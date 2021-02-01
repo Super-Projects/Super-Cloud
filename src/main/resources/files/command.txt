@@ -1,0 +1,5 @@
+java -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:MaxPermSize=256M -XX:-UseAdaptiveSizePolicy -XX:CompileThreshold=100 -Dcom.mojang.eula.agree=true -Dio.netty.recycler.maxCapacity=0 -Dio.netty.recycler.maxCapacity.default=0 -Djline.terminal=jline.UnsupportedTerminal -Xmx1G server.jar
+
+( cd "local//perm//Lobby//Lobby-1" && java -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:MaxPermSize=256M -XX:-UseAdaptiveSizePolicy -XX:CompileThreshold=100 -Dcom.mojang.eula.agree=true -Dio.netty.recycler.maxCapacity=0 -Dio.netty.recycler.maxCapacity.default=0 -Djline.terminal=jline.UnsupportedTerminal -Xmx1G -jar server.jar nogui )
+
+( cd "local//perm//Lobby//Lobby-1" && java -Dcom.mojang.eula.agree=true -Djline.terminal=jline.UnsupportedTerminal -Xmx1G -jar server.jar )
