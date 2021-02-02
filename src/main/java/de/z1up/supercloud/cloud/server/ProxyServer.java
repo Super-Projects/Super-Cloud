@@ -8,8 +8,9 @@ import java.io.IOException;
 
 public class ProxyServer extends Server ***REMOVED***
 
-    public ProxyServer(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path) ***REMOVED***
-        super(uid, serverType, serverMode, display, group, maintenance, id, path);
+
+    public ProxyServer(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, int port, int maxPlayers, String motd) ***REMOVED***
+        super(uid, serverType, serverMode, display, group, maintenance, id, path, port, maxPlayers, motd);
     ***REMOVED***
 
     @Override

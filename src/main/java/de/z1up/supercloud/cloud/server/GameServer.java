@@ -41,7 +41,7 @@ public class GameServer extends Server ***REMOVED***
                 "-Xmx1G " +
                 "-jar server.jar nogui";
 
-        Cloud.getInstance().getLogger().log("running command -> " + command);
+        Cloud.getInstance().getLogger().debug("running command -> " + command);
         this.process = Runtime.getRuntime().exec(command, null, new CloudFolder(super.getPath()).get());
 
         new CloudThread() ***REMOVED***
@@ -80,15 +80,6 @@ public class GameServer extends Server ***REMOVED***
                     ***REMOVED*** catch (IOException exception) ***REMOVED***
                         exception.printStackTrace();
                     ***REMOVED***
-                    /*
-                    try ***REMOVED***
-                        process.destroy();
-                        //process.getOutputStream().write("stop".getBytes());
-                    ***REMOVED*** catch (IOException exception) ***REMOVED***
-                        exception.printStackTrace();
-                    ***REMOVED***
-
-                     */
 
                 ***REMOVED***
 

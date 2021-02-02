@@ -122,7 +122,7 @@ public class ServerCreator ***REMOVED***
 
         String path = "local//" + (serverMode == ServerMode.DYNAMIC ? "temp//" + groupName + "//" + uid.getTag() : "perm//" + groupName + "//" + display);
 
-        ProxyServer proxy = new ProxyServer(uid, serverType, serverMode, display, group, maintenance, id, path);
+        ProxyServer proxy = new ProxyServer(uid, serverType, serverMode, display, group, maintenance, id, path, 25565, 20, "A minecraft server");
         return proxy;
     ***REMOVED***
 
