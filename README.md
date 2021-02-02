@@ -11,4 +11,5 @@ Issues can be reported under the [Issues tab](https://github.com/Super-Projects/
 <br>
 
 ###### More
-Read here for a brief introduction to the [use of the Cloud](https://github.com/Super-Projects/Super-Cloud/blob/main/docs/INTRODUCTION.md) and the best way to [set up the cloud](https://github.com/Super-Projects/Super-Cloud/blob/main/docs/SET_UP.md).
+Read here for a brief introduction to the [use of the Cloud](https://github.com/Super-Projects/Super-Cloud/blob/main/docs/INTRODUCTION.md) and the best way to [set up the cloud](https://github.com/Super-Projects/Super-Cloud/blob/main/docs/SET_UP.md). <br>
+We recommend installing the [Super-Cord](https://github.com/Super-Projects/Super-Cord) plugin for an optimal playing experience.
