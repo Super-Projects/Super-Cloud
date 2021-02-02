@@ -1,3 +1,4 @@
+![alt text](https://avatars.githubusercontent.com/u/78378240?s=200&v=4)
 # Super-Cloud
 
 A Cloud System aiming to create an easy to use environment for small server networks.
