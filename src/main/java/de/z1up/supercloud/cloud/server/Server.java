@@ -121,4 +121,5 @@ public abstract class Server implements IServer {
     public void setMotd(String motd) {
         this.motd = motd;
     }
+
 }
