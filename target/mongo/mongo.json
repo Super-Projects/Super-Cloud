@@ -1,6 +1,6 @@
 {
-  "host": "85.214.26.210",
-  "database": "super-cloud",
+  "host": "127.0.0.1",
+  "database": "admin",
   "password": "#CWsgMc!strt999",
   "user": "chris23lngr",
   "port": 27012

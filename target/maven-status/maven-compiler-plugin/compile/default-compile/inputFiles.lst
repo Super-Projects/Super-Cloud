@@ -6,6 +6,7 @@ D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\cloud\setu
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\cloud\server\GameServer.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\cloud\server\ProxyServer.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\cloud\server\Template.java
+D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\mongo\MongoConfig.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\cloud\setup\SetupManager.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\id\StringGenerator.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\time\CloudThread.java
@@ -13,6 +14,7 @@ D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\Core.
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\input\InputReader.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\id\UID.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\file\CloudFile.java
+D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\mongo\MongoManager.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\cloud\server\Server.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\interfaces\ICloudRunnable.java
 D:\github\Super-Projects\Super-Cloud\src\main\java\de\z1up\supercloud\core\time\CloudRunnable.java
