@@ -20,7 +20,7 @@ public class MongoManager ***REMOVED***
     private void createFiles() ***REMOVED***
 
         CloudFolder dir = new CloudFolder("mongo");
-        CloudFile file = new CloudFile(dir, "access.yml");
+        dir.build();
 
     ***REMOVED***
 
