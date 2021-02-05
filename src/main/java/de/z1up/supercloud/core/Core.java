@@ -24,7 +24,7 @@ public class Core ***REMOVED***
         this.cloud = new Cloud();
     ***REMOVED***
 
-    public void load() ***REMOVED***
+    private void load() ***REMOVED***
         this.cloud.run();
     ***REMOVED***
 ***REMOVED***

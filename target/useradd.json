@@ -1,7 +1,0 @@
-db.createUser(
-  ***REMOVED***
-    user: "chris23lngr",
-    pwd: "#CWsgMc!strt999",
-    roles: [ ***REMOVED*** role: "userAdminAnyDatabase", db: "admin" ***REMOVED***, "readWriteAnyDatabase" ]
-  ***REMOVED***
-)

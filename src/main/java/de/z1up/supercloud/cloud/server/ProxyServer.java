@@ -14,7 +14,7 @@ public class ProxyServer extends Server ***REMOVED***
     ***REMOVED***
 
     @Override
-    public void startProcess() throws IOException ***REMOVED***
+    public void bootstrap() throws IOException ***REMOVED***
 
     ***REMOVED***
 

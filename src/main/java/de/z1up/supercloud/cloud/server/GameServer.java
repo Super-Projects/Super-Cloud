@@ -24,7 +24,7 @@ public class GameServer extends Server ***REMOVED***
     ***REMOVED***
 
     @Override
-    public void startProcess() throws IOException ***REMOVED***
+    public void bootstrap() throws IOException ***REMOVED***
 
         Cloud.getInstance().getLogger().debug("Starting new process for " + getDisplay() + "...");
 
@@ -97,7 +97,7 @@ public class GameServer extends Server ***REMOVED***
 
     @Override
     public Process getProcess() ***REMOVED***
-        return null;
+        return this.process;
     ***REMOVED***
 
     @Override

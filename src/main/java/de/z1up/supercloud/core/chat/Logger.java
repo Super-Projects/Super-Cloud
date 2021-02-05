@@ -133,4 +133,8 @@ public class Logger ***REMOVED***
     public LogWriter getWriter() ***REMOVED***
         return writer;
     ***REMOVED***
+
+    public boolean isDebugActive() ***REMOVED***
+        return debuggerActive;
+    ***REMOVED***
 ***REMOVED***

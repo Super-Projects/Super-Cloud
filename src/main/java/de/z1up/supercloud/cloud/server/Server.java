@@ -1,9 +1,19 @@
 package de.z1up.supercloud.cloud.server;
 
+import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.server.enums.ServerMode;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.interfaces.IServer;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import org.bson.Document;
+
+import java.util.logging.Filter;
 
 public abstract class Server implements IServer ***REMOVED***
 
@@ -122,4 +132,38 @@ public abstract class Server implements IServer ***REMOVED***
         this.motd = motd;
     ***REMOVED***
 
+    @Override
+    public void save() ***REMOVED***
+
+        final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
+        final MongoCollection<Document> collection = database.getCollection("servers");
+
+        Document document
+                = collection.find(Filters.eq("uid", Document.parse("***REMOVED*** tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" ***REMOVED***"))).first();
+
+        if(document != null) ***REMOVED***
+            this.update0(collection);
+        ***REMOVED*** else ***REMOVED***
+            document = Document.parse(new Gson().toJson(this));
+            collection.insertOne(document);
+        ***REMOVED***
+
+    ***REMOVED***
+
+    @Override
+    public void update() ***REMOVED***
+
+        final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
+        final MongoCollection<Document> collection = database.getCollection("servers");
+
+        update0(collection);
+
+    ***REMOVED***
+
+    private void update0(final MongoCollection collection) ***REMOVED***
+        //FindPublisher<Document> findPublisher = collection.find(eq("size", Document.parse("***REMOVED*** h: 14, w: 21, uom: 'cm' ***REMOVED***")));
+        //collection.find(Filters.eq("uid.tag", Document.parse("***REMOVED*** tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" ***REMOVED***")));
+
+        collection.updateOne(Filters.eq("uid", Document.parse("***REMOVED*** tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" ***REMOVED***")), Document.parse(new Gson().toJson(this)));
+    ***REMOVED***
 ***REMOVED***

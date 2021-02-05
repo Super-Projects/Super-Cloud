@@ -4,12 +4,16 @@ import java.io.IOException;
 
 public interface IServer ***REMOVED***
 
-    void startProcess() throws IOException;
+    void bootstrap() throws IOException;
 
     void shutdown();
 
     Process getProcess();
 
     Thread getThread();
+
+    void save();
+
+    void update();
 
 ***REMOVED***

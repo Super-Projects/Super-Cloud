@@ -1,0 +1,21 @@
+***REMOVED***
+    "template": ***REMOVED***
+        "name": "Proxy",
+        "files": [
+            "local\\templates\\Proxy\\plugins",
+            "local\\templates\\Proxy\\server.properties"
+        ]
+    ***REMOVED***,
+    "path": "local//groups",
+    "minOnlineCount": 1,
+    "groupName": "Proxy",
+    "groupType": "PROXY_GROUP",
+    "onlineServers": [],
+    "description": "The default proxy group created by the cloud.",
+    "groupMode": "DYNAMIC_GROUP",
+    "maintenance": false,
+    "uniqueID": ***REMOVED***
+        "tag": "2NVWswVvI3IJ1hre",
+        "type": "GROUP"
+    ***REMOVED***
+***REMOVED***

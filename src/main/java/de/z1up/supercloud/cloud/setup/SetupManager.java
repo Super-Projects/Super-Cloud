@@ -2,24 +2,29 @@ package de.z1up.supercloud.cloud.setup;
 
 public class SetupManager ***REMOVED***
 
-    private ServerSetup serverSetup;
-    private ProxySetup proxySetup;
-    private DefaultsSetup defaultsSetup;
+    private final ServerSetup serverSetup;
+    private final ProxySetup proxySetup;
+    private final DefaultsSetup defaultsSetup;
 
-    public void startSetUp() ***REMOVED***
+    public SetupManager() ***REMOVED***
 
-        init();
-
-        serverSetup.runSetUp();
-        proxySetup.runSetUp();
-        defaultsSetup.runSetUp();
-
+        this.serverSetup    = new ServerSetup();
+        this.proxySetup     = new ProxySetup();
+        this.defaultsSetup  = new DefaultsSetup();
     ***REMOVED***
 
-    void init() ***REMOVED***
-        serverSetup = new ServerSetup();
-        proxySetup = new ProxySetup();
-        defaultsSetup = new DefaultsSetup();
-    ***REMOVED***
+    public void loadSetUp() ***REMOVED***
 
+        if(!this.proxySetup.isCompleted()) ***REMOVED***
+            this.proxySetup.runSetUp();
+        ***REMOVED***
+
+        if(!this.serverSetup.isCompleted()) ***REMOVED***
+            this.serverSetup.runSetUp();
+        ***REMOVED***
+
+        if(!this.defaultsSetup.isCompleted()) ***REMOVED***
+            this.defaultsSetup.runSetUp();
+        ***REMOVED***
+    ***REMOVED***
 ***REMOVED***
