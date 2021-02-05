@@ -24,7 +24,7 @@ public class GameServer extends Server {
     }
 
     @Override
-    public void startProcess() throws IOException {
+    public void bootstrap() throws IOException {
 
         Cloud.getInstance().getLogger().debug("Starting new process for " + getDisplay() + "...");
 
@@ -97,7 +97,7 @@ public class GameServer extends Server {
 
     @Override
     public Process getProcess() {
-        return null;
+        return this.process;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package de.z1up.supercloud;
 
+import com.mongodb.MongoClient;
 import de.z1up.supercloud.core.Core;
 import de.z1up.supercloud.core.mongo.MongoManager;
 import org.json.JSONObject;
@@ -8,7 +9,7 @@ public class Launcher {
 
     public static void main(String[] args) {
 
-        header();
+        new Core().startUp();
 
     }
 
@@ -60,14 +61,6 @@ public class Launcher {
         headerOut0();
     }
     */
-
-    db.createUser(
-    {
-        user: "chris23lngrAdmin",
-                pwd: "#CW", // or cleartext password
-            roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
-    }
-)
 
 
 }

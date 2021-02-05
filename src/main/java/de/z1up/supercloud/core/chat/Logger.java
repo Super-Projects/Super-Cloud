@@ -133,4 +133,8 @@ public class Logger {
     public LogWriter getWriter() {
         return writer;
     }
+
+    public boolean isDebugActive() {
+        return debuggerActive;
+    }
 }
