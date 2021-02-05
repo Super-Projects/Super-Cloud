@@ -11,26 +11,26 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.jar.JarFile;
 
-public class ServerManager {
+public class ServerManager ***REMOVED***
 
     private final String PATH = "local//lib//";
     private final String PROXY_FILE = "proxy.jar";
     private final String SERVER_FILE = "server.jar";
 
-    public void startServer(Server server) {
+    public void startServer(Server server) ***REMOVED***
 
         /*
         File dir = new File(server.getPath());
 
-        if(!dir.exists()) {
-            try {
+        if(!dir.exists()) ***REMOVED***
+            try ***REMOVED***
                 createServerEnvironment(server);
-            } catch (IOException exception) {
+            ***REMOVED*** catch (IOException exception) ***REMOVED***
                 exception.printStackTrace();
-            }
-        }
+            ***REMOVED***
+        ***REMOVED***
 
-        try {
+        try ***REMOVED***
 
 
 
@@ -48,9 +48,9 @@ public class ServerManager {
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line = "";
 
-            while ((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) ***REMOVED***
                 System.out.println(line);
-            }
+            ***REMOVED***
 
             System.out.println("Starting wrapper process...");
             this.process = new ProcessBuilder("java",
@@ -75,31 +75,31 @@ public class ServerManager {
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line = "";
 
-            while ((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) ***REMOVED***
                 System.out.println(line);
-            }
+            ***REMOVED***
 
             //Runtime.getRuntime().exec("( cd " + server.getPath() + " && java -jar " + SERVER_FILE + " - o true )");
 
             /*
             String cmd = "( cd \"" + server.getPath() + "//\" && java -jar " + SERVER_FILE + " )";
 
-            Cloud.getInstance().getLogger().log(cmd + " ----- " + Runtime.getRuntime().exec(new String[]{"cd \"" + server.getPath() + "//\""}));
+            Cloud.getInstance().getLogger().log(cmd + " ----- " + Runtime.getRuntime().exec(new String[]***REMOVED***"cd \"" + server.getPath() + "//\""***REMOVED***));
             Process process = Runtime.getRuntime().exec(cmd);
             InputStream in = process.getInputStream();
             InputStreamReader reader = new InputStreamReader(in);
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line = "";
 
-            while ((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) ***REMOVED***
                 System.out.println(line);
-            }
+            ***REMOVED***
              */
 
-    }
+    ***REMOVED***
 
 
-    public void createServerEnvironment(Server server) throws IOException {
+    public void createServerEnvironment(Server server) throws IOException ***REMOVED***
 
         Cloud.getInstance().getLogger().debug("Creating server environment for " + server.getDisplay() + "...");
 
@@ -110,26 +110,26 @@ public class ServerManager {
         File sourceFileOrDir = new File(PATH + SERVER_FILE);
         File destDir = new File(path);
         destDir.mkdirs();
-        if (sourceFileOrDir.isFile()) {
+        if (sourceFileOrDir.isFile()) ***REMOVED***
             Copier.copyJarFile(new JarFile(sourceFileOrDir), destDir);
-        } else if (sourceFileOrDir.isDirectory()) {
-            File[] files = sourceFileOrDir.listFiles(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
+        ***REMOVED*** else if (sourceFileOrDir.isDirectory()) ***REMOVED***
+            File[] files = sourceFileOrDir.listFiles(new FilenameFilter() ***REMOVED***
+                public boolean accept(File dir, String name) ***REMOVED***
                     return name.endsWith(".jar");
-                }
-            });
-            for (File f : files) {
+                ***REMOVED***
+            ***REMOVED***);
+            for (File f : files) ***REMOVED***
                 Cloud.getInstance().getLogger().debug("Copying server.jar...");
                 Copier.copyJarFile(new JarFile(f), destDir);
                 Cloud.getInstance().getLogger().debug("Copying server.jar finished!");
-            }
-        }
+            ***REMOVED***
+        ***REMOVED***
 
         CloudFolder to = new CloudFolder(path);
         CloudFolder from = new CloudFolder("local//templates//" + template.getName());
         template.copyFromTo(from, to);
 
         Cloud.getInstance().getLogger().debug("Creating server environment for " + server.getDisplay() + " finished!");
-    }
+    ***REMOVED***
 
-}
+***REMOVED***

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class MongoManager {
+public class MongoManager ***REMOVED***
 
     public static final Gson GSON = new Gson();
 
@@ -23,7 +23,7 @@ public class MongoManager {
     private MongoDatabase database;
     private MongoConfiguration config;
 
-    public void connect() {
+    public void connect() ***REMOVED***
 
         this.loadConfiguration();
 
@@ -33,58 +33,58 @@ public class MongoManager {
 
         this.loadDatabase();
 
-    }
+    ***REMOVED***
 
-    private void setLogging() {
+    private void setLogging() ***REMOVED***
 
         final boolean debug = Cloud.getInstance().getLogger().isDebugActive();
 
-        if(debug) {
+        if(debug) ***REMOVED***
             ((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("org.mongodb.driver").setLevel(Level.ALL);
-        } else {
+        ***REMOVED*** else ***REMOVED***
             ((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("org.mongodb.driver").setLevel(Level.ALL);
-        }
+        ***REMOVED***
 
-    }
+    ***REMOVED***
 
-    private synchronized void loadConfiguration() {
+    private synchronized void loadConfiguration() ***REMOVED***
 
         final CloudFolder dir = new CloudFolder("mongo");
         dir.build();
 
-        try {
+        try ***REMOVED***
             this.config = MongoConfiguration.fromFile("mongo//mongo.json");
-        } catch (IOException exception) {
+        ***REMOVED*** catch (IOException exception) ***REMOVED***
             exception.printStackTrace();
-        }
+        ***REMOVED***
 
-    }
+    ***REMOVED***
 
-    private void buildClient() {
+    private void buildClient() ***REMOVED***
         String con = this.config.buildClientURI().toString();
         this.client = MongoClients.create(con);
-    }
+    ***REMOVED***
 
-    private void loadDatabase() {
+    private void loadDatabase() ***REMOVED***
         this.database = this.client.getDatabase(this.config.getDatabase());
-    }
+    ***REMOVED***
 
-    public final MongoDatabase getDatabase() {
+    public final MongoDatabase getDatabase() ***REMOVED***
         return this.database;
-    }
+    ***REMOVED***
 
-    public final MongoClient getClient() {
+    public final MongoClient getClient() ***REMOVED***
         return this.client;
-    }
+    ***REMOVED***
 
-    public void disconnect() {
-        if(this.client != null) {
+    public void disconnect() ***REMOVED***
+        if(this.client != null) ***REMOVED***
             this.client.close();
-        }
-    }
+        ***REMOVED***
+    ***REMOVED***
 
-    public boolean isConnected() {
+    public boolean isConnected() ***REMOVED***
         return (this.client != null ? true : false);
-    }
+    ***REMOVED***
 
-}
+***REMOVED***

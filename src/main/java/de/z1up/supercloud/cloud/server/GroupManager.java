@@ -11,15 +11,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
-public class GroupManager {
+public class GroupManager ***REMOVED***
 
     private final String PATH = "local//groups";
     private Collection<Group> groups;
 
-    public GroupManager() {
-    }
+    public GroupManager() ***REMOVED***
+    ***REMOVED***
 
-    public List<Group> collectGroups() {
+    public List<Group> collectGroups() ***REMOVED***
 
         Cloud.getInstance().getLogger().debug("Starting to collect groups...");
 
@@ -28,59 +28,59 @@ public class GroupManager {
         CloudFolder dir = new CloudFolder(PATH);
         File[] files = dir.get().listFiles();
 
-        for (File file : files) {
-            try {
+        for (File file : files) ***REMOVED***
+            try ***REMOVED***
 
                 Scanner scanner = new Scanner(file);
                 String lines = "";
-                while(scanner.hasNext()){
+                while(scanner.hasNext())***REMOVED***
                     lines = lines + scanner.nextLine();
-                }
+                ***REMOVED***
 
                 Gson gson = new Gson();
                 Object object = gson.fromJson(lines, Group.class);
 
-                if(object instanceof Group) {
+                if(object instanceof Group) ***REMOVED***
                     collected.add((Group) object);
                     Cloud.getInstance().getLogger().debug("Collected group -> " + ((Group) object).getGroupName());
-                }
+                ***REMOVED***
 
-            } catch (FileNotFoundException e) {
+            ***REMOVED*** catch (FileNotFoundException e) ***REMOVED***
                 e.printStackTrace();
-            }
+            ***REMOVED***
 
-        }
+        ***REMOVED***
 
         Cloud.getInstance().getLogger().debug("Collecting groups finished!");
 
         return collected;
-    }
+    ***REMOVED***
 
-    public void loadGroups() {
+    public void loadGroups() ***REMOVED***
         this.groups = collectGroups();
-    }
+    ***REMOVED***
 
-    public Group getGroupByName(String name) {
+    public Group getGroupByName(String name) ***REMOVED***
 
         Cloud.getInstance().getLogger().debug("Searching for group \"" + name + "\"...");
 
         Group target = null;
 
-        for (Group group : groups) {
+        for (Group group : groups) ***REMOVED***
 
-            if(group.getGroupName().toUpperCase().equals(name.toUpperCase())) {
+            if(group.getGroupName().toUpperCase().equals(name.toUpperCase())) ***REMOVED***
                 target = group;
                 Cloud.getInstance().getLogger().debug("Found group \"" + name + "\"...");
-            }
+            ***REMOVED***
 
-        }
+        ***REMOVED***
 
         Cloud.getInstance().getLogger().debug("Search for group \"" + name + "\" finished!");
 
         return target;
-    }
+    ***REMOVED***
 
-    public boolean isRegistered(Group group) {
+    public boolean isRegistered(Group group) ***REMOVED***
         return groups.contains(group);
-    }
-}
+    ***REMOVED***
+***REMOVED***

@@ -9,10 +9,10 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ServerSetup implements SetUp {
+public class ServerSetup implements SetUp ***REMOVED***
 
-    private final String[] VERSIONS_SERVER  = {"spigot", "paper"};
-    private final String[] VERSIONS_SPIGOT  = {"1.8.8", "1.9", "1.11"};
+    private final String[] VERSIONS_SERVER  = ***REMOVED***"spigot", "paper"***REMOVED***;
+    private final String[] VERSIONS_SPIGOT  = ***REMOVED***"1.8.8", "1.9", "1.11"***REMOVED***;
     private final String SPIGOT_URL         = "https://cdn.getbukkit.org/spigot/spigot-";
     private final String FILE_NAME          = "server.jar";
     private final String PATH               = "local//lib";
@@ -20,34 +20,34 @@ public class ServerSetup implements SetUp {
     private boolean completed;
     private String serverVersion;
 
-    public ServerSetup() {
+    public ServerSetup() ***REMOVED***
         this.checkCompleted();
-    }
+    ***REMOVED***
 
     @Override
-    public void runSetUp() {
+    public void runSetUp() ***REMOVED***
         this.askServerVersion();
-    }
+    ***REMOVED***
 
     @Override
-    public boolean isCompleted() {
+    public boolean isCompleted() ***REMOVED***
         return completed;
-    }
+    ***REMOVED***
 
     @Override
-    public void checkCompleted() {
+    public void checkCompleted() ***REMOVED***
 
         File file = new File(PATH + "//" + FILE_NAME);
 
-        if(file.exists()) {
+        if(file.exists()) ***REMOVED***
             completed = true;
-        } else {
+        ***REMOVED*** else ***REMOVED***
             completed = false;
-        }
+        ***REMOVED***
 
-    }
+    ***REMOVED***
 
-    private void askServerVersion() {
+    private void askServerVersion() ***REMOVED***
 
         Cloud.getInstance().getLogger()
                 .log("Please select a server version: (Possible: " + getServerVersions() + ")");
@@ -57,20 +57,20 @@ public class ServerSetup implements SetUp {
 
         String input = reader.getInput();
 
-        if(!existsServerVersion(input)) {
+        if(!existsServerVersion(input)) ***REMOVED***
             Cloud.getInstance().getLogger()
                     .log("§4Ooops! This server version doesn't exists!");
             askServerVersion();
             return;
-        }
+        ***REMOVED***
 
-        if(input.equalsIgnoreCase("spigot")) {
+        if(input.equalsIgnoreCase("spigot")) ***REMOVED***
             askSpigotVersion();
-        }
+        ***REMOVED***
 
-    }
+    ***REMOVED***
 
-    private void askSpigotVersion() {
+    private void askSpigotVersion() ***REMOVED***
 
         Cloud.getInstance().getLogger()
                 .log("Please select a spigot version: (Possible: " + getSpigotVersions() + ")");
@@ -81,73 +81,73 @@ public class ServerSetup implements SetUp {
         String input = reader.getInput();
 
 
-        if(!existsSpigotVersion(input)) {
+        if(!existsSpigotVersion(input)) ***REMOVED***
             Cloud.getInstance().getLogger()
                     .log("§4Ooops! This server spigot version doesn't exists!");
             askSpigotVersion();
             return;
-        }
+        ***REMOVED***
 
         Downloader downloader = new Downloader(SPIGOT_URL + input + "-R0.1-SNAPSHOT-latest.jar", PATH, FILE_NAME);
 
-        if(downloader != null) {
+        if(downloader != null) ***REMOVED***
 
             Cloud.getInstance().getLogger()
                     .log("§aDownloading " + FILE_NAME + "...");
             downloader.downloadAsync();
 
 
-        } else {
+        ***REMOVED*** else ***REMOVED***
 
             Cloud.getInstance().getLogger()
                     .log("§4Error! Download couldn't be started!");
 
-        }
+        ***REMOVED***
 
-    }
+    ***REMOVED***
 
-    private boolean existsServerVersion(String input) {
-
-        AtomicBoolean exists = new AtomicBoolean(false);
-
-        Arrays.stream(VERSIONS_SERVER).forEach(version -> {
-            if(version.equalsIgnoreCase(input))
-                exists.set(true);
-        });
-
-        return exists.get();
-    }
-
-    private boolean existsSpigotVersion(String input) {
+    private boolean existsServerVersion(String input) ***REMOVED***
 
         AtomicBoolean exists = new AtomicBoolean(false);
 
-        Arrays.stream(VERSIONS_SPIGOT).forEach(version -> {
+        Arrays.stream(VERSIONS_SERVER).forEach(version -> ***REMOVED***
             if(version.equalsIgnoreCase(input))
                 exists.set(true);
-        });
+        ***REMOVED***);
 
         return exists.get();
-    }
+    ***REMOVED***
 
-    private String getServerVersions() {
+    private boolean existsSpigotVersion(String input) ***REMOVED***
+
+        AtomicBoolean exists = new AtomicBoolean(false);
+
+        Arrays.stream(VERSIONS_SPIGOT).forEach(version -> ***REMOVED***
+            if(version.equalsIgnoreCase(input))
+                exists.set(true);
+        ***REMOVED***);
+
+        return exists.get();
+    ***REMOVED***
+
+    private String getServerVersions() ***REMOVED***
 
         String versions = "";
 
-        for (String s : VERSIONS_SERVER) {
+        for (String s : VERSIONS_SERVER) ***REMOVED***
             versions = versions + "\"" + s + "\", ";
-        }
+        ***REMOVED***
         return versions;
-    }
+    ***REMOVED***
 
-    private String getSpigotVersions() {
+    private String getSpigotVersions() ***REMOVED***
 
         String versions = "";
 
-        for (String s : VERSIONS_SPIGOT) {
+        for (String s : VERSIONS_SPIGOT) ***REMOVED***
             versions = versions + "\"" + s + "\", ";
-        }
+        ***REMOVED***
         return versions;
-    }
+    ***REMOVED***
 
-}
+***REMOVED***

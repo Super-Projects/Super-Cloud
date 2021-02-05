@@ -2,7 +2,7 @@ package de.z1up.supercloud.core.interfaces;
 
 import java.io.File;
 
-public interface DataFile {
+public interface DataFile ***REMOVED***
 
     void build();
 
@@ -12,4 +12,4 @@ public interface DataFile {
 
     boolean exists();
 
-}
+***REMOVED***

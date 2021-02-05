@@ -40,4 +40,4 @@ database:
   isolation: SERIALIZABLE
   driver: org.sqlite.JDBC
   password: walrus
-  url: jdbc:sqlite:{DIR}{NAME}.db
+  url: jdbc:sqlite:***REMOVED***DIR***REMOVED******REMOVED***NAME***REMOVED***.db

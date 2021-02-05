@@ -1,6 +1,6 @@
 package de.z1up.supercloud.core.interfaces;
 
-public interface Screenable {
+public interface Screenable ***REMOVED***
 
     boolean isScreenActive();
 
@@ -9,4 +9,4 @@ public interface Screenable {
     void disableScreen();
 
 
-}
+***REMOVED***

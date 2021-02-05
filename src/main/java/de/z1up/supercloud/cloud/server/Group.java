@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 
-public class Group {
+public class Group ***REMOVED***
 
     private final String PATH       = "local//groups";
 
@@ -24,7 +24,7 @@ public class Group {
     private UID uid;
     private Collection<Server> onlineServers;
 
-    public Group(String groupName, String description, Template template, int minOnlineCount, boolean maintenance, GroupType groupType, GroupMode groupMode, UID uid, Collection<Server> onlineServers) {
+    public Group(String groupName, String description, Template template, int minOnlineCount, boolean maintenance, GroupType groupType, GroupMode groupMode, UID uid, Collection<Server> onlineServers) ***REMOVED***
         this.groupName = groupName;
         this.description = description;
         this.template = template;
@@ -34,103 +34,103 @@ public class Group {
         this.groupMode = groupMode;
         this.uid = uid;
         this.onlineServers = onlineServers;
-    }
+    ***REMOVED***
 
-    public String getPath() {
+    public String getPath() ***REMOVED***
         return PATH;
-    }
+    ***REMOVED***
 
-    public String getGroupName() {
+    public String getGroupName() ***REMOVED***
         return groupName;
-    }
+    ***REMOVED***
 
-    public void setGroupName(String groupName) {
+    public void setGroupName(String groupName) ***REMOVED***
         this.groupName = groupName;
-    }
+    ***REMOVED***
 
-    public String getDescription() {
+    public String getDescription() ***REMOVED***
         return description;
-    }
+    ***REMOVED***
 
-    public void setDescription(String description) {
+    public void setDescription(String description) ***REMOVED***
         this.description = description;
-    }
+    ***REMOVED***
 
-    public Template getTemplate() {
+    public Template getTemplate() ***REMOVED***
         return template;
-    }
+    ***REMOVED***
 
-    public void setTemplate(Template template) {
+    public void setTemplate(Template template) ***REMOVED***
         this.template = template;
-    }
+    ***REMOVED***
 
-    public int getMinOnlineCount() {
+    public int getMinOnlineCount() ***REMOVED***
         return minOnlineCount;
-    }
+    ***REMOVED***
 
-    public void setMinOnlineCount(int minOnlineCount) {
+    public void setMinOnlineCount(int minOnlineCount) ***REMOVED***
         this.minOnlineCount = minOnlineCount;
-    }
+    ***REMOVED***
 
-    public boolean isMaintenance() {
+    public boolean isMaintenance() ***REMOVED***
         return maintenance;
-    }
+    ***REMOVED***
 
-    public void setMaintenance(boolean maintenance) {
+    public void setMaintenance(boolean maintenance) ***REMOVED***
         this.maintenance = maintenance;
-    }
+    ***REMOVED***
 
-    public GroupType getGroupType() {
+    public GroupType getGroupType() ***REMOVED***
         return groupType;
-    }
+    ***REMOVED***
 
-    public void setGroupType(GroupType groupType) {
+    public void setGroupType(GroupType groupType) ***REMOVED***
         this.groupType = groupType;
-    }
+    ***REMOVED***
 
-    public GroupMode getGroupMode() {
+    public GroupMode getGroupMode() ***REMOVED***
         return groupMode;
-    }
+    ***REMOVED***
 
-    public void setGroupMode(GroupMode groupMode) {
+    public void setGroupMode(GroupMode groupMode) ***REMOVED***
         this.groupMode = groupMode;
-    }
+    ***REMOVED***
 
-    public UID getUniqueID() {
+    public UID getUniqueID() ***REMOVED***
         return uid;
-    }
+    ***REMOVED***
 
-    public void setUniqueID(UID uid) {
+    public void setUniqueID(UID uid) ***REMOVED***
         this.uid = uid;
-    }
+    ***REMOVED***
 
-    public Collection<Server> getOnlineServers() {
+    public Collection<Server> getOnlineServers() ***REMOVED***
         return onlineServers;
-    }
+    ***REMOVED***
 
-    public void setOnlineServers(Collection<Server> onlineServers) {
+    public void setOnlineServers(Collection<Server> onlineServers) ***REMOVED***
         this.onlineServers = onlineServers;
-    }
+    ***REMOVED***
 
-    public void save() {
+    public void save() ***REMOVED***
 
         File dir = new File(PATH);
 
-        if(!dir.exists()) {
+        if(!dir.exists()) ***REMOVED***
             dir.mkdirs();
-        }
+        ***REMOVED***
 
         File file = new File(PATH, groupName + ".json");
 
-        if(!file.exists()) {
-            try {
+        if(!file.exists()) ***REMOVED***
+            try ***REMOVED***
                 file.createNewFile();
-            } catch (IOException exception) {
+            ***REMOVED*** catch (IOException exception) ***REMOVED***
                 exception.printStackTrace();
-            }
-        }
+            ***REMOVED***
+        ***REMOVED***
 
-        try {
+        try ***REMOVED***
             FileWriter writer = new FileWriter(file);
 
             JSONObject object = new JSONObject(this);
@@ -138,11 +138,11 @@ public class Group {
 
             writer.close();
 
-        } catch (IOException exception) {
+        ***REMOVED*** catch (IOException exception) ***REMOVED***
             exception.printStackTrace();
-        }
+        ***REMOVED***
 
-    }
+    ***REMOVED***
 
-}
+***REMOVED***
 

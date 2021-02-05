@@ -12,59 +12,59 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-public class Downloader {
+public class Downloader ***REMOVED***
 
     private URL url;
     private String path;
     private String fileName;
 
-    public Downloader(String urlPath, String path, String fileName) {
+    public Downloader(String urlPath, String path, String fileName) ***REMOVED***
 
-        try {
+        try ***REMOVED***
             this.url = new URL(urlPath);
-        } catch (MalformedURLException e) {
+        ***REMOVED*** catch (MalformedURLException e) ***REMOVED***
             e.printStackTrace();
-        }
+        ***REMOVED***
 
         this.path = path;
         this.fileName = fileName;
 
-    }
+    ***REMOVED***
 
-    public void downloadAsync() {
-        new CloudThread() {
+    public void downloadAsync() ***REMOVED***
+        new CloudThread() ***REMOVED***
             @Override
-            public void run() {
+            public void run() ***REMOVED***
                 download();
-            }
-        }.start();
-    }
+            ***REMOVED***
+        ***REMOVED***.start();
+    ***REMOVED***
 
-    private void download() {
+    private void download() ***REMOVED***
 
-        try {
+        try ***REMOVED***
 
             File dir = new File(path);
 
-            if(!dir.exists()){
+            if(!dir.exists())***REMOVED***
                 dir.mkdirs();
-            }
+            ***REMOVED***
 
             File file = new File(path, fileName);
 
-            if(!file.exists()) {
+            if(!file.exists()) ***REMOVED***
                 file.createNewFile();
-            }
+            ***REMOVED***
 
             InputStream in = url.openStream();
             Files.copy(in, Paths.get(path + "//" + fileName), StandardCopyOption.REPLACE_EXISTING);
 
             Cloud.getInstance().getLogger().log("Download of " + fileName + " finished!");
 
-        } catch (IOException exception) {
+        ***REMOVED*** catch (IOException exception) ***REMOVED***
             exception.printStackTrace();
-        }
+        ***REMOVED***
 
-    }
+    ***REMOVED***
 
-}
+***REMOVED***

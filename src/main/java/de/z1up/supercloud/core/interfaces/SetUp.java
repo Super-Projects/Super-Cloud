@@ -1,6 +1,6 @@
 package de.z1up.supercloud.core.interfaces;
 
-public interface SetUp {
+public interface SetUp ***REMOVED***
 
     void runSetUp();
 
@@ -8,4 +8,4 @@ public interface SetUp {
 
     void checkCompleted();
 
-}
+***REMOVED***

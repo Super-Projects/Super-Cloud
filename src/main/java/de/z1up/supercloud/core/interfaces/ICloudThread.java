@@ -2,7 +2,7 @@ package de.z1up.supercloud.core.interfaces;
 
 import de.z1up.supercloud.core.id.UID;
 
-public interface ICloudThread {
+public interface ICloudThread ***REMOVED***
 
     void run();
 
@@ -10,4 +10,4 @@ public interface ICloudThread {
 
     UID getUniqueID();
 
-}
+***REMOVED***

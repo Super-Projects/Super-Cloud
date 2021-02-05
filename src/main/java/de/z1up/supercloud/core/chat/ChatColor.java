@@ -1,6 +1,6 @@
 package de.z1up.supercloud.core.chat;
 
-public class ChatColor {
+public class ChatColor ***REMOVED***
 
     public static final String BLACK = "\u001b[38;5;232m";
     public static final String DARK_BLUE = "\u001b[34m";
@@ -25,4 +25,4 @@ public class ChatColor {
     public static final String ITALIC = "\u001b[3m";
     public static final String RESET = "\u001b[0m";
 
-}
+***REMOVED***

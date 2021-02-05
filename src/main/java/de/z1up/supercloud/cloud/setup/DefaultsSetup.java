@@ -10,7 +10,7 @@ import de.z1up.supercloud.core.interfaces.SetUp;
 
 import java.io.File;
 
-public class DefaultsSetup implements SetUp {
+public class DefaultsSetup implements SetUp ***REMOVED***
 
     private final String PATH             = "local//groups";
     private final ServerCreator creator   = new ServerCreator();
@@ -18,38 +18,38 @@ public class DefaultsSetup implements SetUp {
     private boolean completed;
 
     @Override
-    public void runSetUp() {
+    public void runSetUp() ***REMOVED***
 
         checkCompleted();
 
-        if(isCompleted()) {
+        if(isCompleted()) ***REMOVED***
             return;
-        }
+        ***REMOVED***
 
         askForDefaultProxy();
         askForDefaultLobby();
 
-    }
+    ***REMOVED***
 
     @Override
-    public boolean isCompleted() {
+    public boolean isCompleted() ***REMOVED***
         return completed;
-    }
+    ***REMOVED***
 
     @Override
-    public void checkCompleted() {
+    public void checkCompleted() ***REMOVED***
 
         File dir = new File(this.PATH);
 
-        if(dir.exists()) {
+        if(dir.exists()) ***REMOVED***
             this.completed = true;
-        } else {
+        ***REMOVED*** else ***REMOVED***
             this.completed = false;
-        }
+        ***REMOVED***
 
-    }
+    ***REMOVED***
 
-    private void askForDefaultProxy() {
+    private void askForDefaultProxy() ***REMOVED***
 
         Cloud.getInstance().getLogger()
                 .log("Do want me to create a default proxy for you? (§aY§7/§cN§7)");
@@ -59,17 +59,17 @@ public class DefaultsSetup implements SetUp {
 
         String input = reader.getInput();
 
-        if(input.equalsIgnoreCase("Y")) {
+        if(input.equalsIgnoreCase("Y")) ***REMOVED***
 
             Cloud.getInstance().getLogger()
                     .log("§aGreat! I'll create a new proxy group for you...");
 
             creator.createDefaultProxyGroup();
 
-        }
-    }
+        ***REMOVED***
+    ***REMOVED***
 
-    private void askForDefaultLobby() {
+    private void askForDefaultLobby() ***REMOVED***
 
         Cloud.getInstance().getLogger()
                 .log("Do want me to create a default lobby for you? (§aY§7/§cN§7)");
@@ -79,7 +79,7 @@ public class DefaultsSetup implements SetUp {
 
         String input = reader.getInput();
 
-        if(input.equalsIgnoreCase("Y")) {
+        if(input.equalsIgnoreCase("Y")) ***REMOVED***
 
             Cloud.getInstance().getLogger()
                     .log("§aGreat! I'll create a new server group for you...");
@@ -91,6 +91,6 @@ public class DefaultsSetup implements SetUp {
             Server lobby = Cloud.getInstance().getServerCreator().createServerByGroup(lobbyGroup);
             lobby.save();
 
-        }
-    }
-}
+        ***REMOVED***
+    ***REMOVED***
+***REMOVED***

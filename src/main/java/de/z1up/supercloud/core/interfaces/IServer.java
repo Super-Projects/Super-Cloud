@@ -2,7 +2,7 @@ package de.z1up.supercloud.core.interfaces;
 
 import java.io.IOException;
 
-public interface IServer {
+public interface IServer ***REMOVED***
 
     void bootstrap() throws IOException;
 
@@ -16,4 +16,4 @@ public interface IServer {
 
     void update();
 
-}
+***REMOVED***
