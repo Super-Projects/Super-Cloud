@@ -14,7 +14,7 @@ public class ProxyServer extends Server {
     }
 
     @Override
-    public void startProcess() throws IOException {
+    public void bootstrap() throws IOException {
 
     }
 

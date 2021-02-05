@@ -1,7 +1,10 @@
 {
   "host": "127.0.0.1",
+  "user": "admin",
   "database": "database",
   "password": "password",
-  "user": "user",
-  "port": 27012
+  "port": 27012,
+  "useSrv": true,
+  "useAuth": true,
+  "authDatabase": "auth"
 }

@@ -1,9 +1,19 @@
 package de.z1up.supercloud.cloud.server;
 
+import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.server.enums.ServerMode;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.interfaces.IServer;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import org.bson.Document;
+
+import java.util.logging.Filter;
 
 public abstract class Server implements IServer {
 
@@ -122,4 +132,38 @@ public abstract class Server implements IServer {
         this.motd = motd;
     }
 
+    @Override
+    public void save() {
+
+        final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
+        final MongoCollection<Document> collection = database.getCollection("servers");
+
+        Document document
+                = collection.find(Filters.eq("uid", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }"))).first();
+
+        if(document != null) {
+            this.update0(collection);
+        } else {
+            document = Document.parse(new Gson().toJson(this));
+            collection.insertOne(document);
+        }
+
+    }
+
+    @Override
+    public void update() {
+
+        final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
+        final MongoCollection<Document> collection = database.getCollection("servers");
+
+        update0(collection);
+
+    }
+
+    private void update0(final MongoCollection collection) {
+        //FindPublisher<Document> findPublisher = collection.find(eq("size", Document.parse("{ h: 14, w: 21, uom: 'cm' }")));
+        //collection.find(Filters.eq("uid.tag", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }")));
+
+        collection.updateOne(Filters.eq("uid", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }")), Document.parse(new Gson().toJson(this)));
+    }
 }

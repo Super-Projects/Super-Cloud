@@ -24,7 +24,7 @@ public class Core {
         this.cloud = new Cloud();
     }
 
-    public void load() {
+    private void load() {
         this.cloud.run();
     }
 }

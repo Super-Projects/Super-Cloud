@@ -16,7 +16,6 @@ de\z1up\supercloud\core\file\CloudFile.class
 de\z1up\supercloud\cloud\server\enums\GroupType.class
 de\z1up\supercloud\cloud\server\mngmt\ServerManager.class
 de\z1up\supercloud\cloud\setup\DefaultsSetup.class
-de\z1up\supercloud\core\mongo\MongoConfig.class
 de\z1up\supercloud\core\file\Downloader.class
 de\z1up\supercloud\core\file\CloudFolder.class
 de\z1up\supercloud\cloud\setup\ServerSetup.class
@@ -46,5 +45,6 @@ de\z1up\supercloud\cloud\server\Server.class
 de\z1up\supercloud\core\file\Downloader$1.class
 de\z1up\supercloud\core\file\Copier.class
 de\z1up\supercloud\core\chat\Logger.class
+de\z1up\supercloud\core\mongo\MongoConfiguration.class
 de\z1up\supercloud\cloud\server\enums\ServerType.class
 de\z1up\supercloud\core\input\InputReader.class

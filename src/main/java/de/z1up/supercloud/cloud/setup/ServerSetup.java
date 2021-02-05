@@ -20,17 +20,13 @@ public class ServerSetup implements SetUp {
     private boolean completed;
     private String serverVersion;
 
+    public ServerSetup() {
+        this.checkCompleted();
+    }
+
     @Override
     public void runSetUp() {
-
-        checkCompleted();
-
-        if(isCompleted()) {
-            return;
-        }
-
-        askServerVersion();
-
+        this.askServerVersion();
     }
 
     @Override

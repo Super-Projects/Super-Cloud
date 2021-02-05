@@ -1,21 +1,26 @@
 package de.z1up.supercloud.cloud;
+
 import de.z1up.supercloud.cloud.server.*;
+import de.z1up.supercloud.cloud.server.enums.ServerMode;
+import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.mngmt.ServerCreator;
 import de.z1up.supercloud.cloud.server.mngmt.ServerManager;
 import de.z1up.supercloud.cloud.setup.SetupManager;
 import de.z1up.supercloud.core.chat.Logger;
-
-import java.io.IOException;
+import de.z1up.supercloud.core.id.UID;
+import de.z1up.supercloud.core.id.UIDType;
+import de.z1up.supercloud.core.mongo.MongoManager;
 
 public class Cloud {
 
     private static Cloud instance;
 
-    private final Logger logger                 = new Logger();
-    private final SetupManager setupManager     = new SetupManager();
-    private final GroupManager groupManager     = new GroupManager();
-    private final ServerManager serverManager   = new ServerManager();
-    private final ServerCreator serverCreator   = new ServerCreator();
+    private Logger          logger;
+    private SetupManager    setupManager;
+    private GroupManager    groupManager;
+    private ServerManager   serverManager;
+    private ServerCreator   serverCreator;
+    private MongoManager    mongoManager;
 
     public Cloud() {
         instance = this;
@@ -23,46 +28,48 @@ public class Cloud {
 
     public void run() {
 
-        init();
-
-        load();
-
-        groupManager.loadGroups();
-
-        Group lobbyGroup = groupManager.getGroupByName("Lobby");
-
-        GameServer server = serverCreator.createServerByGroup(lobbyGroup);
-
-        try {
-            serverManager.createServerEnvironment(server);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-
-        try {
-            server.startProcess();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-
+        this.init();
+        this.load();
 
     }
 
-    void init() {
-        //logger = new Logger();
-        //setupManager = new SetupManager();
+    private synchronized void init() {
+        this.logger           = new Logger();
+        this.setupManager     = new SetupManager();
+        this.groupManager     = new GroupManager();
+        this.serverManager    = new ServerManager();
+        this.serverCreator    = new ServerCreator();
+        this.mongoManager     = new MongoManager();
     }
 
     void load() {
 
-        setupManager.startSetUp();
+        // connect to the database
+        if(!this.mongoManager.isConnected()) {
+            this.mongoManager.connect();
+        }
+
+        GameServer server = new GameServer(new UID("1234we56", UIDType.SERVER),
+                ServerType.SERVER,
+                ServerMode.STATIC,
+                "display-1",
+                null,
+                false,
+                10,
+                "path",
+                12345,
+                20,
+                "a motd");
+        server.save();
+
+        // load setup if necessary
+        this.setupManager.loadSetUp();
 
     }
 
     public static Cloud getInstance() {
         return instance;
     }
-
 
     public Logger getLogger() {
         return logger;
@@ -82,5 +89,9 @@ public class Cloud {
 
     public ServerCreator getServerCreator() {
         return serverCreator;
+    }
+
+    public MongoManager getMongoManager() {
+        return mongoManager;
     }
 }

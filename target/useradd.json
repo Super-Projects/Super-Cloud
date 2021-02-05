@@ -1,7 +1,0 @@
-db.createUser(
-  {
-    user: "chris23lngr",
-    pwd: "#CWsgMc!strt999",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
-  }
-)

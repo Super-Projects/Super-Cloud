@@ -1,7 +1,10 @@
 {
-  "host": "127.0.0.1",
-  "database": "admin",
-  "password": "#CWsgMc!strt999",
+  "host": "supercloud0.vlmyz.mongodb.net",
   "user": "chris23lngr",
-  "port": 27012
+  "database": "super-cloud",
+  "password": "Loewi#2004",
+  "port": 27012,
+  "useSrv": true,
+  "useAuth": true,
+  "authDatabase": "admin"
 }
