@@ -3,7 +3,7 @@ package de.z1up.supercloud.core.chat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Logger ***REMOVED***
+public class Logger {
 
     private final String PREFIX = "§8[§bSuperCloud§8]" + "§7 ";
     private final char colorCode = '§';
@@ -14,88 +14,88 @@ public class Logger ***REMOVED***
 
     private LogWriter writer;
 
-    public Logger() ***REMOVED***
+    public Logger() {
         initColorCodes();
         updateCCsActive();
         initLogWriter();
         updateDebuggerActive();
-    ***REMOVED***
+    }
 
-    public void debug(String debug) ***REMOVED***
+    public void debug(String debug) {
 
         debug = PREFIX + debug;
 
-        if(!debuggerActive) ***REMOVED***
+        if(!debuggerActive) {
             return;
-        ***REMOVED***
+        }
 
         writer.addLine(getRaw(debug));
 
-        if(ccsActive) ***REMOVED***
+        if(ccsActive) {
             debug = translateColorCodes(debug);
-        ***REMOVED***
+        }
 
         System.out.println(debug);
 
-    ***REMOVED***
+    }
 
-    public void log(String log) ***REMOVED***
+    public void log(String log) {
 
         log = PREFIX + log;
 
         writer.addLine(getRaw(log));
 
-        if(ccsActive) ***REMOVED***
+        if(ccsActive) {
             log = translateColorCodes(log);
-        ***REMOVED*** else ***REMOVED***
+        } else {
             log = getRaw(log);
-        ***REMOVED***
+        }
         System.out.println(log);
 
-    ***REMOVED***
+    }
 
-    public String translateAlternateColorCodes(char colorCode, String message) ***REMOVED***
-        for(String key : COLOR_CODES.keySet()) ***REMOVED***
+    public String translateAlternateColorCodes(char colorCode, String message) {
+        for(String key : COLOR_CODES.keySet()) {
             String chatColor = COLOR_CODES.get(key);
-            if(ccsActive) ***REMOVED***
+            if(ccsActive) {
                 message = message.replaceAll(colorCode + key, ChatColor.RESET + chatColor);
-            ***REMOVED*** else ***REMOVED***
+            } else {
                 message = message.replaceAll(colorCode + key, "");
-            ***REMOVED***
-        ***REMOVED***
+            }
+        }
 
         return message;
-    ***REMOVED***
+    }
 
-    public String translateColorCodes(String message) ***REMOVED***
+    public String translateColorCodes(String message) {
 
         message = translateAlternateColorCodes(this.colorCode, message);
         return message;
 
-    ***REMOVED***
+    }
 
-    public String getRaw(String message) ***REMOVED***
+    public String getRaw(String message) {
 
-        for(String key : COLOR_CODES.keySet()) ***REMOVED***
+        for(String key : COLOR_CODES.keySet()) {
             message = message.replaceAll(this.colorCode + key, "");
-        ***REMOVED***
+        }
 
         return message;
-    ***REMOVED***
+    }
 
-    void initColorCodes() ***REMOVED***
+    void initColorCodes() {
 
-        if(COLOR_CODES == null) ***REMOVED***
+        if(COLOR_CODES == null) {
             return;
-        ***REMOVED***
+        }
 
-        if(!COLOR_CODES.isEmpty()) ***REMOVED***
+        if(!COLOR_CODES.isEmpty()) {
             return;
-        ***REMOVED***
+        }
 
-        if(!ccsActive) ***REMOVED***
+        if(!ccsActive) {
             return;
-        ***REMOVED***
+        }
 
         COLOR_CODES.put("0", ChatColor.BLACK);
         COLOR_CODES.put("1", ChatColor.DARK_BLUE);
@@ -113,28 +113,28 @@ public class Logger ***REMOVED***
         COLOR_CODES.put("d", ChatColor.LIGHT_PURPLE);
         COLOR_CODES.put("e", ChatColor.YELLOW);
         COLOR_CODES.put("f", ChatColor.WHITE);
-    ***REMOVED***
+    }
 
-    void updateCCsActive() ***REMOVED***
-        if(System.getProperty("os.name").toLowerCase().contains("win")) ***REMOVED***
+    void updateCCsActive() {
+        if(System.getProperty("os.name").toLowerCase().contains("win")) {
             ccsActive = false;
-        ***REMOVED***
-    ***REMOVED***
+        }
+    }
 
-    void updateDebuggerActive() ***REMOVED***
+    void updateDebuggerActive() {
         debuggerActive = true;
         // ...
-    ***REMOVED***
+    }
 
-    void initLogWriter() ***REMOVED***
+    void initLogWriter() {
         this.writer = new LogWriter();
-    ***REMOVED***
+    }
 
-    public LogWriter getWriter() ***REMOVED***
+    public LogWriter getWriter() {
         return writer;
-    ***REMOVED***
+    }
 
-    public boolean isDebugActive() ***REMOVED***
+    public boolean isDebugActive() {
         return debuggerActive;
-    ***REMOVED***
-***REMOVED***
+    }
+}

@@ -38,8 +38,8 @@ messages:
   whitelist: You are not whitelisted on this service!
   unknown-command: Unknown command. Type "/help" for help.
   server-full: The service is full!
-  outdated-client: Outdated client! Please use ***REMOVED***0***REMOVED***
-  outdated-server: Outdated service! I'm still on ***REMOVED***0***REMOVED***
+  outdated-client: Outdated client! Please use {0}
+  outdated-server: Outdated service! I'm still on {0}
   restart: Server is restarting
 commands:
   tab-complete: 0
@@ -63,7 +63,7 @@ timings:
   history-length: 3600
 stats:
   disable-saving: false
-  forced-stats: ***REMOVED******REMOVED***
+  forced-stats: {}
 world-settings:
   default:
     verbose: true

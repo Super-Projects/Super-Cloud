@@ -15,16 +15,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
-public class GameServer extends Server ***REMOVED***
+public class GameServer extends Server {
 
     private Process process;
 
-    public GameServer(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, int port, int maxPlayers, String motd) ***REMOVED***
+    public GameServer(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, int port, int maxPlayers, String motd) {
         super(uid, serverType, serverMode, display, group, maintenance, id, path, port, maxPlayers, motd);
-    ***REMOVED***
+    }
 
     @Override
-    public void bootstrap() throws IOException ***REMOVED***
+    public void bootstrap() throws IOException {
 
         Cloud.getInstance().getLogger().debug("Starting new process for " + getDisplay() + "...");
 
@@ -44,65 +44,65 @@ public class GameServer extends Server ***REMOVED***
         Cloud.getInstance().getLogger().debug("running command -> " + command);
         this.process = Runtime.getRuntime().exec(command, null, new CloudFolder(super.getPath()).get());
 
-        new CloudThread() ***REMOVED***
+        new CloudThread() {
             @Override
-            public void run() ***REMOVED***
+            public void run() {
                 InputStream in = process.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
                 BufferedReader bufferedReader = new BufferedReader(reader);
                 String line = "";
 
-                while (true) ***REMOVED***
-                    try ***REMOVED***
+                while (true) {
+                    try {
                         if (!((line = bufferedReader.readLine()) != null)) break;
-                    ***REMOVED*** catch (IOException exception) ***REMOVED***
+                    } catch (IOException exception) {
                         exception.printStackTrace();
-                    ***REMOVED***
+                    }
                     System.out.println(line);
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***.start();
+                }
+            }
+        }.start();
 
-        new CloudRunnable() ***REMOVED***
+        new CloudRunnable() {
             @Override
-            public void run() ***REMOVED***
+            public void run() {
 
                 InputReader reader = new InputReader();
                 reader.open();
 
                 String in = reader.getInput();
 
-                if(in.equals("stop")) ***REMOVED***
+                if(in.equals("stop")) {
 
                     process.destroy();
-                    try ***REMOVED***
+                    try {
                         process.getOutputStream().close();
-                    ***REMOVED*** catch (IOException exception) ***REMOVED***
+                    } catch (IOException exception) {
                         exception.printStackTrace();
-                    ***REMOVED***
+                    }
 
-                ***REMOVED***
+                }
 
                 reader.close();
 
-            ***REMOVED***
-        ***REMOVED***.runTaskLater(TimeUnit.SECONDS, 10);
+            }
+        }.runTaskLater(TimeUnit.SECONDS, 10);
 
-    ***REMOVED***
-
-    @Override
-    public void shutdown() ***REMOVED***
-
-    ***REMOVED***
+    }
 
     @Override
-    public Process getProcess() ***REMOVED***
+    public void shutdown() {
+
+    }
+
+    @Override
+    public Process getProcess() {
         return this.process;
-    ***REMOVED***
+    }
 
     @Override
-    public Thread getThread() ***REMOVED***
+    public Thread getThread() {
         return null;
-    ***REMOVED***
+    }
 
-***REMOVED***
+}

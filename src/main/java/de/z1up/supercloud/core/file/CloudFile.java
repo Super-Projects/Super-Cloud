@@ -5,59 +5,59 @@ import de.z1up.supercloud.core.interfaces.DataFile;
 import java.io.File;
 import java.io.IOException;
 
-public class CloudFile implements DataFile ***REMOVED***
+public class CloudFile implements DataFile {
 
     private String path;
     private String fileName;
     private File file;
 
-    public CloudFile(CloudFolder folder, String fileName) ***REMOVED***
+    public CloudFile(CloudFolder folder, String fileName) {
         this(folder.getPath(), fileName);
-    ***REMOVED***
+    }
 
-    public CloudFile(String path, String fileName) ***REMOVED***
+    public CloudFile(String path, String fileName) {
         this.path = path;
         this.fileName = fileName;
         build();
-    ***REMOVED***
+    }
 
 
     @Override
-    public void build() ***REMOVED***
+    public void build() {
 
         File dir = new File(path);
 
-        if(!dir.exists()) ***REMOVED***
+        if(!dir.exists()) {
             dir.mkdirs();
-        ***REMOVED***
+        }
 
         file = new File(path, fileName);
 
-        if(!file.exists()) ***REMOVED***
-            try ***REMOVED***
+        if(!file.exists()) {
+            try {
                 file.createNewFile();
-            ***REMOVED*** catch (IOException exception) ***REMOVED***
+            } catch (IOException exception) {
                 exception.printStackTrace();
-            ***REMOVED***
-        ***REMOVED***
-    ***REMOVED***
+            }
+        }
+    }
 
     @Override
-    public String getPath() ***REMOVED***
+    public String getPath() {
         return path;
-    ***REMOVED***
+    }
 
     @Override
-    public File get() ***REMOVED***
+    public File get() {
         return file;
-    ***REMOVED***
+    }
 
     @Override
-    public boolean exists() ***REMOVED***
+    public boolean exists() {
         return file.exists();
-    ***REMOVED***
+    }
 
-    public String getFileName() ***REMOVED***
+    public String getFileName() {
         return fileName;
-    ***REMOVED***
-***REMOVED***
+    }
+}

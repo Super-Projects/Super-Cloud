@@ -1,0 +1,10 @@
+{
+  "host": "supercloud0.vlmyz.mongodb.net",
+  "user": "chris23lngr",
+  "database": "super-cloud",
+  "password": "Loewi#2004",
+  "port": 27012,
+  "useSrv": true,
+  "useAuth": true,
+  "authDatabase": "admin"
+}

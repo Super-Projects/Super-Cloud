@@ -12,9 +12,9 @@ import de.z1up.supercloud.core.id.UIDType;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ServerCreator ***REMOVED***
+public class ServerCreator {
 
-    public void createDefaultProxyGroup() ***REMOVED***
+    public void createDefaultProxyGroup() {
 
         String name = "Proxy";
         String desc = "The default proxy group created by the cloud.";
@@ -36,9 +36,9 @@ public class ServerCreator ***REMOVED***
         Group group = new Group(name, desc, template, minOnlineCount, maintenance, groupType, groupMode, uid, onlineServers);
         group.save();
 
-    ***REMOVED***
+    }
 
-    public void createDefaultLobbyGroup() ***REMOVED***
+    public void createDefaultLobbyGroup() {
 
         String name = "Lobby";
         String desc = "The default Lobby group created by the cloud.";
@@ -60,9 +60,9 @@ public class ServerCreator ***REMOVED***
         Group group = new Group(name, desc, template, minOnlineCount, maintenance, groupType, groupMode, uid, onlineServers);
         group.save();
 
-    ***REMOVED***
+    }
 
-    public GameServer createServerByGroup(Group group) ***REMOVED***
+    public GameServer createServerByGroup(Group group) {
 
         Cloud.getInstance().getLogger().debug("Starting to create new GameServer by group " + group.getGroupName() + "...");
 
@@ -70,16 +70,16 @@ public class ServerCreator ***REMOVED***
 
         GroupType groupType = group.getGroupType();
         ServerType serverType = ServerType.SERVER;
-        if(groupType == GroupType.LOBBY_GROUP) ***REMOVED***
+        if(groupType == GroupType.LOBBY_GROUP) {
             serverType = ServerType.LOBBY;
-        ***REMOVED***
+        }
 
 
         GroupMode groupMode = group.getGroupMode();
         ServerMode serverMode = ServerMode.DYNAMIC;
-        if(groupMode == GroupMode.STATIC_GROUP) ***REMOVED***
+        if(groupMode == GroupMode.STATIC_GROUP) {
             serverMode = ServerMode.STATIC;
-        ***REMOVED***
+        }
 
         String groupName = group.getGroupName();
         int id = group.getOnlineServers().size() + 1;
@@ -87,18 +87,18 @@ public class ServerCreator ***REMOVED***
 
         boolean maintenance = false;
 
-        if (group.isMaintenance()) ***REMOVED***
+        if (group.isMaintenance()) {
             maintenance = true;
-        ***REMOVED***
+        }
 
         String path = "local//" + (serverMode == ServerMode.DYNAMIC ? "temp//" + groupName + "//" + uid.getTag() : "perm//" + groupName + "//" + display);
 
         GameServer server = new GameServer(uid, serverType, serverMode, display, group, maintenance, id, path, 25565, 20, "A Minecraft Server");
         Cloud.getInstance().getLogger().debug("Server creation finished!");
         return server;
-    ***REMOVED***
+    }
 
-    public ProxyServer createProxyByGroup(Group group) ***REMOVED***
+    public ProxyServer createProxyByGroup(Group group) {
 
         UID uid = UID.randomUID(UIDType.SERVER);
 
@@ -106,9 +106,9 @@ public class ServerCreator ***REMOVED***
 
         GroupMode groupMode = group.getGroupMode();
         ServerMode serverMode = ServerMode.DYNAMIC;
-        if(groupMode == GroupMode.STATIC_GROUP) ***REMOVED***
+        if(groupMode == GroupMode.STATIC_GROUP) {
             serverMode = ServerMode.STATIC;
-        ***REMOVED***
+        }
 
         String groupName = group.getGroupName();
         int id = group.getOnlineServers().size() + 1;
@@ -116,14 +116,14 @@ public class ServerCreator ***REMOVED***
 
         boolean maintenance = false;
 
-        if (group.isMaintenance()) ***REMOVED***
+        if (group.isMaintenance()) {
             maintenance = true;
-        ***REMOVED***
+        }
 
         String path = "local//" + (serverMode == ServerMode.DYNAMIC ? "temp//" + groupName + "//" + uid.getTag() : "perm//" + groupName + "//" + display);
 
         ProxyServer proxy = new ProxyServer(uid, serverType, serverMode, display, group, maintenance, id, path, 25565, 20, "A minecraft server");
         return proxy;
-    ***REMOVED***
+    }
 
-***REMOVED***
+}

@@ -4,20 +4,20 @@ import de.z1up.supercloud.cloud.Cloud;
 
 import java.util.Scanner;
 
-public class InputReader ***REMOVED***
+public class InputReader {
 
     private Scanner scanner;
     private String prefix;
 
-    public InputReader() ***REMOVED***
+    public InputReader() {
         updatePrefix();
-    ***REMOVED***
+    }
 
-    public void open() ***REMOVED***
+    public void open() {
         this.scanner = new Scanner(System.in);
-    ***REMOVED***
+    }
 
-    public final String getInput() ***REMOVED***
+    public final String getInput() {
 
         System.out.print(prefix + " ");
 
@@ -26,15 +26,15 @@ public class InputReader ***REMOVED***
         Cloud.getInstance().getLogger().getWriter().addLine(prefix + " " + input);
 
         return input;
-    ***REMOVED***
+    }
 
-    public void close() ***REMOVED***
+    public void close() {
         this.scanner.close();
-    ***REMOVED***
+    }
 
-    void updatePrefix() ***REMOVED***
+    void updatePrefix() {
         String username = System.getProperty("user.name");
         this.prefix = username + "@Cloud $";
-    ***REMOVED***
+    }
 
-***REMOVED***
+}

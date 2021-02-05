@@ -4,39 +4,39 @@ import de.z1up.supercloud.core.interfaces.DataFile;
 
 import java.io.File;
 
-public class CloudFolder implements DataFile ***REMOVED***
+public class CloudFolder implements DataFile {
 
     private String path;
     private File dir;
 
-    public CloudFolder(String path) ***REMOVED***
+    public CloudFolder(String path) {
         this.path = path;
         build();
-    ***REMOVED***
+    }
 
     @Override
-    public void build() ***REMOVED***
+    public void build() {
 
         dir = new File(path);
 
-        if(!dir.exists()) ***REMOVED***
+        if(!dir.exists()) {
             dir.mkdirs();
-        ***REMOVED***
+        }
 
-    ***REMOVED***
+    }
 
     @Override
-    public String getPath() ***REMOVED***
+    public String getPath() {
         return path;
-    ***REMOVED***
+    }
 
     @Override
-    public File get() ***REMOVED***
+    public File get() {
         return dir;
-    ***REMOVED***
+    }
 
     @Override
-    public boolean exists() ***REMOVED***
+    public boolean exists() {
         return dir.exists();
-    ***REMOVED***
-***REMOVED***
+    }
+}

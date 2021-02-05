@@ -6,30 +6,30 @@ import de.z1up.supercloud.core.id.UID;
 
 import java.io.IOException;
 
-public class ProxyServer extends Server ***REMOVED***
+public class ProxyServer extends Server {
 
 
-    public ProxyServer(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, int port, int maxPlayers, String motd) ***REMOVED***
+    public ProxyServer(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, int port, int maxPlayers, String motd) {
         super(uid, serverType, serverMode, display, group, maintenance, id, path, port, maxPlayers, motd);
-    ***REMOVED***
+    }
 
     @Override
-    public void bootstrap() throws IOException ***REMOVED***
+    public void bootstrap() throws IOException {
 
-    ***REMOVED***
-
-    @Override
-    public void shutdown() ***REMOVED***
-
-    ***REMOVED***
+    }
 
     @Override
-    public Process getProcess() ***REMOVED***
+    public void shutdown() {
+
+    }
+
+    @Override
+    public Process getProcess() {
         return null;
-    ***REMOVED***
+    }
 
     @Override
-    public Thread getThread() ***REMOVED***
+    public Thread getThread() {
         return null;
-    ***REMOVED***
-***REMOVED***
+    }
+}

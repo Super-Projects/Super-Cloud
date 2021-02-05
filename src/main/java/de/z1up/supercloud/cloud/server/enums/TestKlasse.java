@@ -1,18 +1,18 @@
 package de.z1up.supercloud.cloud.server.enums;
 
-public class TestKlasse ***REMOVED***
+public class TestKlasse {
 
     private String name;
 
-    public TestKlasse(String name) ***REMOVED***
+    public TestKlasse(String name) {
         this.name = name;
-    ***REMOVED***
+    }
 
-    public String getName() ***REMOVED***
+    public String getName() {
         return name;
-    ***REMOVED***
+    }
 
-    public void setName(String name) ***REMOVED***
+    public void setName(String name) {
         this.name = name;
-    ***REMOVED***
-***REMOVED***
+    }
+}

@@ -9,38 +9,38 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 
-public class Copier ***REMOVED***
+public class Copier {
 
-    private static void copyDirectory(File sourceDirectory, File destinationDirectory) throws IOException ***REMOVED***
-        if (!destinationDirectory.exists()) ***REMOVED***
+    private static void copyDirectory(File sourceDirectory, File destinationDirectory) throws IOException {
+        if (!destinationDirectory.exists()) {
             destinationDirectory.mkdir();
-        ***REMOVED***
-        for (String f : sourceDirectory.list()) ***REMOVED***
+        }
+        for (String f : sourceDirectory.list()) {
             copyDirectoryCompatibityMode(new File(sourceDirectory, f), new File(destinationDirectory, f));
-        ***REMOVED***
-    ***REMOVED***
+        }
+    }
 
-    public static void copyDirectoryCompatibityMode(File source, File destination) throws IOException ***REMOVED***
-        if (source.isDirectory()) ***REMOVED***
+    public static void copyDirectoryCompatibityMode(File source, File destination) throws IOException {
+        if (source.isDirectory()) {
             copyDirectory(source, destination);
-        ***REMOVED*** else ***REMOVED***
+        } else {
             copyFile(source, destination);
-        ***REMOVED***
-    ***REMOVED***
+        }
+    }
 
     private static void copyFile(File sourceFile, File destinationFile)
-            throws IOException ***REMOVED***
+            throws IOException {
         try (InputStream in = new FileInputStream(sourceFile);
-             OutputStream out = new FileOutputStream(destinationFile)) ***REMOVED***
+             OutputStream out = new FileOutputStream(destinationFile)) {
             byte[] buf = new byte[1024];
             int length;
-            while ((length = in.read(buf)) > 0) ***REMOVED***
+            while ((length = in.read(buf)) > 0) {
                 out.write(buf, 0, length);
-            ***REMOVED***
-        ***REMOVED***
-    ***REMOVED***
+            }
+        }
+    }
 
-    public static void copyFile(CloudFile from, CloudFolder to) ***REMOVED***
+    public static void copyFile(CloudFile from, CloudFolder to) {
 
         File file = from.get();
         Path fromPath = file.toPath();
@@ -48,19 +48,19 @@ public class Copier ***REMOVED***
         File toFile = new File(to.get() + "//" + from.get().getName());
         Path toPath = toFile.toPath();
 
-        if(!file.exists()) ***REMOVED***
+        if(!file.exists()) {
             return;
-        ***REMOVED***
+        }
 
-        try ***REMOVED***
+        try {
             Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
-        ***REMOVED*** catch (IOException exception) ***REMOVED***
+        } catch (IOException exception) {
             exception.printStackTrace();
-        ***REMOVED***
+        }
 
-    ***REMOVED***
+    }
 
-    public static void copyJarFile(JarFile jarFile, File destDir) throws IOException ***REMOVED***
+    public static void copyJarFile(JarFile jarFile, File destDir) throws IOException {
         String fileName = jarFile.getName();
         String fileNameLastPart = fileName.substring(fileName.lastIndexOf(File.separator));
         File destFile = new File(destDir, fileNameLastPart);
@@ -68,7 +68,7 @@ public class Copier ***REMOVED***
         JarOutputStream jos = new JarOutputStream(new FileOutputStream(destFile));
         Enumeration<JarEntry> entries = jarFile.entries();
 
-        while (entries.hasMoreElements()) ***REMOVED***
+        while (entries.hasMoreElements()) {
             JarEntry entry = entries.nextElement();
             InputStream is = jarFile.getInputStream(entry);
 
@@ -77,14 +77,14 @@ public class Copier ***REMOVED***
             jos.putNextEntry(new JarEntry(entry.getName()));
             byte[] buffer = new byte[4096];
             int bytesRead = 0;
-            while ((bytesRead = is.read(buffer)) != -1) ***REMOVED***
+            while ((bytesRead = is.read(buffer)) != -1) {
                 jos.write(buffer, 0, bytesRead);
-            ***REMOVED***
+            }
             is.close();
             jos.flush();
             jos.closeEntry();
-        ***REMOVED***
+        }
         jos.close();
-    ***REMOVED***
+    }
 
-***REMOVED***
+}

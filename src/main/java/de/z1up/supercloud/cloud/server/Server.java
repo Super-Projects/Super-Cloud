@@ -15,7 +15,7 @@ import org.bson.Document;
 
 import java.util.logging.Filter;
 
-public abstract class Server implements IServer ***REMOVED***
+public abstract class Server implements IServer {
 
     private UID uid;
     private ServerType serverType;
@@ -30,7 +30,7 @@ public abstract class Server implements IServer ***REMOVED***
     private int maxPlayers;
     private String motd;
 
-    public Server(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, int port, int maxPlayers, String motd) ***REMOVED***
+    public Server(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, int port, int maxPlayers, String motd) {
         this.uid = uid;
         this.serverType = serverType;
         this.serverMode = serverMode;
@@ -42,128 +42,128 @@ public abstract class Server implements IServer ***REMOVED***
         this.port = port;
         this.maxPlayers = maxPlayers;
         this.motd = motd;
-    ***REMOVED***
+    }
 
-    public UID getUid() ***REMOVED***
+    public UID getUid() {
         return uid;
-    ***REMOVED***
+    }
 
-    public void setUid(UID uid) ***REMOVED***
+    public void setUid(UID uid) {
         this.uid = uid;
-    ***REMOVED***
+    }
 
-    public ServerType getServerType() ***REMOVED***
+    public ServerType getServerType() {
         return serverType;
-    ***REMOVED***
+    }
 
-    public void setServerType(ServerType serverType) ***REMOVED***
+    public void setServerType(ServerType serverType) {
         this.serverType = serverType;
-    ***REMOVED***
+    }
 
-    public ServerMode getServerMode() ***REMOVED***
+    public ServerMode getServerMode() {
         return serverMode;
-    ***REMOVED***
+    }
 
-    public void setServerMode(ServerMode serverMode) ***REMOVED***
+    public void setServerMode(ServerMode serverMode) {
         this.serverMode = serverMode;
-    ***REMOVED***
+    }
 
-    public String getDisplay() ***REMOVED***
+    public String getDisplay() {
         return display;
-    ***REMOVED***
+    }
 
-    public void setDisplay(String display) ***REMOVED***
+    public void setDisplay(String display) {
         this.display = display;
-    ***REMOVED***
+    }
 
-    public Group getGroup() ***REMOVED***
+    public Group getGroup() {
         return group;
-    ***REMOVED***
+    }
 
-    public void setGroup(Group group) ***REMOVED***
+    public void setGroup(Group group) {
         this.group = group;
-    ***REMOVED***
+    }
 
-    public boolean isMaintenance() ***REMOVED***
+    public boolean isMaintenance() {
         return maintenance;
-    ***REMOVED***
+    }
 
-    public void setMaintenance(boolean maintenance) ***REMOVED***
+    public void setMaintenance(boolean maintenance) {
         this.maintenance = maintenance;
-    ***REMOVED***
+    }
 
-    public void setPath(String path) ***REMOVED***
+    public void setPath(String path) {
         this.path = path;
-    ***REMOVED***
+    }
 
-    public String getPath() ***REMOVED***
+    public String getPath() {
         return path;
-    ***REMOVED***
+    }
 
-    public int getId() ***REMOVED***
+    public int getId() {
         return id;
-    ***REMOVED***
+    }
 
-    public void setId(int id) ***REMOVED***
+    public void setId(int id) {
         this.id = id;
-    ***REMOVED***
+    }
 
-    public int getPort() ***REMOVED***
+    public int getPort() {
         return port;
-    ***REMOVED***
+    }
 
-    public void setPort(int port) ***REMOVED***
+    public void setPort(int port) {
         this.port = port;
-    ***REMOVED***
+    }
 
-    public int getMaxPlayers() ***REMOVED***
+    public int getMaxPlayers() {
         return maxPlayers;
-    ***REMOVED***
+    }
 
-    public void setMaxPlayers(int maxPlayers) ***REMOVED***
+    public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
-    ***REMOVED***
+    }
 
-    public String getMotd() ***REMOVED***
+    public String getMotd() {
         return motd;
-    ***REMOVED***
+    }
 
-    public void setMotd(String motd) ***REMOVED***
+    public void setMotd(String motd) {
         this.motd = motd;
-    ***REMOVED***
+    }
 
     @Override
-    public void save() ***REMOVED***
+    public void save() {
 
         final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
         final MongoCollection<Document> collection = database.getCollection("servers");
 
         Document document
-                = collection.find(Filters.eq("uid", Document.parse("***REMOVED*** tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" ***REMOVED***"))).first();
+                = collection.find(Filters.eq("uid", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }"))).first();
 
-        if(document != null) ***REMOVED***
+        if(document != null) {
             this.update0(collection);
-        ***REMOVED*** else ***REMOVED***
+        } else {
             document = Document.parse(new Gson().toJson(this));
             collection.insertOne(document);
-        ***REMOVED***
+        }
 
-    ***REMOVED***
+    }
 
     @Override
-    public void update() ***REMOVED***
+    public void update() {
 
         final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
         final MongoCollection<Document> collection = database.getCollection("servers");
 
         update0(collection);
 
-    ***REMOVED***
+    }
 
-    private void update0(final MongoCollection collection) ***REMOVED***
-        //FindPublisher<Document> findPublisher = collection.find(eq("size", Document.parse("***REMOVED*** h: 14, w: 21, uom: 'cm' ***REMOVED***")));
-        //collection.find(Filters.eq("uid.tag", Document.parse("***REMOVED*** tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" ***REMOVED***")));
+    private void update0(final MongoCollection collection) {
+        //FindPublisher<Document> findPublisher = collection.find(eq("size", Document.parse("{ h: 14, w: 21, uom: 'cm' }")));
+        //collection.find(Filters.eq("uid.tag", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }")));
 
-        collection.updateOne(Filters.eq("uid", Document.parse("***REMOVED*** tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" ***REMOVED***")), Document.parse(new Gson().toJson(this)));
-    ***REMOVED***
-***REMOVED***
+        collection.updateOne(Filters.eq("uid", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }")), Document.parse(new Gson().toJson(this)));
+    }
+}

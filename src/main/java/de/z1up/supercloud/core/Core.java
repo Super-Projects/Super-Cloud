@@ -2,29 +2,29 @@ package de.z1up.supercloud.core;
 
 import de.z1up.supercloud.cloud.Cloud;
 
-public class Core ***REMOVED***
+public class Core {
 
     private static Core instance;
     private Cloud cloud;
 
-    public Core() ***REMOVED***
+    public Core() {
         instance = this;
-    ***REMOVED***
+    }
 
-    public static Core getInstance() ***REMOVED***
+    public static Core getInstance() {
         return instance;
-    ***REMOVED***
+    }
 
-    public void startUp() ***REMOVED***
+    public void startUp() {
         init();
         load();
-    ***REMOVED***
+    }
 
-    void init() ***REMOVED***
+    void init() {
         this.cloud = new Cloud();
-    ***REMOVED***
+    }
 
-    private void load() ***REMOVED***
+    private void load() {
         this.cloud.run();
-    ***REMOVED***
-***REMOVED***
+    }
+}

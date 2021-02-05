@@ -3,11 +3,11 @@ package de.z1up.supercloud.core.settings;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SettingsManager ***REMOVED***
+public class SettingsManager {
 
     private final Map<String, Setting> settings = new HashMap();
 
-    public void loadSettings() ***REMOVED***
+    public void loadSettings() {
 
         /* -----------< TEMP >----------- */
 
@@ -18,31 +18,31 @@ public class SettingsManager ***REMOVED***
 
 
         /* -----------< PERM >----------- */
-    ***REMOVED***
+    }
 
-    void loadCCsActive() ***REMOVED***
+    void loadCCsActive() {
 
         // ccs-active
 
         boolean active = true;
 
-        if(System.getProperty("os.name").toLowerCase().contains("win")) ***REMOVED***
+        if(System.getProperty("os.name").toLowerCase().contains("win")) {
             active = false;
-        ***REMOVED***
+        }
 
         Setting setting = new Setting("ccs-active", active);
         settings.put("ccs-active", setting);
-    ***REMOVED***
+    }
 
-    void loadConsolePrefix() ***REMOVED***
+    void loadConsolePrefix() {
         String username = System.getProperty("user.name");
         String prefix = username + "@Cloud $ ";
         Setting setting = new Setting("console-prefix", prefix);
         settings.put("console-prefix", setting);
-    ***REMOVED***
+    }
 
-    public Setting getByName(String name) ***REMOVED***
+    public Setting getByName(String name) {
         return settings.get(name);
-    ***REMOVED***
+    }
 
-***REMOVED***
+}

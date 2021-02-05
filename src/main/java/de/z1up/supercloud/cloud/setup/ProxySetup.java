@@ -7,9 +7,9 @@ import de.z1up.supercloud.core.interfaces.SetUp;
 
 import java.io.File;
 
-public class ProxySetup implements SetUp ***REMOVED***
+public class ProxySetup implements SetUp {
 
-    private final String[] PROXY_VERSIONS       = ***REMOVED***"bungeecord", "waterfall"***REMOVED***;
+    private final String[] PROXY_VERSIONS       = {"bungeecord", "waterfall"};
     private final String BUNGEECORD_URL         = "https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar";
     private final String FILE_NAME              = "proxy.jar";
     private final String PATH                   = "local//lib";
@@ -17,37 +17,37 @@ public class ProxySetup implements SetUp ***REMOVED***
     private boolean completed;
 
     @Override
-    public void runSetUp() ***REMOVED***
+    public void runSetUp() {
 
         checkCompleted();
 
-        if(isCompleted()) ***REMOVED***
+        if(isCompleted()) {
             return;
-        ***REMOVED***
+        }
 
         askProxyVersion();
 
-    ***REMOVED***
+    }
 
     @Override
-    public boolean isCompleted() ***REMOVED***
+    public boolean isCompleted() {
         return completed;
-    ***REMOVED***
+    }
 
     @Override
-    public void checkCompleted() ***REMOVED***
+    public void checkCompleted() {
 
         File file = new File(PATH + "//" + FILE_NAME);
 
-        if(file.exists()) ***REMOVED***
+        if(file.exists()) {
             completed = true;
-        ***REMOVED*** else ***REMOVED***
+        } else {
             completed = false;
-        ***REMOVED***
+        }
 
-    ***REMOVED***
+    }
 
-    private void askProxyVersion() ***REMOVED***
+    private void askProxyVersion() {
 
         Cloud.getInstance().getLogger()
                 .log("§7Please select a Proxy Version: (Possible: " + getProxyVersions() + ")");
@@ -57,57 +57,57 @@ public class ProxySetup implements SetUp ***REMOVED***
 
         String input = reader.getInput();
 
-        if(!existsProxyVersion(input)) ***REMOVED***
+        if(!existsProxyVersion(input)) {
             Cloud.getInstance().getLogger()
                     .log("§4Ooops! This proxy version doesn't exist!");
             askProxyVersion();
             return;
-        ***REMOVED***
+        }
 
         Downloader downloader = null;
 
-        if(input.equalsIgnoreCase("bungeecord")) ***REMOVED***
+        if(input.equalsIgnoreCase("bungeecord")) {
 
             downloader = new Downloader(BUNGEECORD_URL, PATH, FILE_NAME);
 
-        ***REMOVED***
+        }
 
-        if(downloader != null) ***REMOVED***
+        if(downloader != null) {
 
             Cloud.getInstance().getLogger()
                     .log("§aDownloading " + FILE_NAME + "...");
             downloader.downloadAsync();
 
-        ***REMOVED*** else ***REMOVED***
+        } else {
 
             Cloud.getInstance().getLogger()
                     .log("§4Error! Download couldn't be started!");
 
-        ***REMOVED***
+        }
 
-    ***REMOVED***
+    }
 
-    private boolean existsProxyVersion(String input) ***REMOVED***
+    private boolean existsProxyVersion(String input) {
 
         boolean exists = false;
 
-        for (String proxy_version : PROXY_VERSIONS) ***REMOVED***
-            if(input.equalsIgnoreCase(proxy_version)) ***REMOVED***
+        for (String proxy_version : PROXY_VERSIONS) {
+            if(input.equalsIgnoreCase(proxy_version)) {
                 exists = true;
-            ***REMOVED***
-        ***REMOVED***
+            }
+        }
 
         return exists;
-    ***REMOVED***
+    }
 
-    private String getProxyVersions() ***REMOVED***
+    private String getProxyVersions() {
 
         String versions = "";
 
-        for (String proxy_version : PROXY_VERSIONS) ***REMOVED***
+        for (String proxy_version : PROXY_VERSIONS) {
             versions = versions + "\"" + proxy_version + "\", ";
-        ***REMOVED***
+        }
 
         return versions;
-    ***REMOVED***
-***REMOVED***
+    }
+}

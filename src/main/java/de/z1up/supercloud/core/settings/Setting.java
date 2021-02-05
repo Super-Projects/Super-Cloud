@@ -2,54 +2,54 @@ package de.z1up.supercloud.core.settings;
 
 import de.z1up.supercloud.core.file.CloudFile;
 
-public class Setting ***REMOVED***
+public class Setting {
 
     private String key;
     private Object value;
     private CloudFile file;
     private SettingMode mode;
 
-    public Setting(String key, Object value, CloudFile file) ***REMOVED***
+    public Setting(String key, Object value, CloudFile file) {
         this.key = key;
         this.value = value;
         this.file = file;
         this.mode = SettingMode.PERM;
-    ***REMOVED***
+    }
 
-    public Setting(String key, Object value) ***REMOVED***
+    public Setting(String key, Object value) {
         this.key = key;
         this.value = value;
         this.file = null;
         this.mode = SettingMode.TEMP;
-    ***REMOVED***
+    }
 
-    void load() ***REMOVED***
+    void load() {
 
-    ***REMOVED***
+    }
 
-    public void update() ***REMOVED***
+    public void update() {
 
-    ***REMOVED***
+    }
 
-    public void save() ***REMOVED***
-        if(this.mode != SettingMode.PERM) ***REMOVED***
+    public void save() {
+        if(this.mode != SettingMode.PERM) {
            return;
-        ***REMOVED***
-        if(file == null) ***REMOVED***
+        }
+        if(file == null) {
             return;
-        ***REMOVED***
-    ***REMOVED***
+        }
+    }
 
-    public void setValue(Object value) ***REMOVED***
+    public void setValue(Object value) {
         this.value = value;
-    ***REMOVED***
+    }
 
-    public Object getValue() ***REMOVED***
+    public Object getValue() {
         return this.value;
-    ***REMOVED***
+    }
 
-    public enum SettingMode ***REMOVED***
+    public enum SettingMode {
         TEMP, PERM
-    ***REMOVED***
+    }
 
-***REMOVED***
+}

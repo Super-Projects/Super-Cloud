@@ -9,46 +9,46 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Template ***REMOVED***
+public class Template {
 
     private final String PATH = "local//templates";
     private String name;
 
-    public Template(String name) ***REMOVED***
+    public Template(String name) {
         this.name = name;
-    ***REMOVED***
+    }
 
-    public String getName() ***REMOVED***
+    public String getName() {
         return name;
-    ***REMOVED***
+    }
 
-    public void create() ***REMOVED***
+    public void create() {
 
         File dir = new File(PATH + "//" + name);
 
-        if(!dir.exists()) ***REMOVED***
+        if(!dir.exists()) {
             dir.mkdirs();
-        ***REMOVED***
+        }
 
         File serverProperties = new File(PATH + "//" + name + "//server.properties");
 
-        if(!serverProperties.exists()) ***REMOVED***
-            try ***REMOVED***
+        if(!serverProperties.exists()) {
+            try {
                 serverProperties.createNewFile();
-            ***REMOVED*** catch (IOException exception) ***REMOVED***
+            } catch (IOException exception) {
                 exception.printStackTrace();
-            ***REMOVED***
-        ***REMOVED***
+            }
+        }
 
         File pluginsFolder = new File(PATH + "//" + name + "//plugins");
 
-        if(!pluginsFolder.exists()) ***REMOVED***
+        if(!pluginsFolder.exists()) {
             pluginsFolder.mkdirs();
-        ***REMOVED***
+        }
 
-    ***REMOVED***
+    }
 
-    public Collection<File> getFiles() ***REMOVED***
+    public Collection<File> getFiles() {
 
         Collection files = new ArrayList();
 
@@ -56,17 +56,17 @@ public class Template ***REMOVED***
 
         File[] contents = dir.listFiles();
 
-        for (File content : contents) ***REMOVED***
+        for (File content : contents) {
 
-            if(content.exists()) ***REMOVED***
+            if(content.exists()) {
                 files.add(content);
-            ***REMOVED***
+            }
 
-        ***REMOVED***
+        }
         return files;
-    ***REMOVED***
+    }
 
-    public Collection<File> getFiles(String path) ***REMOVED***
+    public Collection<File> getFiles(String path) {
 
         Collection files = new ArrayList();
 
@@ -74,51 +74,51 @@ public class Template ***REMOVED***
 
         File[] contents = dir.listFiles();
 
-        for (File content : contents) ***REMOVED***
+        for (File content : contents) {
 
-            if(content.exists()) ***REMOVED***
+            if(content.exists()) {
                 files.add(content);
-            ***REMOVED***
+            }
 
-        ***REMOVED***
+        }
         return files;
-    ***REMOVED***
+    }
 
     /*
-    public void copyTo(CloudFolder folder) ***REMOVED***
+    public void copyTo(CloudFolder folder) {
 
         Collection<File> files = getFiles();
         Iterator<File> fileIterator = files.iterator();
 
         Path copyTo = Paths.get(folder.getPath());
 
-        while (fileIterator.hasNext()) ***REMOVED***
+        while (fileIterator.hasNext()) {
 
             File file = fileIterator.next();
             Path filePath = Paths.get(file.getPath());
 
-            try ***REMOVED***
+            try {
                 Files.copy(filePath, copyTo, StandardCopyOption.REPLACE_EXISTING);
-            ***REMOVED*** catch (IOException exception) ***REMOVED***
+            } catch (IOException exception) {
                 exception.printStackTrace();
-            ***REMOVED***
+            }
 
-            if(file.isDirectory()) ***REMOVED***
+            if(file.isDirectory()) {
 
-            ***REMOVED***
+            }
 
-        ***REMOVED***
-    ***REMOVED****/
+        }
+    }*/
 
-    public void copyFromTo(CloudFolder from, CloudFolder to) ***REMOVED***
+    public void copyFromTo(CloudFolder from, CloudFolder to) {
 
         Cloud.getInstance().getLogger().debug("Copying template" + name + "...");
 
-        try ***REMOVED***
+        try {
             Copier.copyDirectoryCompatibityMode(from.get(), to.get());
-        ***REMOVED*** catch (IOException exception) ***REMOVED***
+        } catch (IOException exception) {
             exception.printStackTrace();
-        ***REMOVED***
+        }
 
-    ***REMOVED***
-***REMOVED***
+    }
+}

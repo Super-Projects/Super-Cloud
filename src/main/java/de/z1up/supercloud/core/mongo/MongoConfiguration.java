@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-public class MongoConfiguration ***REMOVED***
+public class MongoConfiguration {
 
     private final String host;
     private final String user;
@@ -21,14 +21,14 @@ public class MongoConfiguration ***REMOVED***
     private final boolean useAuth;
     private final String authDatabase;
 
-    public static MongoConfiguration fromFile(String path) throws IOException ***REMOVED***
-        if(Files.notExists(Paths.get(path))) ***REMOVED***
+    public static MongoConfiguration fromFile(String path) throws IOException {
+        if(Files.notExists(Paths.get(path))) {
             Files.copy(Objects.requireNonNull(MongoConfiguration.class.getClassLoader().getResourceAsStream("mongo.json")), Paths.get(path));
-        ***REMOVED***
+        }
         return MongoManager.GSON.fromJson(new FileReader(path), MongoConfiguration.class);
-    ***REMOVED***
+    }
 
-    public MongoConfiguration(String host, String user, String database, String password, int port, boolean useSrv, boolean useAuth, String authDatabase) ***REMOVED***
+    public MongoConfiguration(String host, String user, String database, String password, int port, boolean useSrv, boolean useAuth, String authDatabase) {
         this.host = host;
         this.user = user;
         this.database = database;
@@ -37,58 +37,58 @@ public class MongoConfiguration ***REMOVED***
         this.useSrv = useSrv;
         this.useAuth = useAuth;
         this.authDatabase = authDatabase;
-    ***REMOVED***
+    }
 
-    public String getHost() ***REMOVED***
+    public String getHost() {
         return this.host;
-    ***REMOVED***
+    }
 
-    public String getUser() ***REMOVED***
+    public String getUser() {
         return this.user;
-    ***REMOVED***
+    }
 
-    public String getDatabase() ***REMOVED***
+    public String getDatabase() {
         return this.database;
-    ***REMOVED***
+    }
 
-    public String getPassword() ***REMOVED***
+    public String getPassword() {
         return this.password;
-    ***REMOVED***
+    }
 
-    public int getPort() ***REMOVED***
+    public int getPort() {
         return this.port;
-    ***REMOVED***
+    }
 
-    public boolean useSrv() ***REMOVED***
+    public boolean useSrv() {
         return this.useSrv;
-    ***REMOVED***
+    }
 
-    public boolean useAuth() ***REMOVED***
+    public boolean useAuth() {
         return this.useAuth;
-    ***REMOVED***
+    }
 
-    public String getAuthDatabase() ***REMOVED***
+    public String getAuthDatabase() {
         return this.authDatabase;
-    ***REMOVED***
+    }
 
-    public MongoClientURI buildClientURI() ***REMOVED***
+    public MongoClientURI buildClientURI() {
 
         StringBuilder uri = new StringBuilder("mongodb");
 
-        if(this.useSrv()) ***REMOVED***
+        if(this.useSrv()) {
             uri.append("+srv");
-        ***REMOVED***
+        }
 
         uri.append("://");
 
-        if(!this.useAuth()) ***REMOVED***
+        if(!this.useAuth()) {
             uri.append(this.host + (!this.useSrv ? (":" + this.port) : ""));
             System.out.println(uri.toString());
             return new MongoClientURI(uri.toString());
-        ***REMOVED***
+        }
 
         uri.append(this.user + ":" + this.password + "@" + this.host + (!this.useSrv ? (":" + this.port) : "") + "/" + this.authDatabase);
         System.out.println(uri.toString());
         return new MongoClientURI(uri.toString());
-    ***REMOVED***
-***REMOVED***
+    }
+}

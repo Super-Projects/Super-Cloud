@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class LogWriter extends StringGenerator ***REMOVED***
+public class LogWriter extends StringGenerator {
 
     private final String PATH           = "logs";
     private final String SDF            = "HH-mm-ss";
@@ -18,47 +18,47 @@ public class LogWriter extends StringGenerator ***REMOVED***
     private CloudFile cloudFile;
     private CloudFolder cloudFolder;
 
-    public LogWriter() ***REMOVED***
+    public LogWriter() {
         createFiles();
-    ***REMOVED***
+    }
 
-    private void createFiles() ***REMOVED***
+    private void createFiles() {
 
         createFolder();
         createFile();
 
-    ***REMOVED***
+    }
 
-    private void createFolder() ***REMOVED***
+    private void createFolder() {
         cloudFolder = new CloudFolder(PATH);
-    ***REMOVED***
+    }
 
-    private void createFile() ***REMOVED***
+    private void createFile() {
         String time = getTime();
         String rnd = generateRandomTag(3);
         cloudFile = new CloudFile(cloudFolder, time + "-" + rnd + ".log");
-    ***REMOVED***
+    }
 
-    public void write(String text) ***REMOVED***
+    public void write(String text) {
         addLine("[" + getTime() + "] " + text);
-    ***REMOVED***
+    }
 
-    public String getTime() ***REMOVED***
+    public String getTime() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(SDF);
         return sdf.format(calendar.getTime());
-    ***REMOVED***
+    }
 
-    public void addLine(String text) ***REMOVED***
-        try ***REMOVED***
+    public void addLine(String text) {
+        try {
             BufferedWriter bw = new BufferedWriter(
                     new FileWriter(cloudFile.get(), true));
             bw.write(text);
             bw.newLine();
             bw.close();
-        ***REMOVED*** catch (IOException exception) ***REMOVED***
+        } catch (IOException exception) {
             exception.printStackTrace();
-        ***REMOVED***
-    ***REMOVED***
+        }
+    }
 
-***REMOVED***
+}

@@ -11,7 +11,7 @@ import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.id.UIDType;
 import de.z1up.supercloud.core.mongo.MongoManager;
 
-public class Cloud ***REMOVED***
+public class Cloud {
 
     private static Cloud instance;
 
@@ -22,32 +22,32 @@ public class Cloud ***REMOVED***
     private ServerCreator   serverCreator;
     private MongoManager    mongoManager;
 
-    public Cloud() ***REMOVED***
+    public Cloud() {
         instance = this;
-    ***REMOVED***
+    }
 
-    public void run() ***REMOVED***
+    public void run() {
 
         this.init();
         this.load();
 
-    ***REMOVED***
+    }
 
-    private synchronized void init() ***REMOVED***
+    private synchronized void init() {
         this.logger           = new Logger();
         this.setupManager     = new SetupManager();
         this.groupManager     = new GroupManager();
         this.serverManager    = new ServerManager();
         this.serverCreator    = new ServerCreator();
         this.mongoManager     = new MongoManager();
-    ***REMOVED***
+    }
 
-    void load() ***REMOVED***
+    void load() {
 
         // connect to the database
-        if(!this.mongoManager.isConnected()) ***REMOVED***
+        if(!this.mongoManager.isConnected()) {
             this.mongoManager.connect();
-        ***REMOVED***
+        }
 
         GameServer server = new GameServer(new UID("1234we56", UIDType.SERVER),
                 ServerType.SERVER,
@@ -65,33 +65,33 @@ public class Cloud ***REMOVED***
         // load setup if necessary
         this.setupManager.loadSetUp();
 
-    ***REMOVED***
+    }
 
-    public static Cloud getInstance() ***REMOVED***
+    public static Cloud getInstance() {
         return instance;
-    ***REMOVED***
+    }
 
-    public Logger getLogger() ***REMOVED***
+    public Logger getLogger() {
         return logger;
-    ***REMOVED***
+    }
 
-    public SetupManager getSetupManager() ***REMOVED***
+    public SetupManager getSetupManager() {
         return setupManager;
-    ***REMOVED***
+    }
 
-    public GroupManager getGroupManager() ***REMOVED***
+    public GroupManager getGroupManager() {
         return groupManager;
-    ***REMOVED***
+    }
 
-    public ServerManager getServerManager() ***REMOVED***
+    public ServerManager getServerManager() {
         return serverManager;
-    ***REMOVED***
+    }
 
-    public ServerCreator getServerCreator() ***REMOVED***
+    public ServerCreator getServerCreator() {
         return serverCreator;
-    ***REMOVED***
+    }
 
-    public MongoManager getMongoManager() ***REMOVED***
+    public MongoManager getMongoManager() {
         return mongoManager;
-    ***REMOVED***
-***REMOVED***
+    }
+}

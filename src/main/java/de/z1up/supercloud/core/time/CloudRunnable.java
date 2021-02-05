@@ -6,133 +6,133 @@ import de.z1up.supercloud.core.interfaces.ICloudRunnable;
 
 import java.util.concurrent.TimeUnit;
 
-public abstract class CloudRunnable implements ICloudRunnable ***REMOVED***
+public abstract class CloudRunnable implements ICloudRunnable {
 
     private boolean active = false;
     private UID uid;
 
     @Override
-    public void runTaskLater(TimeUnit unit, long delay) ***REMOVED***
+    public void runTaskLater(TimeUnit unit, long delay) {
 
         uid = UID.randomUID(UIDType.RUNNABLE);
 
         this.setActive(true);
 
-        try ***REMOVED***
+        try {
             unit.sleep(delay);
-        ***REMOVED*** catch (InterruptedException e) ***REMOVED***
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        ***REMOVED***
+        }
 
         run();
 
         this.setActive(false);
 
-    ***REMOVED***
+    }
 
     @Override
-    public void runTaskLaterAsync(final TimeUnit unit, final long delay) ***REMOVED***
+    public void runTaskLaterAsync(final TimeUnit unit, final long delay) {
 
         uid = UID.randomUID(UIDType.RUNNABLE);
 
         this.setActive(true);
 
-        new CloudThread() ***REMOVED***
+        new CloudThread() {
             @Override
-            public void run() ***REMOVED***
+            public void run() {
 
-                try ***REMOVED***
+                try {
                     unit.sleep(delay);
-                ***REMOVED*** catch (InterruptedException e) ***REMOVED***
+                } catch (InterruptedException e) {
                     e.printStackTrace();
-                ***REMOVED***
+                }
 
                 run();
 
-            ***REMOVED***
-        ***REMOVED***.start();
+            }
+        }.start();
 
         this.setActive(false);
 
-    ***REMOVED***
+    }
 
     @Override
-    public void runTaskTimer(TimeUnit unit, long delay, long period) ***REMOVED***
+    public void runTaskTimer(TimeUnit unit, long delay, long period) {
 
         uid = UID.randomUID(UIDType.RUNNABLE);
 
         CloudRunnable.this.setActive(true);
 
-        try ***REMOVED***
+        try {
             unit.sleep(delay);
-        ***REMOVED*** catch (InterruptedException e) ***REMOVED***
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        ***REMOVED***
+        }
 
-        while (CloudRunnable.this.active) ***REMOVED***
+        while (CloudRunnable.this.active) {
 
             CloudRunnable.this.run();
 
-            try ***REMOVED***
+            try {
                 unit.sleep(period);
-            ***REMOVED*** catch (InterruptedException e) ***REMOVED***
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-            ***REMOVED***
+            }
 
-        ***REMOVED***
+        }
 
         CloudRunnable.this.setActive(false);
 
-    ***REMOVED***
+    }
 
     @Override
-    public void runTaskTimerAsync(final TimeUnit unit, final long delay, final long period) ***REMOVED***
+    public void runTaskTimerAsync(final TimeUnit unit, final long delay, final long period) {
 
         uid = UID.randomUID(UIDType.RUNNABLE);
 
-        new CloudThread() ***REMOVED***
+        new CloudThread() {
             @Override
-            public void run() ***REMOVED***
+            public void run() {
 
                 CloudRunnable.this.setActive(true);
 
-                try ***REMOVED***
+                try {
                     unit.sleep(delay);
-                ***REMOVED*** catch (InterruptedException e) ***REMOVED***
+                } catch (InterruptedException e) {
                     e.printStackTrace();
-                ***REMOVED***
+                }
 
-                while (CloudRunnable.this.active) ***REMOVED***
+                while (CloudRunnable.this.active) {
 
                     CloudRunnable.this.run();
 
-                    try ***REMOVED***
+                    try {
                         unit.sleep(period);
-                    ***REMOVED*** catch (InterruptedException e) ***REMOVED***
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
-                    ***REMOVED***
+                    }
 
-                ***REMOVED***
+                }
 
                 CloudRunnable.this.setActive(false);
 
-            ***REMOVED***
-        ***REMOVED***.start();
+            }
+        }.start();
 
-    ***REMOVED***
+    }
 
     @Override
-    public boolean isActive() ***REMOVED***
+    public boolean isActive() {
         return this.active;
-    ***REMOVED***
+    }
 
     @Override
-    public void setActive(boolean val) ***REMOVED***
+    public void setActive(boolean val) {
         this.active = val;
-    ***REMOVED***
+    }
 
     @Override
-    public UID getUniqueID() ***REMOVED***
+    public UID getUniqueID() {
         return uid;
-    ***REMOVED***
-***REMOVED***
+    }
+}
