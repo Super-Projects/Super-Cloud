@@ -1,8 +1,10 @@
-package de.z1up.supercloud.cloud.server;
+package de.z1up.supercloud.cloud.server.obj;
 
 import de.z1up.supercloud.cloud.server.enums.ServerMode;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
+import de.z1up.supercloud.cloud.server.group.Group;
 import de.z1up.supercloud.core.id.UID;
+import de.z1up.supercloud.core.time.CloudThread;
 
 import java.io.IOException;
 
@@ -28,7 +30,7 @@ public class ProxyServer extends Server {
     }
 
     @Override
-    public Thread getThread() {
+    public CloudThread getThread() {
         return null;
     }
 }

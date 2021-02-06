@@ -1,5 +1,7 @@
 package de.z1up.supercloud.core.interfaces;
 
+import de.z1up.supercloud.core.time.CloudThread;
+
 import java.io.IOException;
 
 public interface IServer {
@@ -10,7 +12,7 @@ public interface IServer {
 
     Process getProcess();
 
-    Thread getThread();
+    CloudThread getThread();
 
     void save();
 

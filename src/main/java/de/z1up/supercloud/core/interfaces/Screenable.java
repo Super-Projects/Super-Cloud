@@ -2,11 +2,11 @@ package de.z1up.supercloud.core.interfaces;
 
 public interface Screenable {
 
-    boolean isScreenActive();
+    boolean isScreeningActive();
 
-    void enableScreen();
+    void enableScreening();
 
-    void disableScreen();
+    void disableScreening();
 
 
 }

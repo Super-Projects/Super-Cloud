@@ -34,6 +34,18 @@ public class MongoUtils {
 
     }
 
+    protected List<Document> selectDocuments(final MongoCollection<Document> collection) {
+
+        final FindIterable<Document> iterable
+                = collection.find();
+
+        final List<Document> docs = new ArrayList<>();
+
+        iterable.forEach((Consumer<? super Document>) doc -> docs.add(doc));
+
+        return docs;
+    }
+
     protected List<Document> selectDocuments(final MongoCollection<Document> collection, final Bson query) {
 
         final FindIterable<Document> iterable

@@ -8,6 +8,10 @@ public interface ICloudThread {
 
     void start();
 
+    void shutdown();
+
     UID getUniqueID();
+
+    boolean isAlive();
 
 }

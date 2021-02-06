@@ -1,4 +1,4 @@
-package de.z1up.supercloud.cloud.server;
+package de.z1up.supercloud.cloud.server.obj;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
@@ -7,6 +7,7 @@ import com.mongodb.client.model.Filters;
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.server.enums.ServerMode;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
+import de.z1up.supercloud.cloud.server.group.Group;
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.interfaces.IServer;
 import de.z1up.supercloud.core.mongo.MongoUtils;
@@ -17,7 +18,7 @@ public abstract class Server extends MongoUtils implements IServer {
 
     private final UID uid;
     private final int id;
-    
+
     private ServerType serverType;
     private ServerMode serverMode;
     private String display;
@@ -28,6 +29,8 @@ public abstract class Server extends MongoUtils implements IServer {
     private int port;
     private int maxPlayers;
     private String motd;
+
+    private long pid;
 
     public Server(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, boolean connected, int port, int maxPlayers, String motd) {
         this.uid = uid;
@@ -130,6 +133,14 @@ public abstract class Server extends MongoUtils implements IServer {
 
     public void setConnected(boolean connected) {
         this.connected = connected;
+    }
+
+    public long getProcessPid() {
+        return this.pid;
+    }
+
+    public void setProcessPid(long pid) {
+        this.pid = pid;
     }
 
     @Override

@@ -21,7 +21,7 @@ settings:
   connection-throttle: -1
   query-plugins: true
   deprecated-verbose: default
-  shutdown-message: CloudServer-Shutdown
+  shutdown-message: Server is shutting down...
 spawn-limits:
   monsters: 70
   animals: 15

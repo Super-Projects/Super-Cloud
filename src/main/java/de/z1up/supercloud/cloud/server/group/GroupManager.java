@@ -1,7 +1,8 @@
-package de.z1up.supercloud.cloud.server;
+package de.z1up.supercloud.cloud.server.group;
 
 import com.google.gson.Gson;
 import de.z1up.supercloud.cloud.Cloud;
+import de.z1up.supercloud.cloud.server.group.Group;
 import de.z1up.supercloud.core.file.CloudFolder;
 
 import java.io.File;

@@ -135,6 +135,6 @@ public class Logger {
     }
 
     public boolean isDebugActive() {
-        return debuggerActive;
+        return !debuggerActive;
     }
 }

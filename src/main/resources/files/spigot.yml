@@ -22,7 +22,7 @@ settings:
   bungeecord: true
   timeout-time: 60
   restart-on-crash: false
-  restart-script: ./scheisse.sh
+  restart-script: ./restart.sh
   attribute:
     maxHealth:
       max: 2048.0
@@ -37,7 +37,7 @@ settings:
 messages:
   whitelist: You are not whitelisted on this service!
   unknown-command: Unknown command. Type "/help" for help.
-  server-full: The service is full!
+  server-full: The server is full!
   outdated-client: Outdated client! Please use {0}
   outdated-server: Outdated service! I'm still on {0}
   restart: Server is restarting

@@ -1,10 +1,9 @@
 package de.z1up.supercloud.cloud.setup;
 
 import de.z1up.supercloud.cloud.Cloud;
-import de.z1up.supercloud.cloud.server.Group;
-import de.z1up.supercloud.cloud.server.Server;
+import de.z1up.supercloud.cloud.server.group.Group;
+import de.z1up.supercloud.cloud.server.obj.Server;
 import de.z1up.supercloud.cloud.server.mngmt.ServerCreator;
-import de.z1up.supercloud.core.file.CloudFolder;
 import de.z1up.supercloud.core.input.InputReader;
 import de.z1up.supercloud.core.interfaces.SetUp;
 

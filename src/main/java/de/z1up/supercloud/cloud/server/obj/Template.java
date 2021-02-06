@@ -1,4 +1,4 @@
-package de.z1up.supercloud.cloud.server;
+package de.z1up.supercloud.cloud.server.obj;
 
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.core.file.CloudFolder;

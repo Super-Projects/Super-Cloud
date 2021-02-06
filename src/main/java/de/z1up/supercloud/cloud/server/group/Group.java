@@ -1,16 +1,22 @@
-package de.z1up.supercloud.cloud.server;
+package de.z1up.supercloud.cloud.server.group;
 
+import com.google.gson.Gson;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.server.enums.GroupMode;
 import de.z1up.supercloud.cloud.server.enums.GroupType;
+import de.z1up.supercloud.cloud.server.obj.Server;
+import de.z1up.supercloud.cloud.server.obj.Template;
 import de.z1up.supercloud.core.id.UID;
-import org.json.JSONObject;
+import de.z1up.supercloud.core.mongo.MongoUtils;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Collection;
 
-public class Group {
+public class Group extends MongoUtils {
 
     private final String PATH       = "local//groups";
 
@@ -114,33 +120,43 @@ public class Group {
 
     public void save() {
 
-        File dir = new File(PATH);
+        final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
+        final MongoCollection<Document> collection = database.getCollection("groups");
 
-        if(!dir.exists()) {
-            dir.mkdirs();
+        Bson query = Filters
+                .eq("uid.tag", this.uid.getTag());
+
+        if(super.exists(collection, query)) {
+            this.update0(collection);
+        } else {
+
+            final Document insert
+                    = Document.parse(new Gson().toJson(this));
+
+            super.insert(collection, insert);
+
         }
 
-        File file = new File(PATH, groupName + ".json");
+    }
 
-        if(!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        }
+    public void update() {
 
-        try {
-            FileWriter writer = new FileWriter(file);
+        final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
+        final MongoCollection<Document> collection = database.getCollection("groups");
 
-            JSONObject object = new JSONObject(this);
-            writer.write(object.toString(4));
+        this.update0(collection);
 
-            writer.close();
+    }
 
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    private void update0(final MongoCollection<Document> collection) {
+
+        final Bson query
+                = Filters.eq("uid.tag", this.uid.getTag());
+
+        final Document insert
+                = Document.parse(new Gson().toJson(this));
+
+        super.updateDocument(collection, query, insert);
 
     }
 
