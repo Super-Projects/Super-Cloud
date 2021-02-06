@@ -93,7 +93,7 @@ public class ServerCreator {
 
         String path = "local//" + (serverMode == ServerMode.DYNAMIC ? "temp//" + groupName + "//" + uid.getTag() : "perm//" + groupName + "//" + display);
 
-        GameServer server = new GameServer(uid, serverType, serverMode, display, group, maintenance, id, path, 25565, 20, "A Minecraft Server");
+        GameServer server = new GameServer(uid, serverType, serverMode, display, group, maintenance, id, path, false, 25565, 20, "A Minecraft Server");
         Cloud.getInstance().getLogger().debug("Server creation finished!");
         return server;
     }
@@ -122,7 +122,7 @@ public class ServerCreator {
 
         String path = "local//" + (serverMode == ServerMode.DYNAMIC ? "temp//" + groupName + "//" + uid.getTag() : "perm//" + groupName + "//" + display);
 
-        ProxyServer proxy = new ProxyServer(uid, serverType, serverMode, display, group, maintenance, id, path, 25565, 20, "A minecraft server");
+        ProxyServer proxy = new ProxyServer(uid, serverType, serverMode, display, group, maintenance, id, path, false, 25565, 20, "A minecraft server");
         return proxy;
     }
 

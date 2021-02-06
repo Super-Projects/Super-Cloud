@@ -1,7 +1,6 @@
 package de.z1up.supercloud.cloud.server;
 
 import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -10,27 +9,27 @@ import de.z1up.supercloud.cloud.server.enums.ServerMode;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.interfaces.IServer;
-import jdk.nashorn.internal.objects.annotations.Getter;
+import de.z1up.supercloud.core.mongo.MongoUtils;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
-import java.util.logging.Filter;
+public abstract class Server extends MongoUtils implements IServer {
 
-public abstract class Server implements IServer {
-
-    private UID uid;
+    private final UID uid;
+    private final int id;
+    
     private ServerType serverType;
     private ServerMode serverMode;
     private String display;
     private Group group;
     private boolean maintenance;
-    private int id;
     private String path;
-
+    private boolean connected;
     private int port;
     private int maxPlayers;
     private String motd;
 
-    public Server(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, int port, int maxPlayers, String motd) {
+    public Server(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, boolean connected, int port, int maxPlayers, String motd) {
         this.uid = uid;
         this.serverType = serverType;
         this.serverMode = serverMode;
@@ -39,6 +38,7 @@ public abstract class Server implements IServer {
         this.maintenance = maintenance;
         this.id = id;
         this.path = path;
+        this.connected = connected;
         this.port = port;
         this.maxPlayers = maxPlayers;
         this.motd = motd;
@@ -46,10 +46,6 @@ public abstract class Server implements IServer {
 
     public UID getUid() {
         return uid;
-    }
-
-    public void setUid(UID uid) {
-        this.uid = uid;
     }
 
     public ServerType getServerType() {
@@ -104,10 +100,6 @@ public abstract class Server implements IServer {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getPort() {
         return port;
     }
@@ -132,20 +124,32 @@ public abstract class Server implements IServer {
         this.motd = motd;
     }
 
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
     @Override
     public void save() {
 
         final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
         final MongoCollection<Document> collection = database.getCollection("servers");
 
-        Document document
-                = collection.find(Filters.eq("uid", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }"))).first();
+        Bson query = Filters
+                .eq("uid.tag", this.uid.getTag());
 
-        if(document != null) {
+        if(super.exists(collection, query)) {
             this.update0(collection);
         } else {
-            document = Document.parse(new Gson().toJson(this));
-            collection.insertOne(document);
+
+            final Document insert
+                    = Document.parse(new Gson().toJson(this));
+
+            super.insert(collection, insert);
+
         }
 
     }
@@ -156,14 +160,19 @@ public abstract class Server implements IServer {
         final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
         final MongoCollection<Document> collection = database.getCollection("servers");
 
-        update0(collection);
+        this.update0(collection);
 
     }
 
-    private void update0(final MongoCollection collection) {
-        //FindPublisher<Document> findPublisher = collection.find(eq("size", Document.parse("{ h: 14, w: 21, uom: 'cm' }")));
-        //collection.find(Filters.eq("uid.tag", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }")));
+    private void update0(final MongoCollection<Document> collection) {
 
-        collection.updateOne(Filters.eq("uid", Document.parse("{ tag: \"" + this.uid.getTag() + "\", type: \"" + this.uid.getType() + "\" }")), Document.parse(new Gson().toJson(this)));
+        final Bson query
+                = Filters.eq("uid.tag", this.uid.getTag());
+
+        final Document insert
+                = Document.parse(new Gson().toJson(this));
+
+        super.updateDocument(collection, query, insert);
+
     }
 }

@@ -49,7 +49,8 @@ public class Cloud {
             this.mongoManager.connect();
         }
 
-        GameServer server = new GameServer(new UID("1234we56", UIDType.SERVER),
+        GameServer server = new GameServer(
+                new UID("1234we56", UIDType.SERVER),
                 ServerType.SERVER,
                 ServerMode.STATIC,
                 "display-1",
@@ -57,9 +58,10 @@ public class Cloud {
                 false,
                 10,
                 "path",
+                false,
                 12345,
                 20,
-                "a motd");
+                "Defintely not a motd");
         server.save();
 
         // load setup if necessary

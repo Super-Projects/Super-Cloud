@@ -4,7 +4,7 @@
   "database": "database",
   "password": "password",
   "port": 27012,
-  "useSrv": true,
+  "useSrv": false,
   "useAuth": true,
   "authDatabase": "auth"
 }
