@@ -4,23 +4,20 @@ import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.server.enums.ServerMode;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.group.Group;
+import de.z1up.supercloud.core.Utils;
 import de.z1up.supercloud.core.file.CloudFolder;
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.screen.Screen;
 import de.z1up.supercloud.core.time.CloudThread;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
+import java.nio.file.*;
 import java.util.Objects;
 
 public class GameServer extends Server {
 
-    private Process process;
-    private CloudThread thread;
-    private Screen screen;
+    private UID threadID;
+    private transient Screen screen;
 
     public GameServer(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, boolean connected, int port, int maxPlayers, String motd) {
         super(uid, serverType, serverMode, display, group, maintenance, id, path, connected, port, maxPlayers, motd);
@@ -42,39 +39,76 @@ public class GameServer extends Server {
                 "-Xmx1G " +
                 "-jar server.jar nogui";
 
-        this.thread = new CloudThread() {
+        final CloudThread thread = new CloudThread() {
             @Override
             public void run() {
 
                 GameServer server = GameServer.this;
 
                 try {
-                    server.process
+
+                    Cloud.getInstance().getLogger().log("Starting server");
+
+                    final Process process
                             = Runtime.getRuntime().exec(command, null, new CloudFolder(server.getPath()).get());
+
+                    server.setPid(process.pid());
+                    server.bootstrapAfter(process);
+
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }
 
-                server.setProcessPid(server.process.pid());
-
-                server.screen = new Screen(server.process.getInputStream(), server.getDisplay(), false);
 
             }
         };
 
-        this.thread.start();
+        Cloud.getInstance().getThreadManager()
+                .createThread(thread);
+
+        try {
+            this.createEnvironment();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+        this.threadID = thread.getUniqueID();
+
+
+        thread.start();
+    }
+
+    private void bootstrapAfter(Process process) {
+
+        this.setConnected(true);
+
+        this.screen = new Screen(process.getInputStream(),
+                this.getDisplay(), true);
+
+        System.out.println("pid: " + getPid());
+
+        super.update();
     }
 
     @Override
     public void shutdown() {
 
-        // check if thread even exists
-        if(this.thread == null) {
+        // check if thread uid even exists
+        if(this.threadID == null) {
+            Cloud.getInstance().getLogger()
+                    .debug("no thread id found for server " + this.getUid().getTag());
+            return;
+        }
+
+        CloudThread thread = Cloud.getInstance()
+                .getThreadManager().getThread(this.threadID);
+
+        // check if thread uid even exists
+        if(thread == null) {
             Cloud.getInstance().getLogger()
                     .debug("no thread found for server " + this.getUid().getTag());
             return;
         }
-
 
         final String threadTag
                 = this.getThread().getUniqueID().getTag();
@@ -90,6 +124,8 @@ public class GameServer extends Server {
 
 
         // destroy the server process
+
+        /*
         if(this.process != null) {
 
             if(this.process.isAlive()) {
@@ -117,11 +153,13 @@ public class GameServer extends Server {
                     .debug("process in thread " + threadTag + " doesn't exists");
         }
 
+         */
+
 
         // finally shut the thread down
-        if(this.thread.isAlive()) {
+        if(this.getThread().isAlive()) {
 
-            this.thread.shutdown();
+            this.getThread().shutdown();
 
         } else {
             Cloud.getInstance().getLogger()
@@ -132,28 +170,43 @@ public class GameServer extends Server {
 
     private void destroyForcibly() {
 
+        /*
         if((this.process != null)
                 && (!this.process.isAlive())) {
             this.process.destroyForcibly();
         }
 
+         */
+
     }
 
     @Override
     public Process getProcess() {
-        return this.process;
+        //return this.process;
+        return null;
     }
 
     @Override
     public CloudThread getThread() {
-        return thread;
+        return Cloud.getInstance().getThreadManager().getThread(this.threadID);
     }
 
-    public void createEnvironmentFiles() throws IOException {
+    public void createEnvironment() throws IOException {
 
+        new CloudFolder(super.getPath());
+
+        copyServerFile0();
+        copyTemplateFiles0();
         this.createServerProperties0();
+
+        /*
         this.createSpigotYML0();
         this.createBukkitYML0();
+
+        this.copyTemplateFiles0();
+        this.copyServerFile0();
+
+         */
 
     }
 
@@ -161,19 +214,29 @@ public class GameServer extends Server {
 
         final String path = super.getPath() + "//server.properties";
 
-        if(!Files.notExists(Paths.get(path))) {
+        if(Files.notExists(Paths.get(path))) {
             Files.copy(Objects.requireNonNull(Server.class.getClassLoader().getResourceAsStream("server.properties")), Paths.get(path));
         }
 
         final File propertiesFile = new File(path);
+        /*
         final FileWriter writer = new FileWriter(propertiesFile);
 
-        writer.write("server-port=" + super.getPort());
-        writer.write("motd=" + super.getMotd());
-        writer.write("max-players=" + super.getMaxPlayers());
-        writer.write("server-name=" + super.getDisplay());
+        writer.write("server-port=" + super.getPort() + "\n");
+        writer.write("motd=" + super.getMotd() + "\n");
+        writer.write("max-players=" + super.getMaxPlayers() + "\n");
+        writer.write("server-name=" + super.getDisplay() + "\n");
+
+        writer.close();
+         */
+
+        Utils.addFileLine(propertiesFile, "\nserver-port=" + super.getPort());
+        Utils.addFileLine(propertiesFile, "motd=" + super.getMotd());
+        Utils.addFileLine(propertiesFile, "max-players=" + super.getMaxPlayers());
+        Utils.addFileLine(propertiesFile, "server-name=" + super.getDisplay());
 
     }
+
 
     public void createServerProperties() {
 
@@ -223,6 +286,70 @@ public class GameServer extends Server {
             exception.printStackTrace();
         }
 
+    }
+
+    public void copyServerFile() {
+        try {
+            this.copyServerFile0();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void copyServerFile0() throws IOException {
+
+        Files.copy(Path.of("local//lib//server.jar"), Path.of(super.getPath() + "//server.jar"), StandardCopyOption.REPLACE_EXISTING);
+
+        /*
+        CloudFile source = new CloudFile("local//lib", "server.jar");
+        CloudFolder destDir = new CloudFolder(super.getPath());
+
+        if(source.get().isFile()) {
+
+            JarFile file = new JarFile(source.getPath());
+            Copier.copyJarFile(file, destDir.get());
+
+            return;
+        }
+
+        if(source.get().isDirectory()) {
+
+            File[] files = source.get().listFiles(new FilenameFilter() {
+                public boolean accept(File dir, String name) {
+                    return name.endsWith(".jar");
+                }
+            });
+            for (File f : files) {
+                Cloud.getInstance().getLogger().debug("Copying server.jar...");
+                Copier.copyJarFile(new JarFile(f), destDir.get());
+                Cloud.getInstance().getLogger().debug("Copying server.jar finished!");
+            }
+
+        }
+
+        //Files.copy(Path.of(""), Path.of(""), StandardCopyOption.REPLACE_EXISTING);
+
+         */
+
+    }
+
+    public void copyTemplateFiles() {
+        try {
+            this.copyTemplateFiles0();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void copyTemplateFiles0() throws IOException {
+        final CloudFolder from =
+                new CloudFolder("local//templates//" + super.getGroup().getTemplate().getName());
+
+        final CloudFolder to =
+                new CloudFolder(super.getPath());
+
+        super.getGroup().getTemplate()
+                .copyFromTo(from.get(), to.get());
     }
 
 }

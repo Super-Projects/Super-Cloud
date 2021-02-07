@@ -21,39 +21,6 @@ public class ServerManager extends MongoUtils {
     private final String PROXY_FILE = "proxy.jar";
     private final String SERVER_FILE = "server.jar";
 
-    public void createServerEnvironment(Server server) throws IOException {
-
-        Cloud.getInstance().getLogger().debug("Creating server environment for " + server.getDisplay() + "...");
-
-        String path = server.getPath();
-
-        Template template = server.getGroup().getTemplate();
-
-        File sourceFileOrDir = new File(PATH + SERVER_FILE);
-        File destDir = new File(path);
-        destDir.mkdirs();
-        if (sourceFileOrDir.isFile()) {
-            Copier.copyJarFile(new JarFile(sourceFileOrDir), destDir);
-        } else if (sourceFileOrDir.isDirectory()) {
-            File[] files = sourceFileOrDir.listFiles(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
-                    return name.endsWith(".jar");
-                }
-            });
-            for (File f : files) {
-                Cloud.getInstance().getLogger().debug("Copying server.jar...");
-                Copier.copyJarFile(new JarFile(f), destDir);
-                Cloud.getInstance().getLogger().debug("Copying server.jar finished!");
-            }
-        }
-
-        CloudFolder to = new CloudFolder(path);
-        CloudFolder from = new CloudFolder("local//templates//" + template.getName());
-        template.copyFromTo(from, to);
-
-        Cloud.getInstance().getLogger().debug("Creating server environment for " + server.getDisplay() + " finished!");
-    }
-
     public void killOldServers() {
 
         final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
@@ -79,19 +46,47 @@ public class ServerManager extends MongoUtils {
 
     }
 
-    private void killOldServer(final Document document) {
-
-        long pid = (long) document.get("pid");
+    public void killOldServer(long pid) {
 
         Optional<ProcessHandle> processHandle
                 = ProcessHandle.of(pid);
 
+        if(processHandle.isPresent()) {
+            processHandle.get().destroyForcibly();
+        } else {
+            System.out.println("process not present");
+        }
+
+    }
+
+    public void killOldServer(final Document document) {
+
+        int pid = (int) document.get("pid");
+
+        Optional<ProcessHandle> processHandle
+                = ProcessHandle.of(29952);
+
+        if(processHandle.isPresent()) {
+            processHandle.get().destroyForcibly();
+        } else {
+            System.out.println("process not present");
+        }
+
+                /*
         if(processHandle == null) {
             return;
         }
 
         ProcessHandle process = processHandle.get();
 
+        process.destroyForcibly();
+
+        if((!processHandle.isEmpty()) || (!processHandle.isPresent())) {
+            return;
+        }
+
+        return;
+        /*
         if(process == null) {
             return;
         }
@@ -107,6 +102,8 @@ public class ServerManager extends MongoUtils {
         }
 
         process.destroyForcibly();
+
+         */
 
     }
 

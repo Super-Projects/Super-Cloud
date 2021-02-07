@@ -6,6 +6,9 @@ import de.z1up.supercloud.core.file.Copier;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -110,14 +113,18 @@ public class Template {
         }
     }*/
 
-    public void copyFromTo(CloudFolder from, CloudFolder to) {
+    public void copyFromTo(File from, File destination) throws IOException {
 
         Cloud.getInstance().getLogger().debug("Copying template" + name + "...");
 
-        try {
-            Copier.copyDirectoryCompatibityMode(from.get(), to.get());
-        } catch (IOException exception) {
-            exception.printStackTrace();
+        File[] files  = from.listFiles();
+
+        for(File file : files) {
+
+            final String fileName = file.getName();
+            System.out.println(fileName);
+            Files.copy(Paths.get(file.getPath()), Paths.get(destination.getPath() + "//" + fileName), StandardCopyOption.REPLACE_EXISTING);
+
         }
 
     }

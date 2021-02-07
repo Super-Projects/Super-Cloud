@@ -1,8 +1,13 @@
 package de.z1up.supercloud.core;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 public class Utils {
 
@@ -59,6 +64,43 @@ public class Utils {
         }
 
         if(Files.exists(Paths.get("logs//shutdown0.log"))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static void addFileLine(File file, String text) {
+        try {
+            BufferedWriter bw = new BufferedWriter(
+                    new FileWriter(file, true));
+            bw.write(text);
+            bw.newLine();
+            bw.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static ProcessHandle getProcess(final long pid) {
+
+        if(existsProcess(pid)) {
+
+            Optional<ProcessHandle> processHandle
+                    = ProcessHandle.of(pid);
+
+            return processHandle.get();
+
+        }
+        return null;
+    }
+
+    public static boolean existsProcess(final long pid) {
+
+        Optional<ProcessHandle> processHandle
+                = ProcessHandle.of(pid);
+
+        if(processHandle != null) {
             return true;
         }
 

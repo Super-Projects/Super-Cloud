@@ -1,87 +1,126 @@
 package de.z1up.supercloud.cloud.server.group;
 
-import com.google.gson.Gson;
+import com.mongodb.client.MongoCollection;
 import de.z1up.supercloud.cloud.Cloud;
-import de.z1up.supercloud.cloud.server.group.Group;
-import de.z1up.supercloud.core.file.CloudFolder;
+import de.z1up.supercloud.core.id.UID;
+import de.z1up.supercloud.core.mongo.MongoUtils;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Scanner;
 
-public class GroupManager {
+public class GroupManager extends MongoUtils {
 
-    private final String PATH = "local//groups";
     private Collection<Group> groups;
 
     public GroupManager() {
+        this.groups = new ArrayList<>();
     }
 
-    public List<Group> collectGroups() {
+    public Collection<Group> collectGroups() {
 
-        Cloud.getInstance().getLogger().debug("Starting to collect groups...");
+        final MongoCollection collection
+                = Cloud.getInstance().getMongoManager().getDatabase().getCollection("groups");
 
-        List<Group> collected = new ArrayList<>();
+        final List<Document> documents = super.selectDocuments(collection);
 
-        CloudFolder dir = new CloudFolder(PATH);
-        File[] files = dir.get().listFiles();
+        final Collection<Group> collected = new ArrayList<>();
 
-        for (File file : files) {
-            try {
-
-                Scanner scanner = new Scanner(file);
-                String lines = "";
-                while(scanner.hasNext()){
-                    lines = lines + scanner.nextLine();
-                }
-
-                Gson gson = new Gson();
-                Object object = gson.fromJson(lines, Group.class);
-
-                if(object instanceof Group) {
-                    collected.add((Group) object);
-                    Cloud.getInstance().getLogger().debug("Collected group -> " + ((Group) object).getGroupName());
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        Cloud.getInstance().getLogger().debug("Collecting groups finished!");
+        documents.forEach(document -> {
+            collected.add(Group.parse(document.toJson()));
+        });
 
         return collected;
     }
 
     public void loadGroups() {
-        this.groups = collectGroups();
+        this.groups = this.collectGroups();
     }
 
-    public Group getGroupByName(String name) {
+    public Group getGroupByName(final String name) {
 
-        Cloud.getInstance().getLogger().debug("Searching for group \"" + name + "\"...");
+        final MongoCollection collection
+                = Cloud.getInstance().getMongoManager().getDatabase().getCollection("groups");
 
-        Group target = null;
+        final Bson query = new Document("groupName", name);
 
-        for (Group group : groups) {
+        final Document document =
+                super.selectFirstDocument(collection, query);
 
-            if(group.getGroupName().toUpperCase().equals(name.toUpperCase())) {
-                target = group;
-                Cloud.getInstance().getLogger().debug("Found group \"" + name + "\"...");
-            }
-
+        if(document == null) {
+            return null;
         }
 
-        Cloud.getInstance().getLogger().debug("Search for group \"" + name + "\" finished!");
+        final Group group
+                = Group.parse(document.toJson());
 
-        return target;
+        return group;
+    }
+
+    public Group getGroup(final String tag) {
+        return this.getGroup0(tag);
+    }
+
+    public Group getGroup(final UID uid) {
+        return this.getGroup0(uid.getTag());
+    }
+
+    private Group getGroup0(final String tag) {
+
+        final MongoCollection collection
+                = Cloud.getInstance().getMongoManager().getDatabase().getCollection("groups");
+
+        final Document query = new Document();
+        query.append("uid.tag", tag);
+
+        final Document document =
+                super.selectFirstDocument(collection, query);
+
+        final Group group
+                = Group.parse(document.toJson());
+
+        return group;
+
     }
 
     public boolean isRegistered(Group group) {
         return groups.contains(group);
     }
+
+    public boolean existsGroup(final String tag) {
+        return this.existsGroup0(tag);
+    }
+
+    public boolean existsGroup(final UID uid) {
+        return this.existsGroup0(uid.getTag());
+    }
+
+    private boolean existsGroup0(final String tag) {
+
+        final MongoCollection collection
+                = Cloud.getInstance().getMongoManager().getDatabase().getCollection("groups");
+
+        final Document query = new Document();
+        query.append("uid.tag", tag);
+
+        return super.exists(collection, query);
+    }
+
+    public boolean existsGroupWithName(final String name) {
+        return this.existsWithName0(name);
+    }
+
+    private boolean existsWithName0(final String name) {
+
+        final MongoCollection collection
+                = Cloud.getInstance().getMongoManager().getDatabase().getCollection("groups");
+
+        final Document query = new Document();
+        query.append("groupName", name);
+
+        return super.exists(collection, query);
+    }
 }
+

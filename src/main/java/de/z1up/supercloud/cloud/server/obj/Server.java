@@ -135,11 +135,11 @@ public abstract class Server extends MongoUtils implements IServer {
         this.connected = connected;
     }
 
-    public long getProcessPid() {
+    public long getPid() {
         return this.pid;
     }
 
-    public void setProcessPid(long pid) {
+    public void setPid(long pid) {
         this.pid = pid;
     }
 
@@ -171,7 +171,14 @@ public abstract class Server extends MongoUtils implements IServer {
         final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
         final MongoCollection<Document> collection = database.getCollection("servers");
 
-        this.update0(collection);
+        Bson query = Filters
+                .eq("uid.tag", this.uid.getTag());
+
+        if(super.exists(collection, query)) {
+            this.update0(collection);
+        } else {
+            this.save();
+        }
 
     }
 
@@ -180,10 +187,12 @@ public abstract class Server extends MongoUtils implements IServer {
         final Bson query
                 = Filters.eq("uid.tag", this.uid.getTag());
 
+
         final Document insert
                 = Document.parse(new Gson().toJson(this));
 
         super.updateDocument(collection, query, insert);
 
     }
+
 }

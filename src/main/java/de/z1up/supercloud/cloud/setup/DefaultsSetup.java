@@ -7,6 +7,7 @@ import de.z1up.supercloud.cloud.server.mngmt.ServerCreator;
 import de.z1up.supercloud.core.input.InputReader;
 import de.z1up.supercloud.core.interfaces.SetUp;
 
+import java.awt.desktop.PrintFilesEvent;
 import java.io.File;
 
 public class DefaultsSetup implements SetUp {
@@ -50,6 +51,10 @@ public class DefaultsSetup implements SetUp {
 
     private void askForDefaultProxy() {
 
+        if(Cloud.getInstance().getGroupManager().existsGroupWithName("Proxy")) {
+            return;
+        }
+
         Cloud.getInstance().getLogger()
                 .log("Do want me to create a default proxy for you? (§aY§7/§cN§7)");
 
@@ -63,12 +68,16 @@ public class DefaultsSetup implements SetUp {
             Cloud.getInstance().getLogger()
                     .log("§aGreat! I'll create a new proxy group for you...");
 
-            creator.createDefaultProxyGroup();
+            this.creator.createDefaultProxyGroup();
 
         }
     }
 
     private void askForDefaultLobby() {
+
+        if(Cloud.getInstance().getGroupManager().existsGroupWithName("Lobby")) {
+            return;
+        }
 
         Cloud.getInstance().getLogger()
                 .log("Do want me to create a default lobby for you? (§aY§7/§cN§7)");
@@ -84,12 +93,6 @@ public class DefaultsSetup implements SetUp {
                     .log("§aGreat! I'll create a new server group for you...");
 
             this.creator.createDefaultLobbyGroup();
-
-            Group lobbyGroup = Cloud.getInstance().getGroupManager().getGroupByName("lobby");
-
-            Server lobby = Cloud.getInstance().getServerCreator().createServerByGroup(lobbyGroup);
-            lobby.save();
-
         }
     }
 }

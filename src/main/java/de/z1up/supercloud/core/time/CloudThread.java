@@ -16,7 +16,6 @@ public abstract class CloudThread implements ICloudThread, Runnable {
         uid = UID.randomUID(UIDType.THREAD);
 
         this.thread = new Thread(this);
-        this.thread.setName(this.uid.getTag());
         this.thread.start();
 
     }
@@ -50,5 +49,9 @@ public abstract class CloudThread implements ICloudThread, Runnable {
 
         }
 
+    }
+
+    public Thread get() {
+        return thread;
     }
 }

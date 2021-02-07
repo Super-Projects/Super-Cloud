@@ -30,6 +30,12 @@ public class Group extends MongoUtils {
     private UID uid;
     private Collection<Server> onlineServers;
 
+    public static Group parse(final String json) {
+        final Gson gson = new Gson();
+        Group group = gson.fromJson(json, Group.class);
+        return group;
+    }
+
     public Group(String groupName, String description, Template template, int minOnlineCount, boolean maintenance, GroupType groupType, GroupMode groupMode, UID uid, Collection<Server> onlineServers) {
         this.groupName = groupName;
         this.description = description;

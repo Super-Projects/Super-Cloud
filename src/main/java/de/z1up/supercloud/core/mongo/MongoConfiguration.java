@@ -1,6 +1,7 @@
 package de.z1up.supercloud.core.mongo;
 
 import com.mongodb.MongoClientURI;
+import de.z1up.supercloud.cloud.Cloud;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,6 +25,13 @@ public class MongoConfiguration {
     public static MongoConfiguration fromFile(String path) throws IOException {
         if(Files.notExists(Paths.get(path))) {
             Files.copy(Objects.requireNonNull(MongoConfiguration.class.getClassLoader().getResourceAsStream("mongo.json")), Paths.get(path));
+
+            Cloud.getInstance().getLogger()
+                    .log("Please enter your mongodb access data first in order to launch the cloud.");
+
+            System.exit(0);
+
+            return null;
         }
         return MongoManager.GSON.fromJson(new FileReader(path), MongoConfiguration.class);
     }

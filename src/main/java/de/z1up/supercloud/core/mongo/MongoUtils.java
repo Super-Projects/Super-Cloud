@@ -46,6 +46,18 @@ public class MongoUtils {
         return docs;
     }
 
+    protected Document selectFirstDocument(final MongoCollection<Document> collection) {
+
+        final FindIterable<Document> iterable
+                = collection.find();
+
+        final Document document
+                = iterable.first();
+
+        return document;
+
+    }
+
     protected List<Document> selectDocuments(final MongoCollection<Document> collection, final Bson query) {
 
         final FindIterable<Document> iterable
@@ -56,6 +68,17 @@ public class MongoUtils {
         iterable.forEach((Consumer<? super Document>) doc -> docs.add(doc));
 
         return docs;
+    }
+
+    protected Document selectFirstDocument(final MongoCollection<Document> collection, final Bson query) {
+
+        final FindIterable<Document> iterable
+                = collection.find(query);
+
+        final Document document
+                = iterable.first();
+
+        return document;
     }
 
     protected boolean exists(final MongoCollection collection, final Bson query) {
