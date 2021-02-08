@@ -137,8 +137,7 @@ public class ServerCreator extends MongoUtils {
 
     public int getRandomPort() {
 
-        final Random random = new Random();
-
+        Random random = new Random();
         int port = random.nextInt(48127);
         port = port + 1024;
 
@@ -146,9 +145,11 @@ public class ServerCreator extends MongoUtils {
             return this.getRandomPort();
         }
 
+        /*
         if(this.portInUse(port)) {
             return this.getRandomPort();
         }
+         */
 
         return port;
     }

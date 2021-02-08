@@ -5,12 +5,12 @@ import java.util.Set;
 
 public interface HandleManager {
 
-    Set<Method> detectAnnotations(Class<? super Listener> type);
+    Set<Method> detectAnnotations(Class<? extends Listener> type);
 
     Set<Method> detectAnnotations(Class<? extends Listener>... type);
 
-    <T> Set<Method> detectAnnotationsWithEvent(T targetEvent, Class<? extends Event> type);
+    <T> Set<Method> detectAnnotationsWithEvent(T targetEvent, Class<? extends Listener> type);
 
-    <T> Set<Method> detectAnnotationsWithEvent(T targetEvent, Class<? extends Event>... type);
+    <T> Set<Method> detectAnnotationsWithEvent(T targetEvent, Class<? extends Listener>... type);
 
 }

@@ -20,4 +20,8 @@ public class ListenerServerBootstrap implements Listener<ServerBootstrapEvent> {
 
     }
 
+    @Override
+    public Class getType() {
+        return ServerBootstrapEvent.class;
+    }
 }

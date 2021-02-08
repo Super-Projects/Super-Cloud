@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Utils {
@@ -108,11 +109,40 @@ public class Utils {
         Optional<ProcessHandle> processHandle
                 = ProcessHandle.of(pid);
 
-        if(processHandle != null) {
+        if(processHandle.isPresent()) {
             return true;
         }
 
         return false;
+    }
+
+    public static void deleteDirectory(Path path) throws IOException {
+
+        File file = path.toFile();
+
+        if(file.exists()) {
+
+            if(file.isDirectory()) {
+
+                for(File content : Objects.requireNonNull(file.listFiles())) {
+
+                    if(!content.isDirectory()) {
+                        Files.delete(Path.of(content.getPath()));
+                    } else {
+                        deleteDirectory(Path.of(content.getPath()));
+
+                        if(Objects.requireNonNull(content.listFiles()).length == 0) {
+                            Files.delete(Path.of(content.getPath()));
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
     }
 
 }

@@ -2,11 +2,12 @@ package de.z1up.supercloud.core.event.listener;
 
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.server.obj.Server;
+import de.z1up.supercloud.core.event.handle.Event;
 import de.z1up.supercloud.core.event.handle.EventHandler;
 import de.z1up.supercloud.core.event.handle.Listener;
 import de.z1up.supercloud.core.event.server.ServerShutdownEvent;
 
-public class ListenerServerShutdown implements Listener {
+public class ListenerServerShutdown implements Listener<ServerShutdownEvent> {
 
     public ListenerServerShutdown() {
         Cloud.getInstance().getEventManager().registerEvents(this);
@@ -20,4 +21,8 @@ public class ListenerServerShutdown implements Listener {
 
     }
 
+    @Override
+    public Class getType() {
+        return ServerShutdownEvent.class;
+    }
 }

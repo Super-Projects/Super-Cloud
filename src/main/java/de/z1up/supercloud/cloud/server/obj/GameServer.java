@@ -77,7 +77,9 @@ public class GameServer extends Server {
                 ServerBootstrapEvent.Result.SUCCESS, false);
         Cloud.getInstance().getEventManager().callEvent(event);
 
+        System.out.println("Running server " + this.getDisplay() + " on port " + this.getPort());
         super.getThread().start();
+
     }
 
     private void bootstrapAfter() {

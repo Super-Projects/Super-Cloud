@@ -339,7 +339,7 @@ public abstract class Server extends MongoUtils implements IServer {
 
     }
 
-    private void destroy0(final MongoCollection<Document> collection) throws IOException {
+    private synchronized void destroy0(final MongoCollection<Document> collection) throws IOException {
 
         final Document query = new Document();
         query.append("uid.tag", this.uid.getTag());
@@ -364,10 +364,17 @@ public abstract class Server extends MongoUtils implements IServer {
 
         }
 
-        System.out.println("Waiting for dfeleting");
+        try {
+            wait(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Starting to delete");
         if(Files.exists(Path.of(this.getPath()))) {
-            System.out.println("deleting: " + this.getPath());
-            Files.delete(Path.of(this.getPath()));
+            Utils.deleteDirectory(Path.of(this.getPath()));
+        } else {
+            System.out.println("No Files to delete found!");
         }
 
         if(super.exists(collection, query)) {
