@@ -1,8 +1,10 @@
 package de.z1up.supercloud.cloud.server.mngmt;
 
+import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import de.z1up.supercloud.cloud.Cloud;
+import de.z1up.supercloud.cloud.server.obj.GameServer;
 import de.z1up.supercloud.cloud.server.obj.Server;
 import de.z1up.supercloud.cloud.server.obj.Template;
 import de.z1up.supercloud.core.file.CloudFolder;
@@ -26,84 +28,32 @@ public class ServerManager extends MongoUtils {
         final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
         final MongoCollection<Document> collection = database.getCollection("servers");
 
-        Document query = new Document();
+        final Gson gson = new Gson();
+
+        final Document query = new Document();
         query.append("connected", true);
 
-        List<Document> documents = selectDocuments(collection, query);
+        final List<Document> documents
+                = selectDocuments(collection, query);
 
         if(documents.isEmpty()) {
             return;
         }
 
-        documents.forEach(document -> {
-            killOldServer(document);
-
-            document.remove("connected");
-            document.put("connected", false);
-
-            super.updateDocument(collection, new Document("uid.tag", document.get("uid.tag")), document);
-        });
+        documents.forEach(document -> killOldServer(document, gson));
 
     }
 
-    public void killOldServer(long pid) {
+    public void killOldServer(final Document document, final Gson gson) {
 
-        Optional<ProcessHandle> processHandle
-                = ProcessHandle.of(pid);
+        if(((String) document.get("serverType")).equalsIgnoreCase("SERVER")) {
 
-        if(processHandle.isPresent()) {
-            processHandle.get().destroyForcibly();
-        } else {
-            System.out.println("process not present");
+            final GameServer server
+                    = gson.fromJson(document.toJson(), GameServer.class);
+
+            server.destroy();
+
         }
-
-    }
-
-    public void killOldServer(final Document document) {
-
-        int pid = (int) document.get("pid");
-
-        Optional<ProcessHandle> processHandle
-                = ProcessHandle.of(29952);
-
-        if(processHandle.isPresent()) {
-            processHandle.get().destroyForcibly();
-        } else {
-            System.out.println("process not present");
-        }
-
-                /*
-        if(processHandle == null) {
-            return;
-        }
-
-        ProcessHandle process = processHandle.get();
-
-        process.destroyForcibly();
-
-        if((!processHandle.isEmpty()) || (!processHandle.isPresent())) {
-            return;
-        }
-
-        return;
-        /*
-        if(process == null) {
-            return;
-        }
-
-        if(!process.isAlive()) {
-            return;
-        }
-
-        try {
-            process.wait(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        process.destroyForcibly();
-
-         */
 
     }
 

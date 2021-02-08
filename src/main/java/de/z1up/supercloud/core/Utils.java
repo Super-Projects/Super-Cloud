@@ -89,6 +89,14 @@ public class Utils {
             Optional<ProcessHandle> processHandle
                     = ProcessHandle.of(pid);
 
+            if(!processHandle.isPresent()) {
+                return null;
+            }
+
+            if(processHandle.isEmpty()) {
+                return null;
+            }
+
             return processHandle.get();
 
         }

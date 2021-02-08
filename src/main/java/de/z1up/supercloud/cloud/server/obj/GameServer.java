@@ -5,6 +5,8 @@ import de.z1up.supercloud.cloud.server.enums.ServerMode;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.group.Group;
 import de.z1up.supercloud.core.Utils;
+import de.z1up.supercloud.core.event.handle.Event;
+import de.z1up.supercloud.core.event.server.ServerBootstrapEvent;
 import de.z1up.supercloud.core.file.CloudFolder;
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.screen.Screen;
@@ -15,9 +17,6 @@ import java.nio.file.*;
 import java.util.Objects;
 
 public class GameServer extends Server {
-
-    private UID threadID;
-    private transient Screen screen;
 
     public GameServer(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, boolean connected, int port, int maxPlayers, String motd) {
         super(uid, serverType, serverMode, display, group, maintenance, id, path, connected, port, maxPlayers, motd);
@@ -39,32 +38,33 @@ public class GameServer extends Server {
                 "-Xmx1G " +
                 "-jar server.jar nogui";
 
-        final CloudThread thread = new CloudThread() {
-            @Override
-            public void run() {
+            final CloudThread thread = new CloudThread() {
+                @Override
+                public void run() {
 
-                GameServer server = GameServer.this;
+                    try {
 
-                try {
+                        Cloud.getInstance().getLogger().log("Starting server");
 
-                    Cloud.getInstance().getLogger().log("Starting server");
+                        final Process process
+                                = Runtime.getRuntime().exec(command, null,
+                                new CloudFolder(GameServer.this.getPath()).get());
 
-                    final Process process
-                            = Runtime.getRuntime().exec(command, null, new CloudFolder(server.getPath()).get());
+                        GameServer.super.setProcess(process);
 
-                    server.setPid(process.pid());
-                    server.bootstrapAfter(process);
+                        GameServer.this.bootstrapAfter();
 
-                } catch (IOException exception) {
-                    exception.printStackTrace();
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+
                 }
+            };
 
-
-            }
-        };
+            super.setThread(thread);
 
         Cloud.getInstance().getThreadManager()
-                .createThread(thread);
+                .createThread(this.getThread());
 
         try {
             this.createEnvironment();
@@ -72,125 +72,29 @@ public class GameServer extends Server {
             exception.printStackTrace();
         }
 
-        this.threadID = thread.getUniqueID();
 
+        Event event = new ServerBootstrapEvent(this,
+                ServerBootstrapEvent.Result.SUCCESS, false);
+        Cloud.getInstance().getEventManager().callEvent(event);
 
-        thread.start();
+        super.getThread().start();
     }
 
-    private void bootstrapAfter(Process process) {
+    private void bootstrapAfter() {
+
+        this.setPid(this.getProcess().pid());
 
         this.setConnected(true);
 
-        this.screen = new Screen(process.getInputStream(),
+        final Screen screen = new Screen(this.getProcess().getInputStream(),
                 this.getDisplay(), true);
 
-        System.out.println("pid: " + getPid());
+        this.setScreen(screen);
 
         super.update();
     }
 
     @Override
-    public void shutdown() {
-
-        // check if thread uid even exists
-        if(this.threadID == null) {
-            Cloud.getInstance().getLogger()
-                    .debug("no thread id found for server " + this.getUid().getTag());
-            return;
-        }
-
-        CloudThread thread = Cloud.getInstance()
-                .getThreadManager().getThread(this.threadID);
-
-        // check if thread uid even exists
-        if(thread == null) {
-            Cloud.getInstance().getLogger()
-                    .debug("no thread found for server " + this.getUid().getTag());
-            return;
-        }
-
-        final String threadTag
-                = this.getThread().getUniqueID().getTag();
-
-
-        // close the screen
-        if(this.screen == null) {
-            Cloud.getInstance().getLogger()
-                    .debug("no screen found for " + this.getDisplay());
-        } else {
-            this.screen.close();
-        }
-
-
-        // destroy the server process
-
-        /*
-        if(this.process != null) {
-
-            if(this.process.isAlive()) {
-
-                try {
-
-                    this.process.wait(1000);
-                    this.process.destroy();
-
-                } catch (InterruptedException exc) {
-
-                    Cloud.getInstance().getLogger()
-                            .debug(exc.getMessage());
-                    this.destroyForcibly();
-
-                }
-
-            } else {
-                Cloud.getInstance().getLogger()
-                        .debug("process in thread " + threadTag + " isn't alive");
-            }
-
-        } else {
-            Cloud.getInstance().getLogger()
-                    .debug("process in thread " + threadTag + " doesn't exists");
-        }
-
-         */
-
-
-        // finally shut the thread down
-        if(this.getThread().isAlive()) {
-
-            this.getThread().shutdown();
-
-        } else {
-            Cloud.getInstance().getLogger()
-                    .debug("thread " + threadTag + " isn't alive");
-        }
-
-    }
-
-    private void destroyForcibly() {
-
-        /*
-        if((this.process != null)
-                && (!this.process.isAlive())) {
-            this.process.destroyForcibly();
-        }
-
-         */
-
-    }
-
-    @Override
-    public Process getProcess() {
-        //return this.process;
-        return null;
-    }
-
-    @Override
-    public CloudThread getThread() {
-        return Cloud.getInstance().getThreadManager().getThread(this.threadID);
-    }
-
     public void createEnvironment() throws IOException {
 
         new CloudFolder(super.getPath());
@@ -252,7 +156,7 @@ public class GameServer extends Server {
 
         final String path = super.getPath() + "//spigot.yml";
 
-        if(!Files.notExists(Paths.get(path))) {
+        if(Files.notExists(Paths.get(path))) {
             Files.copy(Objects.requireNonNull(Server.class.getClassLoader().getResourceAsStream("spigot.yml")), Paths.get(path));
         }
 
@@ -272,7 +176,7 @@ public class GameServer extends Server {
 
         final String path = super.getPath() + "//bukkit.yml";
 
-        if(!Files.notExists(Paths.get(path))) {
+        if(Files.notExists(Paths.get(path))) {
             Files.copy(Objects.requireNonNull(Server.class.getClassLoader().getResourceAsStream("bukkit.yml")), Paths.get(path));
         }
 
@@ -298,38 +202,9 @@ public class GameServer extends Server {
 
     private void copyServerFile0() throws IOException {
 
-        Files.copy(Path.of("local//lib//server.jar"), Path.of(super.getPath() + "//server.jar"), StandardCopyOption.REPLACE_EXISTING);
-
-        /*
-        CloudFile source = new CloudFile("local//lib", "server.jar");
-        CloudFolder destDir = new CloudFolder(super.getPath());
-
-        if(source.get().isFile()) {
-
-            JarFile file = new JarFile(source.getPath());
-            Copier.copyJarFile(file, destDir.get());
-
-            return;
+        if(Files.notExists(Path.of(super.getPath() + "//server.jar"))) {
+            Files.copy(Path.of("local//lib//server.jar"), Path.of(super.getPath() + "//server.jar"), StandardCopyOption.REPLACE_EXISTING);
         }
-
-        if(source.get().isDirectory()) {
-
-            File[] files = source.get().listFiles(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
-                    return name.endsWith(".jar");
-                }
-            });
-            for (File f : files) {
-                Cloud.getInstance().getLogger().debug("Copying server.jar...");
-                Copier.copyJarFile(new JarFile(f), destDir.get());
-                Cloud.getInstance().getLogger().debug("Copying server.jar finished!");
-            }
-
-        }
-
-        //Files.copy(Path.of(""), Path.of(""), StandardCopyOption.REPLACE_EXISTING);
-
-         */
 
     }
 

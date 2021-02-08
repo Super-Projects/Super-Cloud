@@ -7,6 +7,7 @@ import de.z1up.supercloud.core.file.Copier;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -123,7 +124,12 @@ public class Template {
 
             final String fileName = file.getName();
             System.out.println(fileName);
-            Files.copy(Paths.get(file.getPath()), Paths.get(destination.getPath() + "//" + fileName), StandardCopyOption.REPLACE_EXISTING);
+
+            if(Files.notExists(Path.of(destination + "//" + fileName ))) {
+                Files.copy(Paths.get(file.getPath()),
+                        Paths.get(destination.getPath() + "//" + fileName),
+                        StandardCopyOption.REPLACE_EXISTING);
+            }
 
         }
 

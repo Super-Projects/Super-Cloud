@@ -2,6 +2,7 @@ package de.z1up.supercloud.core.mongo;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -92,6 +93,11 @@ public class MongoUtils {
 
         return false;
 
+    }
+
+    protected DeleteResult delete(final MongoCollection collection, final Bson query) {
+        DeleteResult result = collection.deleteMany(query);
+        return result;
     }
 
 }

@@ -7,10 +7,13 @@ import de.z1up.supercloud.cloud.server.group.GroupManager;
 import de.z1up.supercloud.cloud.server.mngmt.ServerCreator;
 import de.z1up.supercloud.cloud.server.mngmt.ServerManager;
 import de.z1up.supercloud.cloud.server.obj.GameServer;
-import de.z1up.supercloud.cloud.server.obj.Server;
 import de.z1up.supercloud.cloud.setup.SetupManager;
 import de.z1up.supercloud.core.Utils;
 import de.z1up.supercloud.core.chat.Logger;
+import de.z1up.supercloud.core.event.EventManager;
+import de.z1up.supercloud.core.event.SimpleEventManager;
+import de.z1up.supercloud.core.event.listener.ListenerServerBootstrap;
+import de.z1up.supercloud.core.event.listener.ListenerServerShutdown;
 import de.z1up.supercloud.core.file.CloudFile;
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.id.UIDType;
@@ -32,6 +35,7 @@ public class Cloud {
     private ServerCreator       serverCreator;
     private MongoManager        mongoManager;
     private ThreadManager       threadManager;
+    private EventManager        eventManager;
 
     public Cloud() {
         instance = this;
@@ -45,13 +49,14 @@ public class Cloud {
     }
 
     private synchronized void init() {
-        this.logger           = new Logger();
-        this.setupManager     = new SetupManager();
-        this.groupManager     = new GroupManager();
-        this.serverManager    = new ServerManager();
-        this.serverCreator    = new ServerCreator();
-        this.mongoManager     = new MongoManager();
-        this.threadManager    = new ThreadManager();
+        this.logger             = new Logger();
+        this.eventManager       = new SimpleEventManager();
+        this.setupManager       = new SetupManager();
+        this.groupManager       = new GroupManager();
+        this.serverManager      = new ServerManager();
+        this.serverCreator      = new ServerCreator();
+        this.mongoManager       = new MongoManager();
+        this.threadManager      = new ThreadManager();
     }
 
     synchronized void load() {
@@ -71,6 +76,9 @@ public class Cloud {
             }
         }
 
+        // register the event listeners
+        this.registerListeners();
+
         // connect to the database
         if(!this.mongoManager.isConnected()) {
             this.mongoManager.connect();
@@ -78,8 +86,7 @@ public class Cloud {
 
         // kill all the old servers which
         // weren't shut down gracefully
-        getServerManager().killOldServer(15316);
-        //this.getServerManager().killOldServers();
+        this.getServerManager().killOldServers();
 
         // load setup if necessary
         this.setupManager.loadSetUp();
@@ -92,10 +99,10 @@ public class Cloud {
                 "Test-Server-1",
                 group,
                 false,
-                2,
+                this.getServerCreator().getRandomServerID(),
                 "local//temp//Test-Server-1",
                 false,
-                25565,
+                this.getServerCreator().getRandomPort(),
                 100,
                 "This is a test Server!");
 
@@ -144,4 +151,14 @@ public class Cloud {
         return threadManager;
     }
 
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+
+    private final synchronized void registerListeners() {
+
+        new ListenerServerBootstrap();
+        new ListenerServerShutdown();
+
+    }
 }

@@ -33,4 +33,9 @@ public class ProxyServer extends Server {
     public CloudThread getThread() {
         return null;
     }
+
+    @Override
+    public void createEnvironment() throws IOException {
+
+    }
 }

@@ -17,5 +17,6 @@ public interface IServer {
     void save();
 
     void update();
+    void createEnvironment() throws IOException;
 
 }
