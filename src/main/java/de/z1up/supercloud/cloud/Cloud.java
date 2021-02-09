@@ -70,7 +70,9 @@ public class Cloud {
             Utils.warningNotShutdownGracefully();
         } else {
             try {
-                Files.delete(Paths.get("logs//shutdown0.log"));
+                if(Files.exists(Paths.get("logs//shutdown0.log"))) {
+                    Files.delete(Paths.get("logs//shutdown0.log"));
+                }
             } catch (IOException exception) {
                 exception.printStackTrace();
             }

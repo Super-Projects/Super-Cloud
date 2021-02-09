@@ -1,11 +1,13 @@
 package de.z1up.supercloud.core.mongo;
 
 import com.google.gson.Gson;
+import com.mongodb.MongoTimeoutException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.core.Core;
+import de.z1up.supercloud.core.Utils;
 import de.z1up.supercloud.core.chat.Logger;
 import de.z1up.supercloud.core.file.CloudFolder;
 
@@ -14,6 +16,8 @@ import ch.qos.logback.classic.LoggerContext;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UTFDataFormatException;
+import java.sql.Time;
 
 public class MongoManager {
 
@@ -61,8 +65,16 @@ public class MongoManager {
     }
 
     private void buildClient() {
-        String con = this.config.buildClientURI().toString();
-        this.client = MongoClients.create(con);
+        Cloud.getInstance().getLogger().log("Establishing a connection to " + this.config.getHost() + "...");
+        final String URI = this.config.buildClientURI().toString();
+        try {
+            this.client = MongoClients.create(URI);
+        } catch (MongoTimeoutException exception) {
+            Utils.warningWrongDBAccessData();
+            return;
+        }
+
+        if(client != null) Cloud.getInstance().getLogger().log("Connection successfully established! Database: CONNECTED");
     }
 
     private void loadDatabase() {

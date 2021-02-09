@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -24,22 +25,20 @@ public class Utils {
 
     private static void headerHead() {
 
-        System.out.println(" __ __      _____                             _____  _                    _  __ __   ");
-        System.out.println(" \\ \\\\ \\    / ____|                           / ____|| |                  | | \\ \\\\ \\  ");
-        System.out.println("  \\ \\\\ \\  | (___   _   _  _ __    ___  _ __ | |     | |  ___   _   _   __| |  \\ \\\\ \\ ");
-        System.out.println("   > >> >  \\___ \\ | | | || '_ \\  / _ \\| '__|| |     | | / _ \\ | | | | / _` |   > >> >");
-        System.out.println("  / // /   ____) || |_| || |_) ||  __/| |   | |____ | || (_) || |_| || (_| |  / // / ");
-        System.out.println(" /_//_/   |_____/  \\__,_|| .__/  \\___||_|    \\_____||_| \\___/  \\__,_| \\__,_| /_//_/  ");
-        System.out.println("                         | |                                                         ");
-        System.out.println("                         |_|                                                         ");
-        System.out.println("\n");
-
+        System.out.println("   _____                       ________                __\n" +
+                "  / ___/__  ______  ___  _____/ ____/ /___  __  ______/ /   by chris23lngr\n" +
+                "  \\__ \\/ / / / __ \\/ _ \\/ ___/ /   / / __ \\/ / / / __  /    v. 0.2.1\n" +
+                " ___/ / /_/ / /_/ /  __/ /  / /___/ / /_/ / /_/ / /_/ /  \n" +
+                "/____/\\__,_/ .___/\\___/_/   \\____/_/\\____/\\__,_/\\__,_/   \n" +
+                "          /_/                                            \n");
     }
 
     private static void headerOut() {
-        System.out.println("«» SuperCloud version b0.3.4");
-        System.out.println("«» Running on Java " + System.getProperty("java.version") + "...");
-        System.out.println("«» " + System.getProperty("user.name") + "@" + System.getProperty("os.name"));
+        System.out.println(" ╔ Thank you for choosing SuperCloud! You are currently running on version 0.2.1! \n" +
+                " ╠ For the latest updates, please visit https://github.com/Super-Projects\n" +
+                " ╚ If you have any issues, please follow the issue steps or contact a project manager.\n");
+
+        // ■■
     }
 
     public static void header() {
@@ -50,12 +49,35 @@ public class Utils {
 
     public static void warningNotShutdownGracefully() {
 
-        System.out.println("[!] WARNING [!]");
-        System.out.println("[!] The last time the cloud was stopped, it was not shut down properly. " +
-                "This can lead to problems that cause the cloud to crash. " +
-                "Please use '/stop' to stop the cloud next time.");
-        System.out.println("[!] WARNING [!]");
+        warningSpacer();
+        System.out.println("  The last time the cloud was stopped, it was not shut down properly. \n" +
+                "  This can lead to problems that cause the cloud to crash. \n" +
+                "  Please use '/stop' to stop the cloud next time.");
+        warningSpacer();
 
+    }
+
+    public static void warningNoDBAccessData() {
+
+        warningSpacer();
+        System.out.println("  To use the cloud system, a MongoDB database is required. After the first\n" +
+                "  start, a file 'mongo.json' was created in the folder 'mongo'. Please enter your \n" +
+                "  access data there and restart the cloud afterwards.");
+        warningSpacer();
+
+    }
+
+    public static void warningWrongDBAccessData() {
+
+        warningSpacer();
+        System.out.println("  Timed out while connecting to the database. Please check your access data \n" +
+                "  in the 'mongo.json' file and restart the cloud afterwards.");
+        warningSpacer();
+
+    }
+
+    private static void warningSpacer() {
+        System.out.println("\n[ ! ] ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ [ ! ]\n");
     }
 
     public static boolean wasShutDownGracefully() {

@@ -16,8 +16,11 @@ public class ListenerServerShutdown implements Listener<ServerShutdownEvent> {
     @EventHandler
     public void onCall(final ServerShutdownEvent event) {
 
-        Server server = event.getServer();
-        System.out.println("server " + server.getDisplay() + " on port " + server.getPort() + " just shut down!");
+        final Server server
+                = event.getServer();
+
+        Cloud.getInstance().getLogger().log(server.getDisplay() + " at port " + server.getPort()
+                + "just shut down! [" + server.getUid().getTag() + "]");
 
     }
 

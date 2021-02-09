@@ -1,5 +1,7 @@
 package de.z1up.supercloud.core.event.handle;
 
+import de.z1up.supercloud.core.event.listener.ListenerServerBootstrap;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashSet;
@@ -8,24 +10,22 @@ import java.util.Set;
 public class SimpleHandleManager implements HandleManager {
 
     @Override
-    public Set<Method> detectAnnotations(Class<? extends Listener> type) {
+    public Set<Method> detectAnnotations(Class<? extends Listener> clazz) {
         final Set<Method> methods
                 = new HashSet<>();
 
-        Class<?> clazz = type;
 
-        while (clazz != Object.class) {
+        for(Method method : clazz.getDeclaredMethods()) {
 
-            for(final Method method : clazz.getDeclaredMethods()) {
+            if(method.isAnnotationPresent(EventHandler.class)) {
 
-                if(method.isAnnotationPresent(EventHandler.class)) {
+                methods.add(method);
+                break;
 
-                    methods.add(method);
-                }
             }
 
-            clazz = clazz.getSuperclass();
         }
+
 
         return methods;
     }

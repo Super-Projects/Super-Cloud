@@ -88,42 +88,17 @@ public class Template {
         return files;
     }
 
-    /*
-    public void copyTo(CloudFolder folder) {
-
-        Collection<File> files = getFiles();
-        Iterator<File> fileIterator = files.iterator();
-
-        Path copyTo = Paths.get(folder.getPath());
-
-        while (fileIterator.hasNext()) {
-
-            File file = fileIterator.next();
-            Path filePath = Paths.get(file.getPath());
-
-            try {
-                Files.copy(filePath, copyTo, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-
-            if(file.isDirectory()) {
-
-            }
-
-        }
-    }*/
-
     public void copyFromTo(File from, File destination) throws IOException {
 
-        Cloud.getInstance().getLogger().debug("Copying template" + name + "...");
+        Cloud.getInstance().getLogger()
+                .debug("Copying template '" + name + "' from " + from.getName() + " to " + destination.getName() + ".");
 
         File[] files  = from.listFiles();
 
         for(File file : files) {
 
-            final String fileName = file.getName();
-            System.out.println(fileName);
+            final String fileName
+                    = file.getName();
 
             if(Files.notExists(Path.of(destination + "//" + fileName ))) {
                 Files.copy(Paths.get(file.getPath()),

@@ -1,5 +1,7 @@
 package de.z1up.supercloud.core.chat;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,18 +14,41 @@ public class Logger {
     private boolean ccsActive = true;
     private boolean debuggerActive = false;
 
+    private final Calendar calendar;
+    private final SimpleDateFormat sdf;
+
     private LogWriter writer;
 
     public Logger() {
+
+        this.calendar = Calendar.getInstance();
+        this.sdf = new SimpleDateFormat("HH:mm:ss");
+
         initColorCodes();
         updateCCsActive();
         initLogWriter();
         updateDebuggerActive();
     }
 
+    private String addPre(String message) {
+
+        message = "§7[§e" + getTime() + "§7] " + PREFIX + message;
+        return message;
+    }
+
+    private String addPreDebug(String message) {
+
+        message = "§7[§e" + getTime() + "§7] " + PREFIX + "§7[§cDEBUG§7] " + message;
+        return message;
+    }
+
+    public String getTime() {
+        return sdf.format(calendar.getTime());
+    }
+
     public void debug(String debug) {
 
-        debug = PREFIX + debug;
+        debug = addPreDebug(debug);
 
         if(!debuggerActive) {
             return;
@@ -33,6 +58,8 @@ public class Logger {
 
         if(ccsActive) {
             debug = translateColorCodes(debug);
+        } else {
+            debug = getRaw(debug);
         }
 
         System.out.println(debug);
@@ -41,7 +68,7 @@ public class Logger {
 
     public void log(String log) {
 
-        log = PREFIX + log;
+        log = addPre(log);
 
         writer.addLine(getRaw(log));
 

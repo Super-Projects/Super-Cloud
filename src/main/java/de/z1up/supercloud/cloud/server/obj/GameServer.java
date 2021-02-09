@@ -44,8 +44,6 @@ public class GameServer extends Server {
 
                     try {
 
-                        Cloud.getInstance().getLogger().log("Starting server");
-
                         final Process process
                                 = Runtime.getRuntime().exec(command, null,
                                 new CloudFolder(GameServer.this.getPath()).get());
@@ -72,13 +70,11 @@ public class GameServer extends Server {
             exception.printStackTrace();
         }
 
+        super.getThread().start();
 
         Event event = new ServerBootstrapEvent(this,
                 ServerBootstrapEvent.Result.SUCCESS, false);
         Cloud.getInstance().getEventManager().callEvent(event);
-
-        System.out.println("Running server " + this.getDisplay() + " on port " + this.getPort());
-        super.getThread().start();
 
     }
 
@@ -101,8 +97,8 @@ public class GameServer extends Server {
 
         new CloudFolder(super.getPath());
 
-        copyServerFile0();
-        copyTemplateFiles0();
+        this.copyServerFile0();
+        this.copyTemplateFiles0();
         this.createServerProperties0();
 
         /*

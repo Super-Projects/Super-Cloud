@@ -36,6 +36,10 @@ public class ServerManager extends MongoUtils {
         final List<Document> documents
                 = selectDocuments(collection, query);
 
+        if(documents == null) {
+            return;
+        }
+
         if(documents.isEmpty()) {
             return;
         }
@@ -51,6 +55,9 @@ public class ServerManager extends MongoUtils {
             final GameServer server
                     = gson.fromJson(document.toJson(), GameServer.class);
 
+            Cloud.getInstance().getLogger()
+                    .debug("Found an old server running at port "
+                            + server.getPort() + "! Trying to close process!");
             server.destroy();
 
         }

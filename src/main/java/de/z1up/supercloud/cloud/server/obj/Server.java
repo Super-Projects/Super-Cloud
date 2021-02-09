@@ -370,17 +370,22 @@ public abstract class Server extends MongoUtils implements IServer {
             e.printStackTrace();
         }
 
-        System.out.println("Starting to delete");
+        Cloud.getInstance().getLogger()
+                .debug("Deleting files from " + getPath() + "...");
         if(Files.exists(Path.of(this.getPath()))) {
             Utils.deleteDirectory(Path.of(this.getPath()));
         } else {
-            System.out.println("No Files to delete found!");
+            Cloud.getInstance().getLogger()
+                    .debug("Didn't find any files to delete! (" + getPath() + ")");
         }
 
         if(super.exists(collection, query)) {
 
-            final DeleteResult result = super.delete(collection, query);
-            Cloud.getInstance().getLogger().debug("Deleted " + result.getDeletedCount() + " servers from collection 'servers'");
+            final DeleteResult result
+                    = super.delete(collection, query);
+            Cloud.getInstance().getLogger()
+                    .debug("Deleted " + result.getDeletedCount() + (result.getDeletedCount() > 1 ? "servers" : "server")
+                            + " from database collection 'servers'!");
 
         }
 
