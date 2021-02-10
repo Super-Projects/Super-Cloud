@@ -10,26 +10,35 @@ public class InputReader {
     private String prefix;
 
     public InputReader() {
-        updatePrefix();
+        this.updatePrefix();
     }
 
     public void open() {
-        this.scanner = new Scanner(System.in);
+        if(this.scanner == null)
+            this.scanner = new Scanner(System.in);
     }
 
     public final String getInput() {
 
+        if(this.scanner == null) {
+            this.open();
+        }
+
         System.out.print(prefix + " ");
 
-        final String input = this.scanner.nextLine();
+        while (this.scanner.hasNextLine()) {
+            final String input = this.scanner.nextLine();
 
-        Cloud.getInstance().getLogger().getWriter().addLine(prefix + " " + input);
+            Cloud.getInstance().getLogger().getWriter().addLine(prefix + " " + input);
 
-        return input;
+            return input;
+        }
+        return "none";
     }
 
     public void close() {
-        this.scanner.close();
+        if(this.scanner != null)
+            this.scanner.close();
     }
 
     void updatePrefix() {

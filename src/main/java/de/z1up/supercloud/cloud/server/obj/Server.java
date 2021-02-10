@@ -384,7 +384,8 @@ public abstract class Server extends MongoUtils implements IServer {
             final DeleteResult result
                     = super.delete(collection, query);
             Cloud.getInstance().getLogger()
-                    .debug("Deleted " + result.getDeletedCount() + (result.getDeletedCount() > 1 ? "servers" : "server")
+                    .debug("Deleted " + result.getDeletedCount()
+                            + (result.getDeletedCount() > 1 ? " servers" : " server")
                             + " from database collection 'servers'!");
 
         }

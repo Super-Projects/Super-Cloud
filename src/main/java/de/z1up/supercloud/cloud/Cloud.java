@@ -17,12 +17,16 @@ import de.z1up.supercloud.core.event.listener.ListenerServerShutdown;
 import de.z1up.supercloud.core.file.CloudFile;
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.id.UIDType;
+import de.z1up.supercloud.core.input.CommandLine;
+import de.z1up.supercloud.core.input.InputReader;
 import de.z1up.supercloud.core.mongo.MongoManager;
 import de.z1up.supercloud.core.thread.ThreadManager;
+import de.z1up.supercloud.core.time.CloudRunnable;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 
 public class Cloud {
 
@@ -36,6 +40,7 @@ public class Cloud {
     private MongoManager        mongoManager;
     private ThreadManager       threadManager;
     private EventManager        eventManager;
+    private CommandLine         commandLine;
 
     public Cloud() {
         instance = this;
@@ -57,6 +62,7 @@ public class Cloud {
         this.serverCreator      = new ServerCreator();
         this.mongoManager       = new MongoManager();
         this.threadManager      = new ThreadManager();
+        this.commandLine        = new CommandLine();
     }
 
     synchronized void load() {
@@ -93,22 +99,9 @@ public class Cloud {
         // load setup if necessary
         this.setupManager.loadSetUp();
 
-        Group group = groupManager.getGroupByName("Lobby");
-
-        GameServer server = new GameServer(UID.randomUID(UIDType.SERVER),
-                ServerType.SERVER,
-                ServerMode.DYNAMIC,
-                "Test-Server-1",
-                group,
-                false,
-                this.getServerCreator().getRandomServerID(),
-                "local//temp//Test-Server-1",
-                false,
-                this.getServerCreator().getRandomPort(),
-                100,
-                "This is a test Server!");
-
-        server.bootstrap();
+        // open the command line
+        this.commandLine.open();
+        this.commandLine.read();
 
     }
 
@@ -155,6 +148,10 @@ public class Cloud {
 
     public EventManager getEventManager() {
         return eventManager;
+    }
+
+    public CommandLine getCommandLine() {
+        return commandLine;
     }
 
     private final synchronized void registerListeners() {

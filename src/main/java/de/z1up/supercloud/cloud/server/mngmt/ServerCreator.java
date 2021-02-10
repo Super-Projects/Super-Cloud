@@ -131,7 +131,9 @@ public class ServerCreator extends MongoUtils {
 
         String path = "local//" + (serverMode == ServerMode.DYNAMIC ? "temp//" + groupName + "//" + uid.getTag() : "perm//" + groupName + "//" + display);
 
-        ProxyServer proxy = new ProxyServer(uid, serverType, serverMode, display, group, maintenance, id, path, false, 25565, 20, "A minecraft server");
+        int port = this.getRandomPort();
+
+        ProxyServer proxy = new ProxyServer(uid, serverType, serverMode, display, group, maintenance, id, path, false, port, 20, "Server: " + display + " at port " + port);
         return proxy;
     }
 

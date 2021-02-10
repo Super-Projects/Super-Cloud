@@ -42,8 +42,27 @@ public class Logger {
         return message;
     }
 
+    private String addPreHelp(String message) {
+
+        message = "    §8■ §7" + message;
+        return message;
+    }
+
     public String getTime() {
         return sdf.format(calendar.getTime());
+    }
+
+    public void help(String help) {
+
+        help = addPreHelp(help);
+
+        if(ccsActive) {
+            help = translateColorCodes(help);
+        } else {
+            help = getRaw(help);
+        }
+
+        System.out.println(help);
     }
 
     public void debug(String debug) {

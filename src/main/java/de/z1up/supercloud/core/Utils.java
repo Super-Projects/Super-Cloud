@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -16,8 +15,8 @@ public class Utils {
     public static void clearConsole() {
 
         int i = 0;
-        while (i < 200) {
-            System.out.println(" ");
+        while (i < 150) {
+            System.out.println("\n");
             i++;
         }
 
@@ -26,16 +25,17 @@ public class Utils {
     private static void headerHead() {
 
         System.out.println("   _____                       ________                __\n" +
-                "  / ___/__  ______  ___  _____/ ____/ /___  __  ______/ /   by chris23lngr\n" +
-                "  \\__ \\/ / / / __ \\/ _ \\/ ___/ /   / / __ \\/ / / / __  /    v. 0.2.1\n" +
+                "  / ___/__  ______  ___  _____/ ____/ /___  __  ______/ /   by " + Core.getInstance().getInfo().getAuthor() + "\n" +
+                "  \\__ \\/ / / / __ \\/ _ \\/ ___/ /   / / __ \\/ / / / __  /    " + Core.getInstance().getInfo().getAbsoluteVersion() + "\n" +
                 " ___/ / /_/ / /_/ /  __/ /  / /___/ / /_/ / /_/ / /_/ /  \n" +
                 "/____/\\__,_/ .___/\\___/_/   \\____/_/\\____/\\__,_/\\__,_/   \n" +
                 "          /_/                                            \n");
     }
 
     private static void headerOut() {
-        System.out.println(" ╔ Thank you for choosing SuperCloud! You are currently running on version 0.2.1! \n" +
-                " ╠ For the latest updates, please visit https://github.com/Super-Projects\n" +
+        System.out.println(" ╔ Thank you for choosing SuperCloud! You are currently running on "
+                + Core.getInstance().getInfo().getAbsoluteVersion() + "! \n" +
+                " ╠ For the latest updates, please visit " + Core.getInstance().getInfo().getRepo() + "\n" +
                 " ╚ If you have any issues, please follow the issue steps or contact a project manager.\n");
 
         // ■■
@@ -45,6 +45,34 @@ public class Utils {
         clearConsole();
         headerHead();
         headerOut();
+
+        if(Core.getInstance()
+                .getInfo().checkBuild()) {
+            buildWarning();
+        }
+
+        headerFinal();
+
+    }
+
+    private static void headerFinal() {
+        System.out.println(" ");
+    }
+
+    public static void buildWarning() {
+
+        System.out.println("\n ■ You are currently running on a " + Core.getInstance().getInfo().getBuild() + " version of the CloudSystem!\n" +
+                " ■ Only build versions can guarantee safe use of the system. Visit \n"+
+                " ■ " + Core.getInstance().getInfo().getRepo() + " to download the latest build! \n");
+
+    }
+
+    public static void versionWarning() {
+
+        System.out.println("\n ■ You are currently running on a " + Core.getInstance().getInfo().getBuild() + " version of \n" +
+                " the CloudSystem! Only build versions can guarantee safe use of the system. Visit"+
+                "\n " + Core.getInstance().getInfo().getRepo() + " to download the latest build! ■");
+
     }
 
     public static void warningNotShutdownGracefully() {

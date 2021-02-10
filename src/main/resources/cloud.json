@@ -1,0 +1,10 @@
+{
+  "version": 0.1,
+  "name": "octopus",
+  "build": "BUILD",
+  "author": "chris23lngr",
+  "contributors": ["chris23lngr"],
+  "desc": "A Cloud System aiming to create an easy to use environment for small server networks.",
+  "troubleShooting": "https://github.com/Super-Projects/Super-Cloud",
+  "repo": "https://github.com/Super-Projects/Super-Cloud"
+}
