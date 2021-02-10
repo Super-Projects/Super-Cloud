@@ -7,7 +7,6 @@ A Cloud System aiming to create an easy to use environment for small server netw
 [Start contributing to the project](https://github.com/Super-Projects/Super-Cloud/blob/main/docs/CONTRIBUTING.md "Click to get to CONTRIBUTING.md"). <br>
 Issues can be reported under the [Issues tab](https://github.com/Super-Projects/Super-Cloud/issues "See Issues"). <br>
 [Read the License](https://github.com/Super-Projects/Super-Cloud/blob/main/LICENSE "See license"). <br>
-
 <br>
 
 ###### More
