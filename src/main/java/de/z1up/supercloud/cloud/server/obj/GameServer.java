@@ -132,10 +132,10 @@ public class GameServer extends Server {
         writer.close();
          */
 
-        Utils.addFileLine(propertiesFile, "\nserver-port=" + super.getPort());
-        Utils.addFileLine(propertiesFile, "motd=" + super.getMotd());
-        Utils.addFileLine(propertiesFile, "max-players=" + super.getMaxPlayers());
-        Utils.addFileLine(propertiesFile, "server-name=" + super.getDisplay());
+        Utils.appendFileLine(propertiesFile, "\nserver-port=" + super.getPort());
+        Utils.appendFileLine(propertiesFile, "motd=" + super.getMotd());
+        Utils.appendFileLine(propertiesFile, "max-players=" + super.getMaxPlayers());
+        Utils.appendFileLine(propertiesFile, "server-name=" + super.getDisplay());
 
     }
 

@@ -10,38 +10,80 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * In the Utils class, various globally useful methods a
+ * re collected. all methods must be static so that they
+ * can be accessed easily.
+ *
+ * @author Christoph Langer
+ * @since 1.0
+ */
 public class Utils {
 
+    /**
+     * Clears the console by spamming 100 clear break
+     * lines.
+     */
     public static void clearConsole() {
-
         int i = 0;
-        while (i < 150) {
+        while (i < 100) {
             System.out.println("\n");
             i++;
         }
-
     }
 
-    private static void headerHead() {
+    /**
+     * {@code headerHead()} outputs the upper part of the
+     * header. This consists of the ASCII- logo and
+     * information about the application.
+     */
+    private final static void headerHead() {
+
+        final String author =
+                Core.getInstance().getInfo().getAuthor();
+        final String absv =
+                Core.getInstance().getInfo().getAbsoluteVersion();
 
         System.out.println("   _____                       ________                __\n" +
-                "  / ___/__  ______  ___  _____/ ____/ /___  __  ______/ /   by " + Core.getInstance().getInfo().getAuthor() + "\n" +
-                "  \\__ \\/ / / / __ \\/ _ \\/ ___/ /   / / __ \\/ / / / __  /    " + Core.getInstance().getInfo().getAbsoluteVersion() + "\n" +
+                "  / ___/__  ______  ___  _____/ ____/ /___  __  ______/ /   by " + author + "\n" +
+                "  \\__ \\/ / / / __ \\/ _ \\/ ___/ /   / / __ \\/ / / / __  /    " + absv + "\n" +
                 " ___/ / /_/ / /_/ /  __/ /  / /___/ / /_/ / /_/ / /_/ /  \n" +
                 "/____/\\__,_/ .___/\\___/_/   \\____/_/\\____/\\__,_/\\__,_/   \n" +
                 "          /_/                                            \n");
     }
 
-    private static void headerOut() {
-        System.out.println(" ╔ Thank you for choosing SuperCloud! You are currently running on "
-                + Core.getInstance().getInfo().getAbsoluteVersion() + "! \n" +
-                " ╠ For the latest updates, please visit " + Core.getInstance().getInfo().getRepo() + "\n" +
-                " ╚ If you have any issues, please follow the issue steps or contact a project manager.\n");
+    /**
+     * With the {@code headerOut()} method, the last part
+     * of the console header is output. various system and
+     * environment information is given out.
+     */
+    private final static void headerOut() {
 
-        // ■■
+        final String absv =
+                Core.getInstance().getInfo().getAbsoluteVersion();
+
+        final String repo =
+                Core.getInstance().getInfo().getRepo();
+
+        System.out.println(" ╔ Thank you for choosing SuperCloud! You are currently running on " + absv + "! \n" +
+                " ╠ For the latest updates, please visit " + repo + "\n" +
+                " ╚ If you have any issues, please follow the issue steps or contact a project manager.\n");
     }
 
+    /**
+     * The {@code header()} method outputs the entire header.
+     * First the console is cleared with {@code clearConsole()}.
+     * Then the header part of the header is output with
+     * {@code headerHead()}. This is followed by the out part via
+     * the {@code headerOut()} method.
+     *
+     * The system then checks whether a build version of the
+     * application is used. If this is not the case, a warning is
+     * issued with {@code buildWarning()}.
+     *
+     */
     public static void header() {
+
         clearConsole();
         headerHead();
         headerOut();
@@ -51,27 +93,40 @@ public class Utils {
             buildWarning();
         }
 
-        headerFinal();
+        clearLine();
 
     }
 
-    private static void headerFinal() {
+    /**
+     * Prints out just one clear line.
+     */
+    private static void clearLine() {
         System.out.println(" ");
     }
 
+    /**
+     * This method is called when no build version of the system is
+     * used. Only build versions should be used, as only these can
+     * be guaranteed to work properly.
+     */
     public static void buildWarning() {
+
+        final String repo =
+                Core.getInstance().getInfo().getRepo();
 
         System.out.println("\n ■ You are currently running on a " + Core.getInstance().getInfo().getBuild() + " version of the CloudSystem!\n" +
                 " ■ Only build versions can guarantee safe use of the system. Visit \n"+
-                " ■ " + Core.getInstance().getInfo().getRepo() + " to download the latest build! \n");
+                " ■ " + repo + " to download the latest build! \n");
 
     }
 
+
     public static void versionWarning() {
 
-        System.out.println("\n ■ You are currently running on a " + Core.getInstance().getInfo().getBuild() + " version of \n" +
-                " the CloudSystem! Only build versions can guarantee safe use of the system. Visit"+
-                "\n " + Core.getInstance().getInfo().getRepo() + " to download the latest build! ■");
+        // TODO: Create algorithm to compare version
+        //  to latest build version
+
+        // ...
 
     }
 
@@ -104,33 +159,64 @@ public class Utils {
 
     }
 
+    /**
+     * Prints out the header which is displayed
+     * before custom warnings.
+     */
     private static void warningSpacer() {
         System.out.println("\n[ ! ] ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ [ ! ]\n");
     }
 
+    /**
+     * This method checks whether the system was stopped
+     * correctly at the last stop. It does this by asking
+     * whether the file shutdown0.log exists in the "logs"
+     * folder.
+     *
+     * Before this, however, it checks whether the system
+     * has been started before. If this is the case, a folder
+     * named "local" must exist.
+     *
+     * The shutdown0.log file is created and saved in the
+     * shutdown hook of {@link de.z1up.supercloud.cloud.Cloud}.
+     *
+     * @return The boolean values whether the system was stopped correctly.
+     */
     public static boolean wasShutDownGracefully() {
 
+        // check if folder "local" exists
         if(!Files.exists(Paths.get("local"))) {
             return true;
         }
 
+        // check if file "shutdown0.log" exists
         if(Files.exists(Paths.get("logs//shutdown0.log"))) {
             return true;
         }
 
+        // system wasn't shut down properly
         return false;
     }
 
-    public static void addFileLine(File file, String text) {
-        try {
-            BufferedWriter bw = new BufferedWriter(
-                    new FileWriter(file, true));
-            bw.write(text);
-            bw.newLine();
-            bw.close();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    /**
+     * Appends a new text line to the bottom of a text file.
+     *
+     * @param file The file which the writer will write into
+     * @param text The text that will be appended
+     * @throws IOException
+     */
+    public static void appendFileLine(final File file,
+                                      final String text) throws IOException {
+
+        final FileWriter fw
+                = new FileWriter(file, true);
+
+        final BufferedWriter bw =
+                new BufferedWriter(fw);
+
+        bw.write(text);
+        bw.newLine();
+        bw.close();
     }
 
     public static ProcessHandle getProcess(final long pid) {

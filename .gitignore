@@ -25,5 +25,9 @@ hs_err_pid*
 /.idea
 
 /target
-
 /target/*
+target/
+
+dependency-reduced-pom.xml
+
+
