@@ -28,7 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
-public class Cloud {
+public final class Cloud {
 
     private static Cloud        instance;
 
@@ -66,6 +66,10 @@ public class Cloud {
     }
 
     synchronized void load() {
+
+        // add a shutdown hook so that
+        // files and others are saved correctly
+        this.addShutdownHook();
 
         // send the header to the console
         Utils.header();
@@ -119,45 +123,54 @@ public class Cloud {
     }
 
     public Logger getLogger() {
-        return logger;
+        return this.logger;
     }
 
     public SetupManager getSetupManager() {
-        return setupManager;
+        return this.setupManager;
     }
 
     public GroupManager getGroupManager() {
-        return groupManager;
+        return this.groupManager;
     }
 
     public ServerManager getServerManager() {
-        return serverManager;
+        return this.serverManager;
     }
 
     public ServerCreator getServerCreator() {
-        return serverCreator;
+        return this.serverCreator;
     }
 
     public MongoManager getMongoManager() {
-        return mongoManager;
+        return this.mongoManager;
     }
 
     public ThreadManager getThreadManager() {
-        return threadManager;
+        return this.threadManager;
     }
 
     public EventManager getEventManager() {
-        return eventManager;
+        return this.eventManager;
     }
 
     public CommandLine getCommandLine() {
-        return commandLine;
+        return this.commandLine;
     }
 
-    private final synchronized void registerListeners() {
+    private synchronized void registerListeners() {
 
         new ListenerServerBootstrap();
         new ListenerServerShutdown();
+
+    }
+
+    private void addShutdownHook() {
+
+        Thread hook = new Thread(() -> {
+            this.shutdownGracefully();
+        });
+        Runtime.getRuntime().addShutdownHook(hook);
 
     }
 }
