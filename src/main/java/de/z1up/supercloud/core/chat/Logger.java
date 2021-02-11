@@ -30,6 +30,10 @@ public class Logger {
         updateDebuggerActive();
     }
 
+    public void clearLine() {
+        System.out.println(" ");
+    }
+
     private String addPre(String message) {
 
         message = "§7[§e" + getTime() + "§7] " + PREFIX + message;

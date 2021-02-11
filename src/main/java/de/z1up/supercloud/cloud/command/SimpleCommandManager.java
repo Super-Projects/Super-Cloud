@@ -1,8 +1,10 @@
 package de.z1up.supercloud.cloud.command;
 
+import de.z1up.supercloud.cloud.command.clear.CommandClear;
 import de.z1up.supercloud.cloud.command.create.CommandCreate;
 import de.z1up.supercloud.cloud.command.exit.CommandExit;
 import de.z1up.supercloud.cloud.command.help.CommandHelp;
+import de.z1up.supercloud.cloud.command.service.CommandService;
 
 public class SimpleCommandManager implements CommandManager{
 
@@ -19,6 +21,8 @@ public class SimpleCommandManager implements CommandManager{
                 new CommandCreate(),
                 new CommandHelp(),
                 new CommandExit(),
+                new CommandService(),
+                new CommandClear(),
         };
 
     }

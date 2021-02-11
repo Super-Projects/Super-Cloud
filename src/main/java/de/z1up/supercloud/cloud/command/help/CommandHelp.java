@@ -35,12 +35,13 @@ public class CommandHelp extends Command {
 
         }
 
-        Cloud.getInstance().getLogger().log("This might help you:");
+        Cloud.getInstance().getLogger().log("This might help you:\n");
 
         for (Command command : manager.getCommands()) {
             Cloud.getInstance().getLogger().help(command.getUsage() + " | " + command.getDescription());
         }
 
+        Cloud.getInstance().getLogger().clearLine();
 
 
         return true;
