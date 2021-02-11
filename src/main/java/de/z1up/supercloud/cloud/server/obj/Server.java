@@ -44,6 +44,8 @@ public abstract class Server extends MongoUtils implements Service {
     private transient Process process;
     private transient Screen screen;
 
+    private boolean cancelled;
+
     public Server(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, boolean connected, int port, int maxPlayers, String motd) {
         this.uid = uid;
         this.serverType = serverType;
@@ -59,7 +61,8 @@ public abstract class Server extends MongoUtils implements Service {
         this.motd = motd;
     }
 
-    public UID getUid() {
+    @Override
+    public UID getUniqueID() {
         return uid;
     }
 
@@ -156,6 +159,16 @@ public abstract class Server extends MongoUtils implements Service {
     }
 
     @Override
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    @Override
     public CloudThread getThread() {
         return thread;
     }
@@ -239,7 +252,7 @@ public abstract class Server extends MongoUtils implements Service {
         // check if thread uid even exists
         if(this.thread == null) {
             Cloud.getInstance().getLogger()
-                    .debug("no thread found for server " + this.getUid().getTag());
+                    .debug("no thread found for server " + this.getUniqueID().getTag());
             return;
         }
 

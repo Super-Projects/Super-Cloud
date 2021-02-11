@@ -110,4 +110,14 @@ public class ProxySetup implements SetUp {
 
         return versions;
     }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
 }

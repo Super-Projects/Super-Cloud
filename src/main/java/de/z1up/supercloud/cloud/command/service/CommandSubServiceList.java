@@ -71,6 +71,6 @@ public class CommandSubServiceList extends SubCommand {
     }
 
     private String format(final Server server) {
-        return String.format("%15s | %10d | %10s | %20s | %-10s", server.getDisplay(), server.getPort(), server.getServerType(), (server.isConnected() ? "CONNECTED" : "DISCONNECTED"), server.getUid().getTag());
+        return String.format("%15s | %10d | %10s | %20s | %-10s", server.getDisplay(), server.getPort(), server.getServerType(), (server.isConnected() ? "CONNECTED" : "DISCONNECTED"), server.getUniqueID().getTag());
     }
 }

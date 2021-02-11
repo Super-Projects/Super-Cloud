@@ -20,7 +20,7 @@ public class ThreadManager {
 
     public void killThread(final CloudThread e) {
 
-        if(e.get().isAlive()) {
+        if(e.isAlive()) {
 
             synchronized (e) {
                 e.shutdown();

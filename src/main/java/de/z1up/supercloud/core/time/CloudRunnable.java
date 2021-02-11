@@ -135,4 +135,14 @@ public abstract class CloudRunnable implements ICloudRunnable {
     public UID getUniqueID() {
         return uid;
     }
+
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        
+    }
 }

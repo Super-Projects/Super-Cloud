@@ -150,4 +150,13 @@ public class ServerSetup implements SetUp {
         return versions;
     }
 
+    @Override
+    public void setCancelled(boolean cancelled) {
+
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
 }

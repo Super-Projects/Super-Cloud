@@ -95,4 +95,14 @@ public class DefaultsSetup implements SetUp {
             this.creator.createDefaultLobbyGroup();
         }
     }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
 }

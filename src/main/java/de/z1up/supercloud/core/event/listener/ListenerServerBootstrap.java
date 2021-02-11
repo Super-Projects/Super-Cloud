@@ -19,7 +19,7 @@ public class ListenerServerBootstrap implements Listener<ServerBootstrapEvent> {
                 = event.getServer();
 
         Cloud.getInstance().getLogger().log(server.getDisplay() + " just bootstrapped at port " + server.getPort()
-                + "! [" + server.getUid().getTag() + "]");
+                + "! [" + server.getUniqueID().getTag() + "]");
 
     }
 
