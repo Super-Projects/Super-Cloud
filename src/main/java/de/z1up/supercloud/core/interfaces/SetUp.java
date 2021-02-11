@@ -1,6 +1,6 @@
 package de.z1up.supercloud.core.interfaces;
 
-public interface SetUp {
+public interface SetUp extends Cancellable {
 
     void runSetUp();
 

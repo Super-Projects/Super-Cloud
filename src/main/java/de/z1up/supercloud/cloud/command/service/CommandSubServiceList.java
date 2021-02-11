@@ -22,9 +22,6 @@ public class CommandSubServiceList extends SubCommand {
     @Override
     public boolean onExecute(String[] args) {
 
-        // server create group_name
-
-
         if(!(args.length > 2)) {
             super.sendHelp();
             return true;

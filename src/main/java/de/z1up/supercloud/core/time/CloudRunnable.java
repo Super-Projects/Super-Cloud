@@ -50,7 +50,7 @@ public abstract class CloudRunnable implements ICloudRunnable {
                 run();
 
             }
-        }.start();
+        };
 
         this.setActive(false);
 
@@ -117,7 +117,7 @@ public abstract class CloudRunnable implements ICloudRunnable {
                 CloudRunnable.this.setActive(false);
 
             }
-        }.start();
+        };
 
     }
 

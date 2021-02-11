@@ -3,11 +3,23 @@ package de.z1up.supercloud.core;
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.core.input.CloudInfo;
 
+/**
+ * In the core, the cloud class that bootstraps the
+ * system is initialised and started. In addition,
+ * the cloud information is loaded here via the
+ * {@link CloudInfo} class.
+ *
+ * @author  Christoph Langer
+ * @since   1.0
+ *
+ * @see     Cloud
+ * @see     CloudInfo
+ */
 public class Core {
 
-    private static Core instance;
-    private Cloud cloud;
-    private CloudInfo info;
+    private static Core     instance;
+    private Cloud           cloud;
+    private CloudInfo       info;
 
     public Core() {
         instance = this;
@@ -18,8 +30,8 @@ public class Core {
     }
 
     public void startUp() {
-        init();
-        load();
+        this.init();
+        this.load();
     }
 
     void init() {
@@ -32,10 +44,10 @@ public class Core {
     }
 
     public CloudInfo getInfo() {
-        return info;
+        return this.info;
     }
 
     public Cloud getCloud() {
-        return cloud;
+        return this.cloud;
     }
 }

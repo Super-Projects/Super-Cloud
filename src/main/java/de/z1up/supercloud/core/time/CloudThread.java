@@ -5,44 +5,44 @@ import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.id.UIDType;
 import de.z1up.supercloud.core.interfaces.ICloudThread;
 
-public abstract class CloudThread implements ICloudThread, Runnable {
+public abstract class CloudThread extends Thread implements ICloudThread {
 
-    private Thread thread;
-    private UID uid;
+    private UID         uid;
+    private boolean     cancelled;
+
+    public CloudThread() {
+        CloudThread.this.start();
+    }
 
     @Override
     public void start() {
 
-        uid = UID.randomUID(UIDType.THREAD);
+        if(this.isCancelled()) {
+           return;
+        }
 
-        this.thread = new Thread(this);
-        this.thread.start();
-
+        this.uid = UID.randomUID(UIDType.THREAD);
+        super.start();
     }
 
     @Override
     public UID getUniqueID() {
-        return uid;
-    }
-
-    @Override
-    public boolean isAlive() {
-        return this.thread.isAlive();
+        return this.uid;
     }
 
     @Override
     public void shutdown() {
 
-        if(this.isAlive()) {
+        if((this.isAlive()) && (!this.isCancelled())) {
 
             try {
 
-                this.thread.sleep(2000);
-                this.thread.stop();
+                super.sleep(2000);
+                super.stop();
 
             } catch (InterruptedException exc) {
 
-                this.thread.interrupt();
+                super.interrupt();
                 Cloud.getInstance().getLogger().debug(exc.getMessage());
 
             }
@@ -51,7 +51,13 @@ public abstract class CloudThread implements ICloudThread, Runnable {
 
     }
 
-    public Thread get() {
-        return thread;
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return cancelled;
     }
 }

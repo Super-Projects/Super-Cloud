@@ -4,7 +4,7 @@ import de.z1up.supercloud.core.id.UID;
 
 import java.util.concurrent.TimeUnit;
 
-public interface ICloudRunnable extends Runnable {
+public interface ICloudRunnable extends Runnable, CloudObject, Cancellable {
 
     void runTaskLater(TimeUnit unit, long delay);
 
@@ -17,7 +17,5 @@ public interface ICloudRunnable extends Runnable {
     boolean isActive();
 
     void setActive(boolean val);
-
-    UID getUniqueID();
 
 }

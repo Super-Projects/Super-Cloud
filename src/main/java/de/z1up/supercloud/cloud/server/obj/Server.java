@@ -11,21 +11,18 @@ import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.group.Group;
 import de.z1up.supercloud.core.Utils;
 import de.z1up.supercloud.core.id.UID;
-import de.z1up.supercloud.core.interfaces.IServer;
+import de.z1up.supercloud.core.interfaces.Service;
 import de.z1up.supercloud.core.mongo.MongoUtils;
 import de.z1up.supercloud.core.screen.Screen;
 import de.z1up.supercloud.core.time.CloudThread;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import javax.print.Doc;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
-public abstract class Server extends MongoUtils implements IServer {
+public abstract class Server extends MongoUtils implements Service {
 
     private final UID uid;
     private final int id;

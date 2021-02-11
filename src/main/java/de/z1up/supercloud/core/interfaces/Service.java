@@ -4,7 +4,7 @@ import de.z1up.supercloud.core.time.CloudThread;
 
 import java.io.IOException;
 
-public interface IServer {
+public interface Service extends CloudObject, Cancellable {
 
     void bootstrap() throws IOException;
 

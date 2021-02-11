@@ -7,8 +7,8 @@ import de.z1up.supercloud.core.Core;
  * cloud system. The main method that starts the
  * programme is located here.
  *
- * @author  Christoph Langer
- * @since   1.0
+ * @author      Christoph Langer
+ * @since       1.0
  */
 public class Launcher {
 
@@ -18,7 +18,8 @@ public class Launcher {
      * this is the case, the startUp method of the
      * core is called.
      *
-     * @param args Arguments passed when running the application
+     * @param   args
+     *          Arguments passed when running the application
      */
     public static void main(String[] args) {
 

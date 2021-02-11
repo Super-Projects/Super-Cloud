@@ -15,8 +15,8 @@ import java.util.Optional;
  * re collected. all methods must be static so that they
  * can be accessed easily.
  *
- * @author Christoph Langer
- * @since 1.0
+ * @author  Christoph Langer
+ * @since   1.0
  */
 public class Utils {
 
@@ -65,7 +65,8 @@ public class Utils {
         final String repo =
                 Core.getInstance().getInfo().getRepo();
 
-        System.out.println(" ╔ Thank you for choosing SuperCloud! You are currently running on " + absv + "! \n" +
+        System.out.println(
+                " ╔ Thank you for choosing SuperCloud! You are currently running on " + absv + "! \n" +
                 " ╠ For the latest updates, please visit " + repo + "\n" +
                 " ╚ If you have any issues, please follow the issue steps or contact a project manager.\n");
     }
@@ -114,22 +115,39 @@ public class Utils {
         final String repo =
                 Core.getInstance().getInfo().getRepo();
 
-        System.out.println("\n ■ You are currently running on a " + Core.getInstance().getInfo().getBuild() + " version of the CloudSystem!\n" +
+        System.out.println("\n ■ You are currently running on a "
+                + Core.getInstance().getInfo().getBuild() + " version of the CloudSystem!\n" +
                 " ■ Only build versions can guarantee safe use of the system. Visit \n"+
                 " ■ " + repo + " to download the latest build! \n");
 
     }
 
 
+    /**
+     * Issues a warning that the version of the system is out of
+     * date and should be updated.
+     *
+     * Before and after warnings, the {@code warningSpacer()}
+     * method is always called to highlight the message.
+     */
     public static void versionWarning() {
 
-        // TODO: Create algorithm to compare version
-        //  to latest build version
-
-        // ...
+        /*
+         TODO: Create algorithm to compare version
+          to latest build version
+         ...
+        */
 
     }
 
+    /**
+     * Issues a warning message that the cloud system was not
+     * shut down in the direction at the last stop. This should
+     * not happen, otherwise errors may occur.
+     *
+     * Before and after warnings, the {@code warningSpacer()}
+     * method is always called to highlight the message.
+     */
     public static void warningNotShutdownGracefully() {
 
         warningSpacer();
@@ -140,6 +158,14 @@ public class Utils {
 
     }
 
+    /**
+     * Issues a warning message that there is no access
+     * data to the database. In this case, the system must
+     * be stopped, as it can only function with a database.
+     *
+     * Before and after warnings, the {@code warningSpacer()}
+     * method is always called to highlight the message.
+     */
     public static void warningNoDBAccessData() {
 
         warningSpacer();
@@ -150,6 +176,13 @@ public class Utils {
 
     }
 
+    /**
+     * Issues a warning message that there is incorrect
+     * access data to the database.
+     *
+     * Before and after warnings, the {@code warningSpacer()}
+     * method is always called to highlight the message.
+     */
     public static void warningWrongDBAccessData() {
 
         warningSpacer();
@@ -180,9 +213,10 @@ public class Utils {
      * The shutdown0.log file is created and saved in the
      * shutdown hook of {@link de.z1up.supercloud.cloud.Cloud}.
      *
-     * @return The boolean values whether the system was stopped correctly.
+     * @return  The boolean values whether the system was
+     *          stopped correctly.
      */
-    public static boolean wasShutDownGracefully() {
+     public static boolean wasShutDownGracefully() {
 
         // check if folder "local" exists
         if(!Files.exists(Paths.get("local"))) {
@@ -201,9 +235,17 @@ public class Utils {
     /**
      * Appends a new text line to the bottom of a text file.
      *
-     * @param file The file which the writer will write into
-     * @param text The text that will be appended
-     * @throws IOException
+     * @param   file
+     *          The file which the writer will write the given
+     *          {@code text} into.
+     *
+     * @param   text
+     *          The text that will be appended to the given file.
+     *
+     * @throws  IOException
+     *          Signals that an I/O exception of some sort has
+     *          occurred. Might be thrown when a file doesn't
+     *          exists or isn't writeable.
      */
     public static void appendFileLine(final File file,
                                       final String text) throws IOException {
@@ -219,6 +261,18 @@ public class Utils {
         bw.close();
     }
 
+    /**
+     * Returns a ProcessHandle of a process based on the pid. First,
+     * the {@code existsProcess()} method is used to query whether
+     * the process exists at all. If this is the case, the static
+     * {@code .of()} method is used. method of the ProcessHandle
+     * filters out the new ProcessHandle.
+     *
+     * @param   pid
+     *          The pid of the Process which needs to be checked.
+     *
+     * @return  The boolean value whether the process exits.
+     */
     public static ProcessHandle getProcess(final long pid) {
 
         if(existsProcess(pid)) {
@@ -226,20 +280,21 @@ public class Utils {
             Optional<ProcessHandle> processHandle
                     = ProcessHandle.of(pid);
 
-            if(!processHandle.isPresent()) {
-                return null;
-            }
-
-            if(processHandle.isEmpty()) {
-                return null;
-            }
-
             return processHandle.get();
 
         }
         return null;
     }
 
+    /**
+     * Checks whether a process exists in the system or is
+     * alive using the ProcessID. Access is via the ProcessHandle.
+     *
+     * @param   pid
+     *          The pid of the Process which needs to be checked.
+     *
+     * @return  The boolean value whether the process exits.
+     */
     public static boolean existsProcess(final long pid) {
 
         Optional<ProcessHandle> processHandle
@@ -249,34 +304,53 @@ public class Utils {
             return true;
         }
 
+        if(processHandle.isEmpty()) {
+            return true;
+        }
+
         return false;
     }
 
-    public static void deleteDirectory(Path path) throws IOException {
+    /**
+     * Deletes a directory with all its contents. If the file
+     * exists and is a directory, all files in the directory are
+     * deleted. If the directory contains a subdirectory, the
+     * {@code deleteDirectory()} method is also applied to the
+     * subdirectory.
+     *
+     * @param   path
+     *          The path to the directory which will be deleted
+     *
+     * @throws  IOException
+     *          Signals that an I/O exception of some sort has
+     *          occurred. Might be thrown when a file doesn't
+     *          exists or isn't writeable.
+     */
+    public static void deleteDirectory(final Path path) throws IOException {
 
-        File file = path.toFile();
+        final File file
+                = path.toFile();
 
-        if(file.exists()) {
+        if(!file.exists()) {
+            return;
+        }
 
-            if(file.isDirectory()) {
+        if(!file.isDirectory()) {
+            return;
+        }
 
-                for(File content : Objects.requireNonNull(file.listFiles())) {
+        for(File content : Objects.requireNonNull(file.listFiles())) {
 
-                    if(!content.isDirectory()) {
-                        Files.delete(Path.of(content.getPath()));
-                    } else {
-                        deleteDirectory(Path.of(content.getPath()));
+            if(!content.isDirectory()) {
+                Files.delete(Path.of(content.getPath()));
+            } else {
+                deleteDirectory(Path.of(content.getPath()));
 
-                        if(Objects.requireNonNull(content.listFiles()).length == 0) {
-                            Files.delete(Path.of(content.getPath()));
-                        }
-
-                    }
-
+                if(Objects.requireNonNull(content.listFiles()).length == 0) {
+                    Files.delete(Path.of(content.getPath()));
                 }
 
             }
-
         }
 
     }
