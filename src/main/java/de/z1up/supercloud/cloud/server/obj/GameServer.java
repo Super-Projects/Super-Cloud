@@ -6,10 +6,13 @@ import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.group.Group;
 import de.z1up.supercloud.core.Utils;
 import de.z1up.supercloud.core.event.handle.Event;
-import de.z1up.supercloud.core.event.server.ServerBootstrapEvent;
+import de.z1up.supercloud.core.event.events.server.ServerBootstrapEvent;
 import de.z1up.supercloud.core.file.CloudFolder;
 import de.z1up.supercloud.core.id.UID;
+import de.z1up.supercloud.core.interfaces.Sender;
 import de.z1up.supercloud.core.screen.Screen;
+import de.z1up.supercloud.core.screen.SimpleSender;
+import de.z1up.supercloud.core.settings.Setting;
 import de.z1up.supercloud.core.time.CloudThread;
 
 import java.io.*;
@@ -84,8 +87,11 @@ public class GameServer extends Server {
 
         this.setConnected(true);
 
+        final Sender sender
+                = new SimpleSender(this.getDisplay(), GameServer.class);
+
         final Screen screen = new Screen(this.getProcess().getInputStream(),
-                this.getDisplay(), true);
+                sender, Setting.getBool("auto-screening"));
 
         this.setScreen(screen);
 

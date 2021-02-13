@@ -2,6 +2,8 @@ package de.z1up.supercloud.core;
 
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.core.input.CloudInfo;
+import de.z1up.supercloud.core.settings.Setting;
+import de.z1up.supercloud.core.settings.SettingsManager;
 
 /**
  * In the core, the cloud class that bootstraps the
@@ -49,5 +51,17 @@ public class Core {
 
     public Cloud getCloud() {
         return this.cloud;
+    }
+
+    // Settings
+
+    private SettingsManager settingsManager;
+
+    public void loadSettingsManager() {
+        this.settingsManager = new SettingsManager();
+    }
+
+    public SettingsManager getSettingsManager() {
+        return this.settingsManager;
     }
 }

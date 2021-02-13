@@ -4,7 +4,7 @@ import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.server.obj.Server;
 import de.z1up.supercloud.core.event.handle.EventHandler;
 import de.z1up.supercloud.core.event.handle.Listener;
-import de.z1up.supercloud.core.event.server.ServerBootstrapEvent;
+import de.z1up.supercloud.core.event.events.server.ServerBootstrapEvent;
 
 public class ListenerServerBootstrap implements Listener<ServerBootstrapEvent> {
 

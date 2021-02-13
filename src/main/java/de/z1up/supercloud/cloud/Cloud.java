@@ -4,6 +4,7 @@ import de.z1up.supercloud.cloud.server.group.GroupManager;
 import de.z1up.supercloud.cloud.server.mngmt.ServerCreator;
 import de.z1up.supercloud.cloud.server.mngmt.ServerManager;
 import de.z1up.supercloud.cloud.setup.SetupManager;
+import de.z1up.supercloud.core.Core;
 import de.z1up.supercloud.core.Utils;
 import de.z1up.supercloud.core.chat.Logger;
 import de.z1up.supercloud.core.event.EventManager;
@@ -12,6 +13,7 @@ import de.z1up.supercloud.core.event.listener.ListenerServerBootstrap;
 import de.z1up.supercloud.core.event.listener.ListenerServerShutdown;
 import de.z1up.supercloud.core.file.CloudFile;
 import de.z1up.supercloud.core.input.CommandLine;
+import de.z1up.supercloud.core.interfaces.Sender;
 import de.z1up.supercloud.core.mongo.MongoManager;
 import de.z1up.supercloud.core.thread.ThreadManager;
 
@@ -19,7 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public final class Cloud {
+public final class Cloud implements Sender {
 
     private static Cloud        instance;
 
@@ -86,6 +88,9 @@ public final class Cloud {
         if(!this.mongoManager.isConnected()) {
             this.mongoManager.connect();
         }
+
+        // load the settings manager
+        Core.getInstance().loadSettingsManager();
 
         // kill all the old servers which
         // weren't shut down gracefully
@@ -163,5 +168,20 @@ public final class Cloud {
         });
         Runtime.getRuntime().addShutdownHook(hook);
 
+    }
+
+    @Override
+    public String getName() {
+        return "Cloud";
+    }
+
+    @Override
+    public Class getDeclaringClass() {
+        return this.getClass();
+    }
+
+    @Override
+    public String getDisplay() {
+        return "§8[§bSuperCloud§8]";
     }
 }

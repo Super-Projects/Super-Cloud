@@ -1,5 +1,8 @@
 package de.z1up.supercloud.core.chat;
 
+import de.z1up.supercloud.core.interfaces.Sender;
+import de.z1up.supercloud.core.settings.Setting;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -7,12 +10,11 @@ import java.util.Map;
 
 public class Logger {
 
-    private final String PREFIX = "§8[§bSuperCloud§8]" + "§7 ";
-    private final char colorCode = '§';
-    private final Map<String, String> COLOR_CODES = new HashMap();
+    private final char colorCode                    = '§';
+    private final Map<String, String> COLOR_CODES   = new HashMap();
 
-    private boolean ccsActive = true;
-    private boolean debuggerActive = false;
+    private boolean ccsActive                       = true;
+    private boolean debuggerActive                  = false;
 
     private final Calendar calendar;
     private final SimpleDateFormat sdf;
@@ -21,8 +23,8 @@ public class Logger {
 
     public Logger() {
 
-        this.calendar = Calendar.getInstance();
-        this.sdf = new SimpleDateFormat("HH:mm:ss");
+        this.calendar   = Calendar.getInstance();
+        this.sdf        = new SimpleDateFormat("HH:mm:ss");
 
         initColorCodes();
         updateCCsActive();
@@ -34,15 +36,15 @@ public class Logger {
         System.out.println(" ");
     }
 
-    private String addPre(String message) {
+    private String addPreLog(String message, Sender sender) {
 
-        message = "§7[§e" + getTime() + "§7] " + PREFIX + message;
+        message = "§7[§e" + getTime() + "§7] " + (sender == null ? "" : sender.getDisplay()) + "§7 " + message;
         return message;
     }
 
-    private String addPreDebug(String message) {
+    private String addPreDebug(String message, Sender sender) {
 
-        message = "§7[§e" + getTime() + "§7] " + PREFIX + "§7[§cDEBUG§7] " + message;
+        message = "§7[§e" + getTime() + "§7] " + (sender == null ? "" : sender.getDisplay()) + " §7[§cDEBUG§7] " + message;
         return message;
     }
 
@@ -71,7 +73,13 @@ public class Logger {
 
     public void debug(String debug) {
 
-        debug = addPreDebug(debug);
+        this.debug(debug, null);
+
+    }
+
+    public void debug(String debug, Sender sender) {
+
+        debug = addPreDebug(debug, sender);
 
         if(!debuggerActive) {
             return;
@@ -90,8 +98,12 @@ public class Logger {
     }
 
     public void log(String log) {
+        this.log(log, null);
+    }
 
-        log = addPre(log);
+    public void log(String log, Sender sender) {
+
+        log = addPreLog(log, sender);
 
         writer.addLine(getRaw(log));
 
@@ -100,6 +112,7 @@ public class Logger {
         } else {
             log = getRaw(log);
         }
+
         System.out.println(log);
 
     }
@@ -167,12 +180,12 @@ public class Logger {
 
     void updateCCsActive() {
         if(System.getProperty("os.name").toLowerCase().contains("win")) {
-            ccsActive = false;
+            ccsActive   = false;
         }
     }
 
     void updateDebuggerActive() {
-        debuggerActive = true;
+        this.debuggerActive     = Setting.getBool("debugging");
         // ...
     }
 

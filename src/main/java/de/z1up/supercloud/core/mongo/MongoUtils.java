@@ -1,14 +1,17 @@
 package de.z1up.supercloud.core.mongo;
 
+import com.google.gson.Gson;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
+import de.z1up.supercloud.core.interfaces.CloudObject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class MongoUtils {
@@ -98,6 +101,14 @@ public class MongoUtils {
     protected DeleteResult delete(final MongoCollection collection, final Bson query) {
         DeleteResult result = collection.deleteMany(query);
         return result;
+    }
+
+    public Document parse(final Object object) {
+        return Document.parse(new Gson().toJson(object));
+    }
+
+    public <T> T parse(final Document document, final Class<T> type) {
+        return new Gson().fromJson(document.toJson(), type);
     }
 
 }

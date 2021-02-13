@@ -1,48 +1,80 @@
 package de.z1up.supercloud.core.settings;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import de.z1up.supercloud.cloud.Cloud;
+import de.z1up.supercloud.core.mongo.MongoUtils;
+import org.bson.Document;
 
-public class SettingsManager {
+import java.util.ArrayList;
+import java.util.List;
 
-    private final Map<String, Setting> settings = new HashMap();
+public class SettingsManager extends MongoUtils {
 
-    public void loadSettings() {
+    final MongoCollection<Document>     collection;
 
-        /* -----------< TEMP >----------- */
+    public SettingsManager() {
 
-        // ccs-active
-        loadCCsActive();
-        // console-prefix
-        loadConsolePrefix();
+        final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
+        this.collection = database.getCollection("settings");
 
-
-        /* -----------< PERM >----------- */
+        this.loadSettings();
     }
 
-    void loadCCsActive() {
+    public Setting getSetting(final String key) {
+        final Document query = new Document();
+        query.append("key", key);
+        final Document document = super.selectFirstDocument(collection, query);
+        return Setting.parse(document.toJson());
+    }
 
-        // ccs-active
+    public boolean existsSetting(final String key) {
+        final Document query = new Document();
+        query.append("key", key);
+        return super.exists(this.collection, query);
+    }
 
-        boolean active = true;
+    public void create(final Setting setting) {
+        this.create(setting.getKey(), setting.getValue());
+    }
 
-        if(System.getProperty("os.name").toLowerCase().contains("win")) {
-            active = false;
+    public void create(final String key, final Object value) {
+        Setting setting = new Setting(key, value);
+        super.insert(collection, super.parse(setting));
+    }
+
+    public void save(final Setting setting) {
+
+        final Document query = new Document("key", setting.getKey());
+        collection.updateOne(query, super.parse(setting));
+
+    }
+
+    public void load(final Setting setting) {
+
+        if(!this.existsSetting(setting.getKey())) {
+            this.create(setting);
         }
 
-        Setting setting = new Setting("ccs-active", active);
-        settings.put("ccs-active", setting);
     }
 
-    void loadConsolePrefix() {
-        String username = System.getProperty("user.name");
-        String prefix = username + "@Cloud $ ";
-        Setting setting = new Setting("console-prefix", prefix);
-        settings.put("console-prefix", setting);
+    private final void loadSettings() {
+
+        Setting.load("auto-screening", true);
+        Setting.load("debugging", true);
+
     }
 
-    public Setting getByName(String name) {
-        return settings.get(name);
+    public List<Setting> getSettings() {
+
+        final List<Setting> settings
+                = new ArrayList<>();
+
+        super.selectDocuments(collection).forEach(document -> {
+            Setting setting = super.parse(document, Setting.class);
+        });
+
+        return settings;
     }
 
 }

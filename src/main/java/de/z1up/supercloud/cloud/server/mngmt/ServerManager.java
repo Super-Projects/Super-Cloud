@@ -27,9 +27,9 @@ import java.util.jar.JarFile;
 
 public class ServerManager extends MongoUtils {
 
-    private final String PATH = "local//lib//";
-    private final String PROXY_FILE = "proxy.jar";
-    private final String SERVER_FILE = "server.jar";
+    private final String PATH           = "local//lib//";
+    private final String PROXY_FILE     = "proxy.jar";
+    private final String SERVER_FILE    = "server.jar";
 
     public void killOldServers() {
 

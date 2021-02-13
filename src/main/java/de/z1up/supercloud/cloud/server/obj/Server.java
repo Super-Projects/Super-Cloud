@@ -11,6 +11,7 @@ import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.group.Group;
 import de.z1up.supercloud.core.Utils;
 import de.z1up.supercloud.core.id.UID;
+import de.z1up.supercloud.core.interfaces.Sender;
 import de.z1up.supercloud.core.interfaces.Service;
 import de.z1up.supercloud.core.mongo.MongoUtils;
 import de.z1up.supercloud.core.screen.Screen;
@@ -24,25 +25,26 @@ import java.nio.file.Path;
 
 public abstract class Server extends MongoUtils implements Service {
 
-    private final UID uid;
-    private final int id;
+    private final UID       uid;
+    private final int       id;
 
-    private ServerType serverType;
-    private ServerMode serverMode;
-    private String display;
-    private Group group;
-    private boolean maintenance;
-    private String path;
-    private boolean connected;
-    private int port;
-    private int maxPlayers;
-    private String motd;
+    private ServerType      serverType;
+    private ServerMode      serverMode;
+    private String          display;
+    private Group           group;
+    private boolean         maintenance;
+    private String          path;
+    private boolean         connected;
+    private int             port;
+    private int             maxPlayers;
+    private String          motd;
 
-    private long pid;
+    private long            pid;
 
-    private transient CloudThread thread;
-    private transient Process process;
-    private transient Screen screen;
+    private transient CloudThread   thread;
+    private transient Process       process;
+    private transient Screen        screen;
+    private Sender                  sender;
 
     private boolean cancelled;
 
@@ -158,6 +160,14 @@ public abstract class Server extends MongoUtils implements Service {
         this.pid = pid;
     }
 
+    public Sender getSender() {
+        return sender;
+    }
+
+    public void setSender(Sender sender) {
+        this.sender = sender;
+    }
+
     @Override
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
@@ -252,7 +262,7 @@ public abstract class Server extends MongoUtils implements Service {
         // check if thread uid even exists
         if(this.thread == null) {
             Cloud.getInstance().getLogger()
-                    .debug("no thread found for server " + this.getUniqueID().getTag());
+                    .debug("No thread found for server " + this.getUniqueID().getTag());
             return;
         }
 
@@ -262,7 +272,7 @@ public abstract class Server extends MongoUtils implements Service {
         // close the screen
         if(this.screen == null) {
             Cloud.getInstance().getLogger()
-                    .debug("no screen found for " + this.getDisplay());
+                    .debug("No screen found for " + this.getDisplay());
         } else {
             this.screen.close();
         }

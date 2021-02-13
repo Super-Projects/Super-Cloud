@@ -8,5 +8,6 @@ public interface Screenable {
 
     void disableScreening();
 
+    Sender getSender();
 
 }

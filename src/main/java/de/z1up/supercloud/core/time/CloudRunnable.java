@@ -10,6 +10,7 @@ public abstract class CloudRunnable implements ICloudRunnable {
 
     private boolean active = false;
     private UID uid;
+    private boolean cancelled;
 
     @Override
     public void runTaskLater(TimeUnit unit, long delay) {
@@ -137,12 +138,12 @@ public abstract class CloudRunnable implements ICloudRunnable {
     }
 
     @Override
-    public boolean isCancelled() {
-        return false;
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
-        
+    public boolean isCancelled() {
+        return this.cancelled;
     }
 }
