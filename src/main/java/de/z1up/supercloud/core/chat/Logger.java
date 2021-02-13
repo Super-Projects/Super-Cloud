@@ -1,5 +1,7 @@
 package de.z1up.supercloud.core.chat;
 
+import de.z1up.supercloud.cloud.Cloud;
+import de.z1up.supercloud.core.Core;
 import de.z1up.supercloud.core.interfaces.Sender;
 import de.z1up.supercloud.core.settings.Setting;
 
@@ -29,7 +31,6 @@ public class Logger {
         initColorCodes();
         updateCCsActive();
         initLogWriter();
-        updateDebuggerActive();
     }
 
     public void clearLine() {
@@ -98,7 +99,7 @@ public class Logger {
     }
 
     public void log(String log) {
-        this.log(log, null);
+        this.log(log, Cloud.getInstance());
     }
 
     public void log(String log, Sender sender) {
@@ -186,7 +187,10 @@ public class Logger {
 
     void updateDebuggerActive() {
         this.debuggerActive     = Setting.getBool("debugging");
-        // ...
+    }
+
+    public void updateValues() {
+        this.updateDebuggerActive();
     }
 
     void initLogWriter() {

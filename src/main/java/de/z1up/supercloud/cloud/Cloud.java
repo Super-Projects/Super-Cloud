@@ -15,6 +15,7 @@ import de.z1up.supercloud.core.file.CloudFile;
 import de.z1up.supercloud.core.input.CommandLine;
 import de.z1up.supercloud.core.interfaces.Sender;
 import de.z1up.supercloud.core.mongo.MongoManager;
+import de.z1up.supercloud.core.settings.SettingsManager;
 import de.z1up.supercloud.core.thread.ThreadManager;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ public final class Cloud implements Sender {
     private ThreadManager       threadManager;
     private EventManager        eventManager;
     private CommandLine         commandLine;
+    private SettingsManager     settingsManager;
 
     public Cloud() {
         instance = this;
@@ -48,6 +50,7 @@ public final class Cloud implements Sender {
 
     private synchronized void init() {
         this.logger             = new Logger();
+        this.settingsManager    = new SettingsManager();
         this.eventManager       = new SimpleEventManager();
         this.setupManager       = new SetupManager();
         this.groupManager       = new GroupManager();
@@ -90,7 +93,7 @@ public final class Cloud implements Sender {
         }
 
         // load the settings manager
-        Core.getInstance().loadSettingsManager();
+        this.settingsManager.loadDependecies();
 
         // kill all the old servers which
         // weren't shut down gracefully
@@ -152,6 +155,10 @@ public final class Cloud implements Sender {
 
     public CommandLine getCommandLine() {
         return this.commandLine;
+    }
+
+    public SettingsManager getSettingsManager() {
+        return settingsManager;
     }
 
     private synchronized void registerListeners() {

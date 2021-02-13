@@ -22,12 +22,14 @@ public class CommandSubSettingsList extends SubCommand {
     public boolean onExecute(String[] args) {
 
         final List<Setting> settings
-                = Core.getInstance().getSettingsManager().getSettings();
+                = Cloud.getInstance().getSettingsManager().getSettings();
 
-        Cloud.getInstance().getLogger().help(String.format("%-20s - %15s", "Key", "Value"));
+        Cloud.getInstance().getLogger().clearLine();
+        Cloud.getInstance().getLogger().help(String.format("%-20s   %15s", "KEY", "VALUE"));
         Cloud.getInstance().getLogger().clearLine();
 
         settings.forEach(setting -> Cloud.getInstance().getLogger().help(this.format(setting)));
+        Cloud.getInstance().getLogger().clearLine();
 
         return false;
     }

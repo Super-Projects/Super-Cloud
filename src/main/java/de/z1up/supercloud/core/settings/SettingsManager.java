@@ -11,10 +11,12 @@ import java.util.List;
 
 public class SettingsManager extends MongoUtils {
 
-    final MongoCollection<Document>     collection;
+    private MongoCollection<Document>     collection;
 
     public SettingsManager() {
+    }
 
+    public void loadDependecies() {
         final MongoDatabase database = Cloud.getInstance().getMongoManager().getDatabase();
         this.collection = database.getCollection("settings");
 
@@ -63,6 +65,8 @@ public class SettingsManager extends MongoUtils {
         Setting.load("auto-screening", true);
         Setting.load("debugging", true);
 
+        Cloud.getInstance().getLogger().updateValues();
+
     }
 
     public List<Setting> getSettings() {
@@ -72,6 +76,7 @@ public class SettingsManager extends MongoUtils {
 
         super.selectDocuments(collection).forEach(document -> {
             Setting setting = super.parse(document, Setting.class);
+            settings.add(setting);
         });
 
         return settings;
