@@ -1,4 +1,4 @@
-package de.z1up.supercloud.core.time;
+package de.z1up.supercloud.core.thread;
 
 import de.z1up.supercloud.core.id.UID;
 import de.z1up.supercloud.core.id.UIDType;

@@ -39,13 +39,13 @@ public class Logger {
 
     private String addPreLog(String message, Sender sender) {
 
-        message = "§7[§e" + getTime() + "§7] " + (sender == null ? "" : sender.getDisplay()) + "§7 " + message;
+        message = "§7[§e" + getTime() + "§7] " + (sender == null ? "" : sender.getDisplay() + " ") + "§7 " + message;
         return message;
     }
 
     private String addPreDebug(String message, Sender sender) {
 
-        message = "§7[§e" + getTime() + "§7] " + (sender == null ? "" : sender.getDisplay()) + " §7[§cDEBUG§7] " + message;
+        message = "§7[§e" + getTime() + "§7] " + (sender == null ? "" : sender.getDisplay() + " ") + "§7[§cDEBUG§7] " + message;
         return message;
     }
 

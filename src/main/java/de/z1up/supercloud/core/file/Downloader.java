@@ -1,7 +1,7 @@
 package de.z1up.supercloud.core.file;
 
 import de.z1up.supercloud.cloud.Cloud;
-import de.z1up.supercloud.core.time.CloudThread;
+import de.z1up.supercloud.core.thread.CloudThread;
 
 import java.io.File;
 import java.io.IOException;

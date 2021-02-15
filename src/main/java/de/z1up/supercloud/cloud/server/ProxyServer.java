@@ -1,10 +1,10 @@
-package de.z1up.supercloud.cloud.server.obj;
+package de.z1up.supercloud.cloud.server;
 
 import de.z1up.supercloud.cloud.server.enums.ServerMode;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.group.Group;
 import de.z1up.supercloud.core.id.UID;
-import de.z1up.supercloud.core.time.CloudThread;
+import de.z1up.supercloud.core.thread.CloudThread;
 
 import java.io.IOException;
 

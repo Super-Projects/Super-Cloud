@@ -1,6 +1,6 @@
 package de.z1up.supercloud.core.event.events.server;
 
-import de.z1up.supercloud.cloud.server.obj.Server;
+import de.z1up.supercloud.cloud.server.Server;
 
 public class ServerBootstrapEvent extends ServerEvent {
 

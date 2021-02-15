@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 public class Screen implements Screenable {
 
-    private final InputStream   in;
+    private final transient InputStream   in;
 
     private final Sender        sender;
     private boolean             active;
@@ -33,11 +33,13 @@ public class Screen implements Screenable {
     @Override
     public void enableScreening() {
         this.active = true;
+        this.open();
     }
 
     @Override
     public void disableScreening() {
         this.active = false;
+        this.close();
     }
 
     @Override
@@ -76,8 +78,7 @@ public class Screen implements Screenable {
 
     public void close() {
 
-        this.disableScreening();
-        Cloud.getInstance().getLogger().log("[" + this.sender + "] §cScreen closed!");
+        Cloud.getInstance().getLogger().log("§cScreen closed!", this.getSender());
 
     }
 

@@ -1,28 +1,25 @@
-package de.z1up.supercloud.cloud.command.service;
+package de.z1up.supercloud.cloud.command.screen;
 
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.command.Command;
 import de.z1up.supercloud.cloud.command.SubCommand;
-import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.Server;
+import de.z1up.supercloud.cloud.server.enums.ServerType;
+import de.z1up.supercloud.core.screen.Screen;
 import org.bson.Document;
 
-import java.io.IOException;
+public class CommandSubScreenToggle extends SubCommand {
 
-public class CommandSubServiceStart extends SubCommand {
-
-    public CommandSubServiceStart(Command superCommand) {
-        super("service_start",
-                "Start an existing service",
-                "service start <Name>",
-                null, superCommand);
+    public CommandSubScreenToggle(Command superCommand) {
+        super("screen_toggle",
+                "Toggle the output for a service",
+                "screen toggle <service>",
+                null,
+                superCommand);
     }
 
     @Override
     public boolean onExecute(String[] args) {
-
-        // server create group_name
-
 
         if(!(args.length > 2)) {
             super.sendHelp();
@@ -34,7 +31,7 @@ public class CommandSubServiceStart extends SubCommand {
         if(!Cloud.getInstance().getServerManager().existsService(serviceName)) {
 
             Cloud.getInstance().getLogger()
-                    .log("§cError! This service doesn't exists!");
+                    .log("§cError! This server doesn't exists!");
 
             return true;
         }
@@ -51,22 +48,23 @@ public class CommandSubServiceStart extends SubCommand {
         }
 
         if(server == null) {
-            Cloud.getInstance().getLogger().log("Error fetching Server!");
+            Cloud.getInstance().getLogger().log("Error fetching server!");
             return true;
         }
 
-        if(server.isConnected()) {
-            Cloud.getInstance().getLogger().log("Server is already connected!");
-            return true;
+        final Screen screen = server.getScreen();
+
+        if(screen.isScreeningActive()) {
+            screen.disableScreening();
+        } else {
+            screen.enableScreening();
         }
 
-        Cloud.getInstance().getLogger().log("Starting service...");
+        server.setScreen(screen);
+        server.save();
 
-        try {
-            server.bootstrap();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+        Cloud.getInstance().getLogger()
+                .log("Screening for server '" + server.getDisplay() + "' was "+ (screen.isScreeningActive() ? "enabled" : "disabled") + "!");
 
         return false;
     }

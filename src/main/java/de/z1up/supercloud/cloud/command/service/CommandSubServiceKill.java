@@ -4,17 +4,15 @@ import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.command.Command;
 import de.z1up.supercloud.cloud.command.SubCommand;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
-import de.z1up.supercloud.cloud.server.obj.Server;
+import de.z1up.supercloud.cloud.server.Server;
 import org.bson.Document;
-
-import java.io.IOException;
 
 public class CommandSubServiceKill extends SubCommand {
 
     public CommandSubServiceKill(Command superCommand) {
         super("service_kill",
                 "Kill an existing service",
-                "service kill <Name>",
+                "service kill <Name> [-f]",
                 null,
                 superCommand);
     }
@@ -53,15 +51,26 @@ public class CommandSubServiceKill extends SubCommand {
             return true;
         }
 
-        if(server.isConnected()) {
+        boolean forced = false;
 
-            Cloud.getInstance().getLogger().log("Error: Service is still connected! Please run 'service stop " + server.getDisplay() + "' first, in order to kill the service!");
-            return true;
+        if(args.length == 4) {
+
+            System.out.println(args[3]);
+            if(args[3].equalsIgnoreCase("-f")) {
+                forced = true;
+            }
+
+        }
+
+        if(!forced) {
+            if (server.isConnected()) {
+                Cloud.getInstance().getLogger().log("Error: Service is still connected! Please run 'service stop " + server.getDisplay() + "' first, in order to kill the service!");
+                return true;
+            }
         }
 
         Cloud.getInstance().getLogger().log("Killing server '" + server.getDisplay() + "'!");
         server.destroy();
-
 
         return false;
     }

@@ -1,4 +1,4 @@
-package de.z1up.supercloud.cloud.server.obj;
+package de.z1up.supercloud.cloud.server;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
@@ -15,7 +15,7 @@ import de.z1up.supercloud.core.interfaces.Sender;
 import de.z1up.supercloud.core.interfaces.Service;
 import de.z1up.supercloud.core.mongo.MongoUtils;
 import de.z1up.supercloud.core.screen.Screen;
-import de.z1up.supercloud.core.time.CloudThread;
+import de.z1up.supercloud.core.thread.CloudThread;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -25,21 +25,21 @@ import java.nio.file.Path;
 
 public abstract class Server extends MongoUtils implements Service {
 
-    private final UID       uid;
-    private final int       id;
+    private final UID               uid;
+    private final int               id;
 
-    private ServerType      serverType;
-    private ServerMode      serverMode;
-    private String          display;
-    private Group           group;
-    private boolean         maintenance;
-    private String          path;
-    private boolean         connected;
-    private int             port;
-    private int             maxPlayers;
-    private String          motd;
+    private ServerType              serverType;
+    private ServerMode              serverMode;
+    private String                  display;
+    private Group                   group;
+    private boolean                 maintenance;
+    private String                  path;
+    private boolean                 connected;
+    private int                     port;
+    private int                     maxPlayers;
+    private String                  motd;
 
-    private long            pid;
+    private long                    pid;
 
     private transient CloudThread   thread;
     private transient Process       process;
@@ -49,18 +49,18 @@ public abstract class Server extends MongoUtils implements Service {
     private boolean cancelled;
 
     public Server(UID uid, ServerType serverType, ServerMode serverMode, String display, Group group, boolean maintenance, int id, String path, boolean connected, int port, int maxPlayers, String motd) {
-        this.uid = uid;
-        this.serverType = serverType;
-        this.serverMode = serverMode;
-        this.display = display;
-        this.group = group;
-        this.maintenance = maintenance;
-        this.id = id;
-        this.path = path;
-        this.connected = connected;
-        this.port = port;
-        this.maxPlayers = maxPlayers;
-        this.motd = motd;
+        this.uid                    = uid;
+        this.serverType             = serverType;
+        this.serverMode             = serverMode;
+        this.display                = display;
+        this.group                  = group;
+        this.maintenance            = maintenance;
+        this.id                     = id;
+        this.path                   = path;
+        this.connected              = connected;
+        this.port                   = port;
+        this.maxPlayers             = maxPlayers;
+        this.motd                   = motd;
     }
 
     @Override
@@ -189,7 +189,7 @@ public abstract class Server extends MongoUtils implements Service {
     }
 
     public Screen getScreen() {
-        return screen;
+        return this.screen;
     }
 
     public void setProcess(Process process) {

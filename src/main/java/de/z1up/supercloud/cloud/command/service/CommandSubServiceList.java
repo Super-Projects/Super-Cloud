@@ -5,7 +5,7 @@ import de.z1up.supercloud.cloud.command.Command;
 import de.z1up.supercloud.cloud.command.SubCommand;
 import de.z1up.supercloud.cloud.server.enums.GroupType;
 import de.z1up.supercloud.cloud.server.group.Group;
-import de.z1up.supercloud.cloud.server.obj.Server;
+import de.z1up.supercloud.cloud.server.Server;
 
 
 import java.util.List;

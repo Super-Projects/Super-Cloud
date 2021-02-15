@@ -277,7 +277,7 @@ public class Utils {
 
         if(existsProcess(pid)) {
 
-            Optional<ProcessHandle> processHandle
+            final Optional<ProcessHandle> processHandle
                     = ProcessHandle.of(pid);
 
             return processHandle.get();
@@ -301,10 +301,6 @@ public class Utils {
                 = ProcessHandle.of(pid);
 
         if(processHandle.isPresent()) {
-            return true;
-        }
-
-        if(processHandle.isEmpty()) {
             return true;
         }
 

@@ -4,26 +4,17 @@ import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import de.z1up.supercloud.cloud.Cloud;
-import de.z1up.supercloud.cloud.server.enums.GroupType;
 import de.z1up.supercloud.cloud.server.enums.ServerType;
 import de.z1up.supercloud.cloud.server.group.Group;
-import de.z1up.supercloud.cloud.server.obj.GameServer;
-import de.z1up.supercloud.cloud.server.obj.ProxyServer;
-import de.z1up.supercloud.cloud.server.obj.Server;
-import de.z1up.supercloud.cloud.server.obj.Template;
-import de.z1up.supercloud.core.file.CloudFolder;
-import de.z1up.supercloud.core.file.Copier;
+import de.z1up.supercloud.cloud.server.GameServer;
+import de.z1up.supercloud.cloud.server.ProxyServer;
+import de.z1up.supercloud.cloud.server.Server;
 import de.z1up.supercloud.core.mongo.MongoUtils;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import javax.print.Doc;
-import java.io.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.jar.JarFile;
 
 public class ServerManager extends MongoUtils {
 

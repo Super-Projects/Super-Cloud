@@ -1,19 +1,20 @@
 package de.z1up.supercloud.core.interfaces;
 
 import de.z1up.supercloud.core.id.UID;
+import de.z1up.supercloud.core.thread.CloudThread;
 
 /**
  * An ICloudThread is an interface that should be passed
  * to all threads created by the cloud. The easiest way
  * to use this ICloudThread is to create a new object of
- * the {@link de.z1up.supercloud.core.time.CloudThread}
+ * the {@link CloudThread}
  * class. This implements the ICloudThread interface.
  *
  * @author  Christoph Langer
  * @since   1.0
  *
  * @see     java.lang.Runnable
- * @see     de.z1up.supercloud.core.time.CloudThread
+ * @see     CloudThread
  * @see     de.z1up.supercloud.core.interfaces.CloudObject
  * @see     de.z1up.supercloud.core.interfaces.Cancellable
  */

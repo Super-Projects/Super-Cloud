@@ -1,4 +1,4 @@
-package de.z1up.supercloud.cloud.server.obj;
+package de.z1up.supercloud.cloud.server;
 
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.cloud.server.enums.ServerMode;
@@ -13,7 +13,7 @@ import de.z1up.supercloud.core.interfaces.Sender;
 import de.z1up.supercloud.core.screen.Screen;
 import de.z1up.supercloud.core.screen.SimpleSender;
 import de.z1up.supercloud.core.settings.Setting;
-import de.z1up.supercloud.core.time.CloudThread;
+import de.z1up.supercloud.core.thread.CloudThread;
 
 import java.io.*;
 import java.nio.file.*;
@@ -45,6 +45,8 @@ public class GameServer extends Server {
                 @Override
                 public void run() {
 
+                    System.out.println("Cloud thread activated");
+
                     try {
 
                         final Process process
@@ -73,8 +75,6 @@ public class GameServer extends Server {
             exception.printStackTrace();
         }
 
-        super.getThread().start();
-
         Event event = new ServerBootstrapEvent(this,
                 ServerBootstrapEvent.Result.SUCCESS, false);
         Cloud.getInstance().getEventManager().callEvent(event);
@@ -82,6 +82,8 @@ public class GameServer extends Server {
     }
 
     private void bootstrapAfter() {
+
+        System.out.println("Bootstrap after");
 
         this.setPid(this.getProcess().pid());
 
@@ -92,6 +94,7 @@ public class GameServer extends Server {
 
         final Screen screen = new Screen(this.getProcess().getInputStream(),
                 sender, Setting.getBool("auto-screening"));
+        screen.enableScreening();
 
         this.setScreen(screen);
 

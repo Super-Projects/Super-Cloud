@@ -1,7 +1,6 @@
 package de.z1up.supercloud.core.thread;
 
 import de.z1up.supercloud.core.id.UID;
-import de.z1up.supercloud.core.time.CloudThread;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -95,8 +94,7 @@ public class ThreadManager {
     }
 
     private void createThread0(final CloudThread e) {
-        this.threads
-                .add(e);
+        this.threads.add(e);
     }
 
     public Collection<CloudThread> getThreads() {

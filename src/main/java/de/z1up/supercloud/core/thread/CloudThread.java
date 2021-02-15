@@ -1,4 +1,4 @@
-package de.z1up.supercloud.core.time;
+package de.z1up.supercloud.core.thread;
 
 import de.z1up.supercloud.cloud.Cloud;
 import de.z1up.supercloud.core.id.UID;
@@ -11,14 +11,13 @@ public abstract class CloudThread extends Thread implements ICloudThread {
     private boolean     cancelled;
 
     public CloudThread() {
-        CloudThread.this.start();
+        super();
+        this.runThread();
     }
 
-    @Override
-    public void start() {
-
+    private void runThread() {
         if(this.isCancelled()) {
-           return;
+            return;
         }
 
         this.uid = UID.randomUID(UIDType.THREAD);

@@ -1,6 +1,6 @@
 package de.z1up.supercloud.core.event.events.server;
 
-import de.z1up.supercloud.cloud.server.obj.Server;
+import de.z1up.supercloud.cloud.server.Server;
 import de.z1up.supercloud.core.event.handle.HandlerList;
 import de.z1up.supercloud.core.event.handle.Event;
 
